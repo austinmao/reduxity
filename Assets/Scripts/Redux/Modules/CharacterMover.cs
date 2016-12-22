@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Redux;
 
-namespace CharacterMover {
+namespace Reduxity.CharacterMover {
     // actions must have a type and may include a payload
     public class Action {
         public class Move: IAction {

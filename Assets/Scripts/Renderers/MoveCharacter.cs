@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UniRx;
 
-namespace CharacterMover {
+namespace Reduxity.CharacterMover {
     public class MoveCharacter : MonoBehaviour {
         public CharacterController character;
 

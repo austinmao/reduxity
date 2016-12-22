@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Redux;
 
-namespace Counter {
+namespace Reduxity.Counter {
 	public class Action {
     // actions must have a type and may include a payloaMoveon {
         public class Increment: IAction {}
