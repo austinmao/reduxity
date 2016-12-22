@@ -9,6 +9,7 @@ namespace Reduxity.CharacterMover {
             // translated to Vector3 in the reducer.
             public Vector2 inputVelocity { get; set; }
             public Transform playerTransform { get; set; } // curent transform
+            public float fixedDeltaTime { get; set; }
         }
 
         public class Stop: IAction {}
@@ -34,7 +35,7 @@ namespace Reduxity.CharacterMover {
             var inputVelocity = action.inputVelocity;
             var playerTransform = action.playerTransform;
             var playerVelocity = (inputVelocity.x * playerTransform.right) + (inputVelocity.y * playerTransform.forward);
-            var distance = playerVelocity * Time.fixedDeltaTime;
+            var distance = playerVelocity * action.fixedDeltaTime;
 
             // calculate and store distance in state
             MoveState moveState = new MoveState {

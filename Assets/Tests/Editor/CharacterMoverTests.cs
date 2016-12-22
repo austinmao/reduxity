@@ -1,27 +1,63 @@
-﻿// using UnityEngine;
-// using UnityEditor;
-// using NUnit.Framework;
-// using System;
-// using System.Linq;
-// using UniRx;
-// using Redux;
-// using Reduxity;
+﻿using UnityEngine;
+using NUnit.Framework;
 
-// namespace Reduxity.CharacterMover.Tests {
+namespace Reduxity.Tests.Example {
 
-// 	public static State 
+	[TestFixture]
+	public class CharacterMoverTests {
 
-// 	[TestFixture]
-// 	public class CharacterMoverTests {
-		
-// 		[Test]
-// 		public void Should_push_initial_state() {
-//             var sut = new Store<int>(Reducers.PassThrough, 1);
-//             var mockObserver = new MockObserver<int>();
+		private App app_;
+		private GameObject mockGameObject_;
+		private State initialStateDump_;
+		private State currentStateDump_;
 
-//             sut.Subscribe(mockObserver);
+		[SetUpAttribute]
+		public void Init() {
+			// initialize app
+			app_ = new App();
+			app_.Initialize();
 
-//             CollectionAssert.AreEqual(new[] { 1 }, mockObserver.Values);
-// 		}
-// 	}
-// }
+			// set initial state object dump
+			initialStateDump_ = new State {}.Initialize();
+
+			// create empty game object
+			mockGameObject_ = new GameObject();
+		}
+
+		[TearDownAttribute]
+		public void Dispose() {
+			app_ = null;
+			initialStateDump_ = null;
+			currentStateDump_ = null;
+			mockGameObject_ = null;
+		}
+
+		[Test]
+		public void Should_return_accurate_move_distance_from_move_reducer() {
+			CharacterMover.Action.Move mockMoveAction = new CharacterMover.Action.Move {
+				inputVelocity = Vector2.up.normalized,
+				playerTransform = mockGameObject_.transform,
+				fixedDeltaTime = 1.0f
+			};
+			App.Store.Dispatch(mockMoveAction);
+
+			State currentState = GetCurrentState();
+			Debug.Log(currentState.Movement.distance);
+			Assert.IsTrue(currentState.Movement.isMoving);
+			Assert.AreEqual(currentState.Movement.distance, Vector3.forward);
+		}
+
+		[Test]
+		public void Should_stop_on_stop_action() {
+			CharacterMover.Action.Stop mockStopAction = new CharacterMover.Action.Stop {};
+			App.Store.Dispatch(mockStopAction);
+
+			State currentState = GetCurrentState();
+			Assert.IsFalse(currentState.Movement.isMoving);
+		}
+
+		private State GetCurrentState() {
+			return App.Store.GetState();
+		}
+	}
+}

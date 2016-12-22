@@ -25,7 +25,8 @@ namespace Reduxity {
                         // dispatch move action
                         new CharacterMover.Action.Move {
                             inputVelocity = inputVelocity,
-                            playerTransform = transform
+                            playerTransform = transform,
+                            fixedDeltaTime = Time.fixedDeltaTime
                         }
                     )
                 )

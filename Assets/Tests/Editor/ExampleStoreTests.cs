@@ -7,11 +7,20 @@ namespace Reduxity.Tests.Example {
 	public class StoreTests {
 
 		private App app_;
+
+		[SetUpAttribute]
+		public void Init() {
+			app_ = new App();
+			app_.Initialize();
+		}
+
+		[TearDownAttribute]
+		public void Dispose() {
+			app_ = null;
+		}
 		
 		[Test]
 		public void Should_initialize_state_on_App_Awake() {
-			app_ = new App();
-			app_.Initialize();
 			State currentState = App.Store.GetState();
 			State initialState = new State {}.Initialize();
 
