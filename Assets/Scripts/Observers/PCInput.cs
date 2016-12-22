@@ -8,6 +8,7 @@ namespace Reduxity {
             observeAndDispatchMoveInput();
         }
 
+    // reference: https://ornithoptergames.com/reactiverx-in-unity3d-part-1/
     void observeAndDispatchMoveInput() {
             this.FixedUpdateAsObservable()
                 // get inputs by axis
@@ -20,7 +21,6 @@ namespace Reduxity {
                 .Where(v => v != Vector2.zero)
                 // dispatch inputVelocity and GameObject transform to move reducer
                 .Subscribe(inputVelocity => 
-                    // Debug.Log($"going to dispatch. inputVelocity: {inputVelocity}, playerTransform: {transform}");
                     App.Store.Dispatch(
                         // dispatch move action
                         new CharacterMover.Action.Move {
