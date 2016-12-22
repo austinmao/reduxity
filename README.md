@@ -140,6 +140,7 @@ App.Store.Dispatch(new Counter.Action.Increment {});
 App.Store.Subscribe(store => {
         Debug.Log($"going to change count to: {store.Counter.count}");
     })
+    // clean up subscribable when game object is destroyed in order to not leak memory
     .AddTo(this);
 ```
 
