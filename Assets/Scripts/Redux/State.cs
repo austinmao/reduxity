@@ -6,7 +6,7 @@ namespace Reduxity {
         public CounterState Counter { get; set; }
 
         /* default state at app start-up */
-        public State initialize() {
+        public State Initialize() {
             return new State {
                 Movement = new MoveState {
                     isMoving = false,
