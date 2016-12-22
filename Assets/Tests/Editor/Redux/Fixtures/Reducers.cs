@@ -1,6 +1,6 @@
 ﻿using Redux;
 
-namespace Reduxity.Tests
+namespace Reduxity.Tests.Redux
 {
     public static class Reducers
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UniRx;
 
-namespace Reduxity.Tests
+namespace Reduxity.Tests.Redux
 {
     public class MockObserver<T> : IObserver<T>
     {

@@ -5,6 +5,8 @@ namespace Reduxity.CharacterMover {
     // actions must have a type and may include a payload
     public class Action {
         public class Move: IAction {
+            // using Vector2 as input for 2-axis movements. these will be
+            // translated to Vector3 in the reducer.
             public Vector2 inputVelocity { get; set; }
             public Transform playerTransform { get; set; } // curent transform
         }

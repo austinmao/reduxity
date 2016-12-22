@@ -1,14 +1,12 @@
 ﻿using Redux;
-using UnityEngine;
-using UniRx;
 
 namespace Reduxity {
-	public class App : MonoBehaviour {
+	public class App {
 		public static IStore<State> Store { get ; private set; }
 
-		private void Awake () {
+		public void Initialize() {
 			// initialize store with default values
-			State initialState = new State {}.initialize();
+			State initialState = new State {}.Initialize();
 
 			// generate Store
 			Store = new Store<State>(CombineReducers, initialState); 

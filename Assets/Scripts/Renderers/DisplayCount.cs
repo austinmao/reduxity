@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UniRx;
 
-namespace Reduxity.Counter {
+namespace Reduxity {
     public class DisplayCount : MonoBehaviour {
         void Start() {
             renderCounter();

@@ -1,14 +1,8 @@
-﻿using UnityEngine;
-using UnityEditor;
-// using NUnit.Core;
-using NUnit.Framework;
-using System;
-using System.Linq;
-// using System.Threading.Tasks;
+﻿using NUnit.Framework;
 using UniRx;
 using Redux;
 
-namespace Reduxity.Tests
+namespace Reduxity.Tests.Redux
 {
     [TestFixture]
     public class StoreTests
