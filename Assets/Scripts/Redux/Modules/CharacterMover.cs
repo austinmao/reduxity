@@ -15,7 +15,7 @@ namespace Reduxity.CharacterMover {
     // reducers handle state changes
     public static class Reducer {
         public static State Reduce(State previousState, IAction action) {
-            Debug.Log($"reducing with action: {action}");
+            // Debug.Log($"reducing with action: {action}");
             if (action is Action.Move) {
                 return Move(previousState, (Action.Move)action);
             }

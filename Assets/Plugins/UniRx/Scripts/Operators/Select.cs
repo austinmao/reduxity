@@ -57,7 +57,6 @@ namespace UniRx.Operators
 
         protected override IDisposable SubscribeCore(IObserver<TR> observer, IDisposable cancel)
         {
-            Debug.Log($"observer: {observer}, cancel: {cancel}, source: {source}");
             if (selector != null)
             {
                 return source.Subscribe(new Select(this, observer, cancel));
