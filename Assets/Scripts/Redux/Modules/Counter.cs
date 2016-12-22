@@ -3,7 +3,9 @@ using Redux;
 
 namespace Reduxity.Counter {
 	public class Action {
-    // actions must have a type and may include a payloaMoveon {
+        // actions must have a type and may include a payload. The payload will
+        // need to be specified in properties of the Action. See the CharacterMover
+        // module for an example of this.
         public class Increment: IAction {}
         public class Decrement: IAction {}
     }
@@ -27,7 +29,10 @@ namespace Reduxity.Counter {
             return previousState;
         }
 
+        // include previousState and action in the constructor to make it faster and
+        // easier to replicate reducers later
         public static State Increment(State previousState, Action.Increment action) {
+            // always return a new State in order to note mutate the previousState
             return new State {
 				Counter = new CounterState {
 					count = previousState.Counter.count + 1
