@@ -5,7 +5,7 @@ namespace Reduxity.Example.Counter {
         public CounterState Counter { get; set; }
 
         /* default state at app start-up */
-        public State initialize() {
+        public State Initialize() {
             return new State {
                 Counter = new CounterState {
                     count = 0
