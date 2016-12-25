@@ -8,8 +8,6 @@ namespace Reduxity.Tests.Example {
 
 		private App app_;
 		private GameObject mockGameObject_;
-		private State initialStateDump_;
-		private State currentStateDump_;
 
 		[SetUpAttribute]
 		public void Init() {
@@ -18,7 +16,7 @@ namespace Reduxity.Tests.Example {
 			app_.Initialize();
 
 			// set initial state object dump
-			initialStateDump_ = new State {}.Initialize();
+			new State {}.Initialize();
 
 			// create empty game object
 			mockGameObject_ = new GameObject();
@@ -27,8 +25,6 @@ namespace Reduxity.Tests.Example {
 		[TearDownAttribute]
 		public void Dispose() {
 			app_ = null;
-			initialStateDump_ = null;
-			currentStateDump_ = null;
 			mockGameObject_ = null;
 		}
 
@@ -42,7 +38,6 @@ namespace Reduxity.Tests.Example {
 			App.Store.Dispatch(mockMoveAction);
 
 			State currentState = GetCurrentState();
-			Debug.Log(currentState.Movement.distance);
 			Assert.IsTrue(currentState.Movement.isMoving);
 			Assert.AreEqual(currentState.Movement.distance, Vector3.forward);
 		}
