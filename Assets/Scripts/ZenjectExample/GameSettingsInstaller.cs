@@ -2,7 +2,7 @@ using UnityEngine;
 using Zenject;
 
 namespace ZenjectTest {
-    [CreateAssetMenu(fileName = "GameSettingsInstaller", menuName = "Installers/GameSettingsInstaller")]
+    [CreateAssetMenu(fileName = "CubeMakerGameSettingsInstaller", menuName = "Installers/CubeMakerGameSettingsInstaller")]
     public class GameSettingsInstaller : ScriptableObjectInstaller<GameSettingsInstaller> {
         
         public GameInstaller.Settings GameInstaller;
