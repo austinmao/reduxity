@@ -7,7 +7,7 @@ namespace Reduxity.Example.PlayerMovementLook {
 		}
 
 		public static Quaternion GetTurnRotation(State state) {
-			return state.Character.playerTransform.localRotation;
+			return state.Character.transform.localRotation;
 		}
 	}
 }

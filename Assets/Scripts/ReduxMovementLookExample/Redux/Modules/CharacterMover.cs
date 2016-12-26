@@ -40,37 +40,41 @@ namespace Reduxity.Example.PlayerMovementLook.Movement {
         public static CharacterState Move(CharacterState state, Action.Move action) {
             /* calculate distance from velocity and transform */
             var inputVelocity = action.inputVelocity;
-            var playerTransform = state.playerTransform;
-            var playerVelocity = (inputVelocity.x * playerTransform.right) + (inputVelocity.y * playerTransform.forward);
+            var transform = state.transform;
+            var playerVelocity = (inputVelocity.x * transform.right) + (inputVelocity.y * transform.forward);
             var distance = playerVelocity * action.fixedDeltaTime;
 
             state.isMoving = true;
             state.moveDistance = distance;
+            Debug.Log($"in Move, returning state: {ObjectDumper.Dump(state)}");
             return state;
         }
 
         public static CharacterState StopMove(CharacterState state, Action.StopMove action) {
             state.isMoving = false;
             state.moveDistance = Vector3.zero;
+            Debug.Log($"in StopMove, returning state: {ObjectDumper.Dump(state)}");
             return state;
         }
 
         public static CharacterState Turn(CharacterState state, Action.Turn action) {
-            Transform playerTransform = state.playerTransform;
+            Transform transform = state.transform;
             Vector2 rotation = action.inputRotation;
             float time = action.fixedDeltaTime;
 
             // inputLook.x rotates the character around the vertical axis (with + being right)
             Vector3 horzLook = rotation.x * time * Vector3.up;
-            Quaternion playerLocalRotation = playerTransform.localRotation * Quaternion.Euler(horzLook);
+            Quaternion playerLocalRotation = transform.localRotation * Quaternion.Euler(horzLook);
 
-            state.playerTransform.localRotation = playerLocalRotation;
+            state.transform.localRotation = playerLocalRotation;
             state.isTurning = true;
+            Debug.Log($"in Turn, returning state: {ObjectDumper.Dump(state)}");
             return state;
         }
 
         public static CharacterState StopTurn(CharacterState state, Action.StopTurn action) {
             state.isTurning = false;
+            Debug.Log($"in StopTurn, returning state: {ObjectDumper.Dump(state)}");
             return state;
         }
     }

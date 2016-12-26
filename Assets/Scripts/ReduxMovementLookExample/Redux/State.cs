@@ -5,19 +5,19 @@ namespace Reduxity.Example.PlayerMovementLook {
         public CharacterState Character { get; set; }
         public CameraState Camera { get; set; }
 
-        /* default state at app start-up */
+        /* default state at app start-up. every property needs to be specified. */
         public State Initialize() {
             return new State {
                 Character = new CharacterState {
                     isMoving = false,
                     isTurning = false,
                     moveDistance = Vector3.zero,
-                    playerTransform = ReduxityInitializer.PlayerTransform // TODO: Inject this
+                    transform = ReduxityInitializer.PlayerTransform // TODO: Inject this
                 },
                 Camera = new CameraState {
                     isLooking = false,
                     lookRotation = Quaternion.LookRotation(Vector3.forward, Vector3.up),
-                    cameraTransform = ReduxityInitializer.CameraTransform // TODO: Inject this
+                    transform = ReduxityInitializer.CameraTransform // TODO: Inject this
                 }
             };
         }
@@ -26,13 +26,13 @@ namespace Reduxity.Example.PlayerMovementLook {
     public class CharacterState {
         public bool isMoving { get; set; }
         public bool isTurning { get; set; }
-        public Vector3 moveDistance { get; set; }
-        public Transform playerTransform { get; set; }
+        public Vector3 moveDistance { get; set; } // how much to move character
+        public Transform transform { get; set; }
     }
 
     public class CameraState {
         public bool isLooking { get; set; }
         public Quaternion lookRotation { get; set; }
-        public Transform cameraTransform { get; set; }
+        public Transform transform { get; set; }
     }
 }
