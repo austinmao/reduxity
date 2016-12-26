@@ -4,6 +4,8 @@ using UniRx;
 
 namespace Reduxity.Example.PlayerMovementLook {
 	public class App {
+
+		// creating store singleton
 		public static IStore<State> Store { get ; private set; }
 
 		public void Initialize () {

@@ -10,7 +10,7 @@ namespace Reduxity.Example.PlayerMovementLook.Look {
             public Vector2 inputRotation { get; set; }
             // // cameraTransform is initialized. in a proper redux application, this
             // // can only be mutated form a reducer. therefore, it should never need
-            // // to be passee in as a payload of an action
+            // // to be passed in as a payload of an action
             // public Transform cameraTransform { get; set; }
             public float fixedDeltaTime { get; set; }
         }
@@ -38,7 +38,7 @@ namespace Reduxity.Example.PlayerMovementLook.Look {
             Quaternion localRotation = state.localRotation;
             Vector2 rotation = action.inputRotation;
             float time = action.fixedDeltaTime;
-            int lookSpeed = ReduxityInitializer.Instance.lookSpeed;
+            int lookSpeed = ReduxityInitializer.Instance.lookSpeed; // editor setting
 
             // inputLook.y rotates the camera around the horizontal axis (with + being up)
             Vector3 vertLook = rotation.y * time * Vector3.left * lookSpeed;
@@ -56,13 +56,14 @@ namespace Reduxity.Example.PlayerMovementLook.Look {
             return state;
         }
 
+        // stop look
         public static CameraState StopLook(CameraState state, Action.StopLook action) {
             state.isLooking = false;
             Debug.Log($"in StopLook, returning state: {ObjectDumper.Dump(state)}");
             return state;
         }
 
-        // Ripped straight out of the Standard Assets MouseLook script. (This should really be a standard function...)
+        // Ripped straight out of the Standard Assets MouseLook script
 		public static Quaternion ClampRotationAroundXAxis_(Quaternion q, float minAngle, float maxAngle) {
 			q.x /= q.w;
 			q.y /= q.w;

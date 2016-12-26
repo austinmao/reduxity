@@ -14,6 +14,8 @@ namespace Reduxity.Example.PlayerMovementLook.Movement {
         public class StopMove: IAction {}
 
         public class Turn: IAction {
+            // using Vector2 as input for 2-axis rotations. these will be
+            // translated to Quaternions in the reducer.
             public Vector2 inputRotation { get; set; }
             public float fixedDeltaTime { get; set; }
         }
@@ -37,8 +39,8 @@ namespace Reduxity.Example.PlayerMovementLook.Movement {
         }
 
         // TODO: clone state
+        /* calculate distance from velocity and transform */
         public static CharacterState Move(CharacterState state, Action.Move action) {
-            /* calculate distance from velocity and transform */
             var inputVelocity = action.inputVelocity;
             var transform = state.transform;
             var playerVelocity = (inputVelocity.x * transform.right) + (inputVelocity.y * transform.forward);
@@ -57,6 +59,7 @@ namespace Reduxity.Example.PlayerMovementLook.Movement {
             return state;
         }
 
+        // TODO: get this to work
         public static CharacterState Turn(CharacterState state, Action.Turn action) {
             Vector2 rotation = action.inputRotation;
             float time = action.fixedDeltaTime;

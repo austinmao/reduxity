@@ -11,15 +11,11 @@ namespace Reduxity.Example.PlayerMovementLook {
 		[RangeAttribute(0, 90)]
 		public float minViewAngle = -60f;
 		public int lookSpeed = 100;
-		public static Transform PlayerTransform;
-		public static Transform CameraTransform;
 		public static ReduxityInitializer Instance { get; private set; }
 
 		private void Awake () {
+			// create Reduxity settings singleton
 			Instance = this;
-
-			PlayerTransform = Player.transform;
-			CameraTransform = Camera.transform;
 
 			App app = new App();
 			app.Initialize();

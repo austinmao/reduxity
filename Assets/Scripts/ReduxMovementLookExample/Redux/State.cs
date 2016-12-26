@@ -12,11 +12,11 @@ namespace Reduxity.Example.PlayerMovementLook {
                     isMoving = false,
                     isTurning = false,
                     moveDistance = Vector3.zero,
-                    transform = ReduxityInitializer.PlayerTransform // TODO: Inject this
+                    transform = ReduxityInitializer.Instance.Player.transform // TODO: Inject this
                 },
                 Camera = new CameraState {
                     isLooking = false,
-                    localRotation = ReduxityInitializer.CameraTransform.localRotation // TODO: Inject this
+                    localRotation = ReduxityInitializer.Instance.Camera.transform.localRotation // TODO: Inject this
                 }
             };
         }
