@@ -22,7 +22,7 @@ namespace Reduxity.Example.PlayerMovementLook.Movement {
     }
 
     // reducers handle state changes
-    public static class Reducer {
+    public class Reducer {
         public static CharacterState Reduce(CharacterState previousState, IAction action) {
             // Debug.Log($"reducing with action: {action}");
             if (action is Action.Move) {

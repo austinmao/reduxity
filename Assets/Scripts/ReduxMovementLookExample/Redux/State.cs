@@ -16,7 +16,6 @@ namespace Reduxity.Example.PlayerMovementLook {
                 },
                 Camera = new CameraState {
                     isLooking = false,
-                    lookRotation = Quaternion.LookRotation(Vector3.forward, Vector3.up),
                     transform = ReduxityInitializer.CameraTransform // TODO: Inject this
                 }
             };
@@ -32,7 +31,6 @@ namespace Reduxity.Example.PlayerMovementLook {
 
     public class CameraState {
         public bool isLooking { get; set; }
-        public Quaternion lookRotation { get; set; }
         public Transform transform { get; set; }
     }
 }
