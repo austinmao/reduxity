@@ -10,6 +10,7 @@ namespace Reduxity.Example.PlayerMovementLook {
 		public static Transform CameraTransform;
 		public static float maxViewAngle;
 		public static float minViewAngle;
+		public static int lookSpeed = 100;
 
 		private void Awake () {
 			PlayerTransform = Player.transform;

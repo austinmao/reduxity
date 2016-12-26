@@ -61,9 +61,10 @@ namespace Reduxity.Example.PlayerMovementLook.Movement {
             Transform transform = state.transform;
             Vector2 rotation = action.inputRotation;
             float time = action.fixedDeltaTime;
+            int lookSpeed = ReduxityInitializer.lookSpeed;
 
             // inputLook.x rotates the character around the vertical axis (with + being right)
-            Vector3 horzLook = rotation.x * time * Vector3.up;
+            Vector3 horzLook = rotation.x * time * Vector3.up * lookSpeed;
             Quaternion playerLocalRotation = transform.localRotation * Quaternion.Euler(horzLook);
 
             state.transform.localRotation = playerLocalRotation;
