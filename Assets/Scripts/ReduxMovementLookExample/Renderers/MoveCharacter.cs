@@ -32,6 +32,7 @@ namespace Reduxity.Example.PlayerMovementLook {
             App.Store
                 .Select(CharacterMoverSelector.GetTurnRotation)
                 .Subscribe(rotation => {
+                    Debug.Log($"going to turn character by: {rotation}");
                     character_.transform.localRotation = rotation;
                 })
                 .AddTo(this);

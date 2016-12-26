@@ -58,16 +58,14 @@ namespace Reduxity.Example.PlayerMovementLook.Movement {
         }
 
         public static CharacterState Turn(CharacterState state, Action.Turn action) {
-            Transform transform = state.transform;
             Vector2 rotation = action.inputRotation;
             float time = action.fixedDeltaTime;
-            int lookSpeed = ReduxityInitializer.Instance.lookSpeed;
+            int lookSpeed = ReduxityInitializer.Instance.lookSpeed; // public setting. TODO: inject
 
             // inputLook.x rotates the character around the vertical axis (with + being right)
-            Vector3 horzLook = rotation.x * time * Vector3.up * lookSpeed;
-            Quaternion playerLocalRotation = transform.localRotation * Quaternion.Euler(horzLook);
-
-            state.transform.localRotation = playerLocalRotation;
+            Vector3 horizontalLook = rotation.x * time * Vector3.up * lookSpeed;
+            
+            state.transform.localRotation *= Quaternion.Euler(horizontalLook);
             state.isTurning = true;
             Debug.Log($"in Turn, returning state: {ObjectDumper.Dump(state)}");
             return state;
