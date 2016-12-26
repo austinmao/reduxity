@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UniRx;
 
-namespace Reduxity.Example.PlayerMovement {
+namespace Reduxity.Example.PlayerMovementLook {
 
     [RequireComponent(typeof(CharacterController))]
     public class MoveCharacter : MonoBehaviour {

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 namespace Reduxity.Example.Counter {
-    public class State {
+    public class State : IState<State> {
         public CounterState Counter { get; set; }
 
         /* default state at app start-up */

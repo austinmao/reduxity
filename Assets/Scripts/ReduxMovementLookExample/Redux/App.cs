@@ -2,13 +2,13 @@
 using UnityEngine;
 using UniRx;
 
-namespace Reduxity.Example.Counter {
+namespace Reduxity.Example.PlayerMovementLook {
 	public class App {
 		public static IStore<State> Store { get ; private set; }
 
 		public void Initialize () {
 			// initialize store with default values
-			var initialState = new State {}.Initialize();
+			State initialState = new State {}.Initialize();
 
 			// generate Store
 			Store = new Store<State>(CombineReducers, initialState); 
@@ -19,7 +19,8 @@ namespace Reduxity.Example.Counter {
 		// relevant reducer function.
 		private State CombineReducers(State previousState, IAction action) {
 			return new State {
-				Counter = Reducer.Reduce(previousState, action).Counter
+				// TODO: fix me
+				// Character = Reducer.Reduce(previousState, action).Movement,
 			};
 		}
 	}
