@@ -60,13 +60,13 @@ namespace Reduxity.Example.PlayerMovementLook {
                         }
                     );
 
-                    // turn character along y-axis
-                    App.Store.Dispatch(
-                        new Movement.Action.Turn {
-                            inputRotation = inputRotation,
-                            fixedDeltaTime = Time.fixedDeltaTime
-                        }
-                    );
+                    // // turn character along y-axis
+                    // App.Store.Dispatch(
+                    //     new Movement.Action.Turn {
+                    //         inputRotation = inputRotation,
+                    //         fixedDeltaTime = Time.fixedDeltaTime
+                    //     }
+                    // );
 				}).AddTo(this);
         }
     }

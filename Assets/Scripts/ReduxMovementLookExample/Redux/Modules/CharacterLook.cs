@@ -38,7 +38,7 @@ namespace Reduxity.Example.PlayerMovementLook.Look {
             Quaternion localRotation = state.localRotation;
             Vector2 rotation = action.inputRotation;
             float time = action.fixedDeltaTime;
-            int lookSpeed = ReduxityInitializer.lookSpeed;
+            int lookSpeed = ReduxityInitializer.Instance.lookSpeed;
 
             // inputLook.y rotates the camera around the horizontal axis (with + being up)
             Vector3 vertLook = rotation.y * time * Vector3.left * lookSpeed;
@@ -46,8 +46,8 @@ namespace Reduxity.Example.PlayerMovementLook.Look {
 
             // We have to flip the signs and positions of min/max view angle here because the math
             // uses the contradictory interpretation of our angles (+/- is down/up).
-            float maxViewAngle = ReduxityInitializer.maxViewAngle;
-            float minViewAngle = ReduxityInitializer.minViewAngle;
+            float maxViewAngle = ReduxityInitializer.Instance.maxViewAngle;
+            float minViewAngle = ReduxityInitializer.Instance.minViewAngle;
             Quaternion clampedRotation = ClampRotationAroundXAxis_(cameraLookRotation, -maxViewAngle, -minViewAngle);
 
             state.isLooking = true;
