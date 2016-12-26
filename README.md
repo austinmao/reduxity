@@ -146,6 +146,40 @@ App.Store.Subscribe(store => {
 
 6) Render state changes!
 
+## Examples
+### CounterButton
+A standard example that demonstrate simple actions without a payload
+
+### PlayerMovement
+An example of player movement via PC input observables. This implements a React-redux version of player movement from [this awesome article](https://ornithoptergames.com/reactiverx-in-unity3d-part-1/)
+
+### PlayerLook
+An example of player movement with keyboard inputs and camera looking with mouse inputs. This implements a React-redux version of player movement and mouse looking from [the aforementioned article](https://ornithoptergames.com/reactiverx-in-unity3d-part-1/). Specifically, it demonstrates:
+* an observer dispatching two actions
+* GameObjects (i.e., Transform) in state
+* separation of responsibilities of reducers
+
+## Plans
+- [x] provide multiple reducer example
+- [x] provide GameObject in State example
+- [ ] clone state so state does not get mutated
+- [ ] add Zenject example
+- [ ] create DevTools to visualize current state
+- [ ] create TimeMachineStore to visualize past states
+
+## FAQ
+### Should I include the entire state object in the reducer?
+While [Redux docs](http://redux.js.org/docs/faq/Reducers.html#how-do-i-share-state-between-two-reducers-do-i-have-to-use-combinereducers) suggest this is an anti-pattern, it also provides situations where this could be desired. Ultimately, it's up to you. Just make sure you must return the entire `State` object in `CombineReducers()` on `App.cs`.
+
+### Why are you mutating the state?
+Because I need to figure out how to efficiently deep clone state objects before they hit the reducer. Until then, be careful that you do not mutate the whole state.
+
+### Will there be DevTools that allow Time Travel?
+Working on it, but this will likely be integrated with Zenject. If you don't know what this is, check out [Redux DevTools](https://github.com/gaearon/redux-devtools).
+
+### Why use Zenject?
+There is plenty of reading material you can find on the benefits of direct injection at the [Zenject Repo](https://github.com/modesttree/Zenject). With that aside, I found that Zenject's separation + initialization logic, runtime serialization of fields, and its easy-to-use Settings Installer make it easier to reason about a more complex Redux project.
+
 
 ## Resources
 Read more about [Redux](http://redux.js.org/)
@@ -158,5 +192,6 @@ Read more about [Reactive Programming](https://gist.github.com/staltz/868e7e9bc2
 * [UniRx](https://github.com/neuecc/UniRx)
 * [Ducks: Redux Reducer Bundles](https://github.com/erikras/ducks-modular-redux)
 * [Redux](http://redux.js.org/)
+* [Zenject](https://github.com/modesttree/Zenject)
 * [Unidux](https://github.com/mattak/Unidux) for the inspiration!
 * [Takuma](https://github.com/mattak) for the help
