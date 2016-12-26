@@ -5,5 +5,9 @@ namespace Reduxity.Example.PlayerMovementLook {
 		public static Vector3 GetMoveDistance(State state) {
 			return state.Character.moveDistance;
 		}
+
+		public static Quaternion GetTurnRotation(State state) {
+			return state.Character.playerTransform.localRotation;
+		}
 	}
 }

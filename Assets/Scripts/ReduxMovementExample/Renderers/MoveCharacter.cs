@@ -18,7 +18,8 @@ namespace Reduxity.Example.PlayerMovement {
 
         void renderMove() {
             // Debug.Log($"App.Store: {App.Store}");
-            App.Store.Select(CharacterMoverSelector.GetMoveDistance)
+            App.Store
+                .Select(CharacterMoverSelector.GetMoveDistance)
                 .Subscribe(distance => {
                     // Debug.Log($"going to move character by: {distance}");
                     character_.Move(distance);

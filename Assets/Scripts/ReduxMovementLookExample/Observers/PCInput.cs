@@ -52,8 +52,17 @@ namespace Reduxity.Example.PlayerMovementLook {
             observeMouseInput()
 				.Where(v => v != Vector2.zero) // We can ignore this if mouse look is zero.
 				.Subscribe(inputRotation => {
+                    // rotate camera
                     App.Store.Dispatch(
                         new Look.Action.Look {
+                            inputRotation = inputRotation,
+                            fixedDeltaTime = Time.fixedDeltaTime
+                        }
+                    );
+
+                    // turn character along y-axis
+                    App.Store.Dispatch(
+                        new Movement.Action.Turn {
                             inputRotation = inputRotation,
                             fixedDeltaTime = Time.fixedDeltaTime
                         }

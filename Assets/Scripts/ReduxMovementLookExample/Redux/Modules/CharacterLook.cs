@@ -17,7 +17,7 @@ namespace Reduxity.Example.PlayerMovementLook.Look {
 
     // reducers handle state changes
     public static class Reducer {
-        public static State Reduce(State previousState, IAction action) {
+        public static CameraState Reduce(CameraState previousState, IAction action) {
             // Debug.Log($"reducing with action: {action}");
             if (action is Action.Look) {
                 return Look(previousState, (Action.Look)action);
@@ -31,29 +31,22 @@ namespace Reduxity.Example.PlayerMovementLook.Look {
         }
 
         // Translate 2D mouse input into euler angle rotations.
-        public static State Look(State state, Action.Look action) {
-            Transform playerTransform = state.Character.playerTransform;
-            Transform cameraTransform = state.Character.cameraTransform;
-
-            Vector3 rotation = action.inputRotation;
+        public static CameraState Look(CameraState state, Action.Look action) {
+            Transform cameraTransform = state.cameraTransform;
+            Vector2 rotation = action.inputRotation;
             float time = action.fixedDeltaTime;
 
-            // inputLook.x rotates the character around the vertical axis (with + being right)
-            Vector3 horzLook = rotation.x * time * Vector3.up;
-            Quaternion playerLocalRotation = playerTransform.localRotation * Quaternion.Euler(horzLook);
-
             // inputLook.y rotates the camera around the horizontal axis (with + being up)
-            var vertLook = rotation.y * time * Vector3.left;
+            Vector3 vertLook = rotation.y * time * Vector3.left;
             Quaternion cameraLookRotation = cameraTransform.localRotation * Quaternion.Euler(vertLook);
 
-            state.Character.isLooking = true;
-            state.Character.lookRotation = cameraLookRotation;
-            state.Character.playerTransform.localRotation = playerLocalRotation;
+            state.isLooking = true;
+            state.lookRotation = cameraLookRotation;
             return state;
         }
 
-        public static State Stop(State state, Action.Stop action) {
-            state.Character.isLooking = false;
+        public static CameraState Stop(CameraState state, Action.Stop action) {
+            state.isLooking = false;
             return state;
         }
     }

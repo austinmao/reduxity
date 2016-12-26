@@ -11,41 +11,66 @@ namespace Reduxity.Example.PlayerMovementLook.Movement {
             public float fixedDeltaTime { get; set; }
         }
 
-        public class Stop: IAction {}
+        public class StopMove: IAction {}
+
+        public class Turn: IAction {
+            public Vector2 inputRotation { get; set; }
+            public float fixedDeltaTime { get; set; }
+        }
+
+        public class StopTurn: IAction {}
     }
 
     // reducers handle state changes
     public static class Reducer {
-        public static State Reduce(State previousState, IAction action) {
+        public static CharacterState Reduce(CharacterState previousState, IAction action) {
             // Debug.Log($"reducing with action: {action}");
             if (action is Action.Move) {
                 return Move(previousState, (Action.Move)action);
             }
 
-            if (action is Action.Stop) {
-                return Stop(previousState, (Action.Stop)action);
+            if (action is Action.StopMove) {
+                return StopMove(previousState, (Action.StopMove)action);
             }
 
             return previousState;
         }
 
         // TODO: clone state
-        public static State Move(State state, Action.Move action) {
+        public static CharacterState Move(CharacterState state, Action.Move action) {
             /* calculate distance from velocity and transform */
             var inputVelocity = action.inputVelocity;
-            var playerTransform = state.Character.playerTransform;
+            var playerTransform = state.playerTransform;
             var playerVelocity = (inputVelocity.x * playerTransform.right) + (inputVelocity.y * playerTransform.forward);
             var distance = playerVelocity * action.fixedDeltaTime;
 
-            state.Character.isMoving = true;
-            state.Character.moveDistance = distance;
-
+            state.isMoving = true;
+            state.moveDistance = distance;
             return state;
         }
 
-        public static State Stop(State state, Action.Stop action) {
-            state.Character.isMoving = false;
-            state.Character.moveDistance = Vector3.zero;
+        public static CharacterState StopMove(CharacterState state, Action.StopMove action) {
+            state.isMoving = false;
+            state.moveDistance = Vector3.zero;
+            return state;
+        }
+
+        public static CharacterState Turn(CharacterState state, Action.Turn action) {
+            Transform playerTransform = state.playerTransform;
+            Vector2 rotation = action.inputRotation;
+            float time = action.fixedDeltaTime;
+
+            // inputLook.x rotates the character around the vertical axis (with + being right)
+            Vector3 horzLook = rotation.x * time * Vector3.up;
+            Quaternion playerLocalRotation = playerTransform.localRotation * Quaternion.Euler(horzLook);
+
+            state.playerTransform.localRotation = playerLocalRotation;
+            state.isTurning = true;
+            return state;
+        }
+
+        public static CharacterState StopTurn(CharacterState state, Action.StopTurn action) {
+            state.isTurning = false;
             return state;
         }
     }

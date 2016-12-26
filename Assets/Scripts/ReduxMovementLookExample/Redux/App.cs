@@ -19,8 +19,8 @@ namespace Reduxity.Example.PlayerMovementLook {
 		// relevant reducer function.
 		private State CombineReducers(State previousState, IAction action) {
 			return new State {
-				// TODO: fix me
-				// Character = Reducer.Reduce(previousState, action).Movement,
+				Character = Movement.Reducer.Reduce(previousState.Character, action),
+				Camera = Look.Reducer.Reduce(previousState.Camera, action)
 			};
 		}
 	}
