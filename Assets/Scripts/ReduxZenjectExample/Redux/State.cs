@@ -7,6 +7,12 @@ namespace Reduxity.Example.Zenject {
         public CharacterState Character;
         public CameraState Camera;
 
+        /// <summary>
+        /// Inject nested state nodes into the Redux State that are already initialized.
+        /// Thus, the initial State does not need an initializer itself.
+        /// </summary>
+        /// <param name="characterState"></param>
+        /// <param name="cameraState"></param>
         public State(
             CharacterState characterState,
             CameraState cameraState
@@ -17,6 +23,9 @@ namespace Reduxity.Example.Zenject {
     }
 
 
+    /// <summary>
+    /// Nested State node that governs Character movement.
+    /// </summary>
     public class CharacterState : IInitializable {
         readonly CharacterController character_;
         public bool isMoving { get; set; }
@@ -25,9 +34,9 @@ namespace Reduxity.Example.Zenject {
         public Transform transform { get; set; }
 
         /// <summary>
-        /// character state constructor
+        /// Character state constructor
         /// </summary>
-        /// <param name="character">injected via editor</param>
+        /// <param name="character">CharacterController GameObject injected via editor</param>
         public CharacterState(CharacterController character) {
             character_ = character;
         }
@@ -43,6 +52,9 @@ namespace Reduxity.Example.Zenject {
         }
     }
 
+    /// <summary>
+    /// Nested State node that governs Camera transform.
+    /// </summary>
     public class CameraState : IInitializable {
         readonly Camera camera_;
 
@@ -50,9 +62,9 @@ namespace Reduxity.Example.Zenject {
         public Quaternion localRotation { get; set; }
 
         /// <summary>
-        /// camera state constructor
+        /// Camera state constructor
         /// </summary>
-        /// <param name="camera">injected via editor</param>
+        /// <param name="camera">Camera GameObject injected via editor</param>
         public CameraState(Camera camera) {
             camera_ = camera;
         }

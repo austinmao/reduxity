@@ -31,7 +31,44 @@ For a standard CounterButton example, take a look at the Example below. Example 
 Download or clone this repo. While Reduxity has dependencies on [UniRx](https://github.com/neuecc/UniRx) and [redux.NET](https://github.com/GuillaumeSalles/redux.NET), these are included in this repo.
 
 
-## Process
+## Process with Zenject
+
+***Example for this is in `Reduxity.ZenjectPlayerMovementExamply.unity`***
+
+First, let us set up Zenject. This is boilerplate for every Zenject project.
+
+1. Create MonoInstaller in Project > Create > Zenject > Mono Installer. This is where you will bind classes to the Direct Injection container via [Installers](https://github.com/modesttree/Zenject#installers)
+2. Create ScriptableObjectInstaller in Project > Create > Zenject > Scriptable Object Installer. This is where you will have Settings that can be changed during runtime and persist between sessions.
+3. Create Zenject `SceneContext` in Hierarchy > Create > Zenject > SceneContext. This is the entryway into your scene.
+4. In the SceneContext, click the `+` under Installers and ScriptableObjectInstallers
+5. Drag the MonoInstaller to SceneContext > Installers
+6. Drag the ScriptableObjectInstaller to SceneContext > ScriptableObjectInstallers
+
+Next, let's set up the State.
+
+1. Create a `State` script. This will house your nested state object and initialize a default state.
+2. Create an `IInitializable` Zenject class like `CharacterState : IInitializable`. Specify state properties.
+3. In `void Initialize()`, set up the default state for this object.
+4. Repeat this for each node of the state tree. Finally, set up the `State` class to include each of the nodes.
+
+Next, set up Actions and Reducers. Actions take input parameters and are dispatched to the Redux store. They feed those parameters as a payload to reducers that will modify a new state object.
+
+Next, set up the App, which will initialize the store with a default state and reducers. Here, you will inject each reducer and the state. Note that the App contains a public `Store`, which will be your method to dispatch Actions.
+
+Finally, create Components that listen to changes in the State.
+
+### A Few Gotchas
+
+* [Zenject](https://github.com/modesttree/Zenject) can take some time to decipher. Here are a few gotchas:
+** Need a reference to a GameObject? On the GameObject, go to Add Component > ZenjectBindingScript. Then, change the Component > Size to `1` and then drag the GameObject into `Element 0`. Then, inject and use the bound instance without needing to do `GetComponent` or `public GameObject`.
+** Make sure you are dragging the actual GameObject you want a reference to. If it is the `CharacterController`, do not drag in the `Transform`.
+** You can also bind a GameObject directly to a script by dragging the script into the `Element 0`.
+** If you have multiple injected GameObjects of the same type, you should give an `ID` in the `ZenjectBindingScript`. Then, you can reference this injected GameObject by ID via an [Identifier](https://github.com/modesttree/Zenject#identifiers).
+
+
+## Process without Zenject
+
+Note: Direct injection via Zenject is the preferred method for using this library.
 
 1) Set up `State.cs`. Don't forget you need to create a function to initialize state with default values.
 
@@ -163,7 +200,7 @@ An example of player movement with keyboard inputs and camera looking with mouse
 - [x] provide multiple reducer example
 - [x] provide GameObject in State example
 - [ ] clone state so state does not get mutated
-- [ ] add Zenject example
+- [x] add Zenject example
 - [ ] create DevTools to visualize current state
 - [ ] create TimeMachineStore to visualize past states
 

@@ -4,7 +4,10 @@ using System;
 using Zenject;
 
 namespace Reduxity.Example.Zenject.Movement {
-    // actions must have a type and may include a payload
+
+    /// <summary>
+    /// Actions that will be dispatched to the Redux store. These may have payloads.
+    /// </summary>
     public class Action {
         public class Move: IAction {
             // using Vector2 as input for 2-axis movements. these will be

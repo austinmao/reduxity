@@ -6,7 +6,7 @@ namespace Reduxity.Example.Zenject {
     [CreateAssetMenu(fileName = "ReduxZenjectSettingsInstaller", menuName = "Installers/ReduxZenjectSettingsInstaller")]
     public class ReduxZenjectSettingsInstaller : ScriptableObjectInstaller<ReduxZenjectSettingsInstaller> {
 
-        /* variable to access nested classes below */
+        /* These variables provide access nested classes below */
         public PlayerSettings Player;
         public GameInstaller.Settings GameInstaller;
 

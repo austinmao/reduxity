@@ -2,20 +2,25 @@
 using Zenject;
 
 namespace Reduxity.Example.Zenject {
+
+	/// <summary>
+    /// Class that initializes the Store and provides a public Store to dispatch actions
+	/// and GetState from.
+    /// </summary>
 	public class App : IInitializable {
 
 		readonly State state_;
 
-		/* reducers */
+		/* Reducers below */
 		readonly Movement.Reducer move_;
 		readonly Look.Reducer look_;
 
 		/// <summary>
         /// Inject state and reducers
         /// </summary>
-        /// <param name="state"></param>
-        /// <param name="move"></param>
-        /// <param name="look"></param>
+        /// <param name="state">Redux State</param>
+        /// <param name="move">Character movement reducers</param>
+        /// <param name="look">Camera look reducers</param>
 		public App(
 			State state,
 			Movement.Reducer move,
@@ -26,11 +31,10 @@ namespace Reduxity.Example.Zenject {
 			look_ = look;
 		}
 
-		// creating store singleton
 		public IStore<State> Store { get ; private set; }
 
 		public void Initialize () {
-			// generate Store with initial state
+			// generate Store with initial state injected in the constructor
 			Store = new Store<State>(CombineReducers, state_); 
 		}
 

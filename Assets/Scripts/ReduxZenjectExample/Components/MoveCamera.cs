@@ -22,6 +22,9 @@ namespace Reduxity.Example.Zenject {
             RenderLook();
         }
 
+        /// <summary>
+        /// Subscribe to store state changes and then render.
+        /// </summary>
         void RenderLook() {
             app_.Store
                 .Subscribe(state => {
