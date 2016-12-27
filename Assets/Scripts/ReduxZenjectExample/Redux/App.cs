@@ -1,6 +1,4 @@
 ﻿using Redux;
-using UnityEngine;
-using UniRx;
 using Zenject;
 
 namespace Reduxity.Example.Zenject {

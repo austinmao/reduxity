@@ -15,7 +15,7 @@ namespace Reduxity.Example.Zenject {
 		public override void InstallBindings() {
             // 1. init default nested state object
 			InstallState();
-            // 2. reducers will be injected into App
+            // 2. reducers are injected into App
             InstallReducers();
             // 3. create store from reducers
             InstallApp();
@@ -35,8 +35,8 @@ namespace Reduxity.Example.Zenject {
 		}
 
         private void InstallReducers() {
-            Container.Bind<Movement.Reducer>().AsSingle();
-            Container.Bind<Look.Reducer>().AsSingle();
+            Container.Bind<Movement.Reducer>().AsSingle().WhenInjectedInto<App>();
+            Container.Bind<Look.Reducer>().AsSingle().WhenInjectedInto<App>();
         }
 
         private void InstallApp() {
