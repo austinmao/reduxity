@@ -6,20 +6,23 @@ namespace Reduxity.Example.Zenject {
 
     public class MoveCamera : IInitializable {
 
-        App app_;
-        Camera camera_; // bound through ZenjectBinding script on GameObject
+        readonly App app_;
+        readonly Camera camera_; // bound through ZenjectBinding script on GameObject
 
-        public MoveCamera(App app, Camera camera) {
+        public MoveCamera(
+            App app,
+            Camera camera // via ZenjectBinding in editor
+        ) {
             app_ = app;
             camera_ = camera;
         }
 
         public void Initialize() {
+            Debug.Log($"In MoveCamera.Initialize, App.Store: {app_.Store}");
             RenderLook();
         }
 
         void RenderLook() {
-            // Debug.Log($"App.Store: {App.Store}");
             app_.Store
                 .Subscribe(state => {
                     Debug.Log($"looking by rotation: {state.Camera.localRotation}");

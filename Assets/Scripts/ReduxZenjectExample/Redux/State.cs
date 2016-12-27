@@ -16,25 +16,30 @@ namespace Reduxity.Example.Zenject {
         }
     }
 
+
     public class CharacterState : IInitializable {
-        readonly Player player_;
+        readonly CharacterController character_;
         public bool isMoving { get; set; }
         public bool isTurning { get; set; }
         public Vector3 moveDistance { get; set; } // how much to move character
         public Transform transform { get; set; }
 
-        public CharacterState(Player player) {
-            player_ = player;
+        /// <summary>
+        /// character state constructor
+        /// </summary>
+        /// <param name="character">injected via editor</param>
+        public CharacterState(CharacterController character) {
+            character_ = character;
         }
 
         /// <summary>
-        /// Initial state
+        /// Initiale state
         /// </summary>
         public void Initialize() {
             isMoving = false;
             isTurning = false;
             moveDistance = Vector3.zero;
-            transform = player_.transform; // TODO: Inject this
+            transform = character_.transform;
         }
     }
 
@@ -44,13 +49,17 @@ namespace Reduxity.Example.Zenject {
         public bool isLooking { get; set; }
         public Quaternion localRotation { get; set; }
 
+        /// <summary>
+        /// camera state constructor
+        /// </summary>
+        /// <param name="camera">injected via editor</param>
         public CameraState(Camera camera) {
             camera_ = camera;
         }
 
         public void Initialize() {
             isLooking = false;
-            localRotation = camera_.transform.localRotation; // TODO: Inject this
+            localRotation = camera_.transform.localRotation;
         }
     }
 }

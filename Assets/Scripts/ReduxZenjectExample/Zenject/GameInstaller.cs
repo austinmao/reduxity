@@ -8,30 +8,40 @@ namespace Reduxity.Example.Zenject {
         [Inject]
         Settings settings_ = null;
 
+        /// <summary>
+        /// install bindings into the direct injection container
+        /// note: order matters!
+        /// </summary>
 		public override void InstallBindings() {
+            // 1. init default nested state object
 			InstallState();
-			InstallStateInitializers();
+            // 2. reducers will be injected into App
             InstallReducers();
-            InstallComponents();
+            // 3. create store from reducers
             InstallApp();
+            // 4. init store state subscribers
+            InstallComponents();
+            // 5. install renderers
+            InstallContainers();
 		}
 
-		// create new state on each injection
-        private void InstallState() {
-			Container.Bind<State>().AsSingle(); // TODO: should this be transient?
-        }
-
 		// initialize state on each injection
-        private void InstallStateInitializers() {
+        private void InstallState() {
             Container.Bind<IInitializable>().To<CharacterState>().AsSingle();
             Container.Bind<CharacterState>().AsSingle();
             Container.Bind<IInitializable>().To<CameraState>().AsSingle();
             Container.Bind<CameraState>().AsSingle();
+			Container.Bind<State>().AsSingle(); // TODO: should this be transient?
 		}
 
         private void InstallReducers() {
             Container.Bind<Movement.Reducer>().AsSingle();
             Container.Bind<Look.Reducer>().AsSingle();
+        }
+
+        private void InstallApp() {
+            Container.Bind<IInitializable>().To<App>().AsSingle();
+            Container.Bind<App>().AsSingle();
         }
 
         private void InstallComponents() {
@@ -41,17 +51,8 @@ namespace Reduxity.Example.Zenject {
             Container.Bind<MoveCamera>().AsSingle();
         }
 
-        private void InstallApp() {
-            Container.Bind<IInitializable>().To<App>().AsSingle();
-            Container.Bind<App>().AsSingle();
+        private void InstallContainers() {
         }
-
-        // void InitExecutionOrder() {
-        //     init state before app to ensure store gets default app state
-        //     Container.BindExecutionOrder<State>(-10);
-        //     Container.BindExecutionOrder<Reducers>(-20);
-        //     Container.BindExecutionOrder<App>(-30);
-        // }
 
 		[Serializable]
 		public class Settings {
