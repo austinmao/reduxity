@@ -8,6 +8,7 @@ namespace Reduxity.Example.Zenject {
 
         /* variable to access nested classes below */
         public PlayerSettings Player;
+        public GameInstaller.Settings GameInstaller;
 
         [Serializable]
         /// <summary>
@@ -24,6 +25,7 @@ namespace Reduxity.Example.Zenject {
         public override void InstallBindings() {
             Container.BindInstance(Player.Movement);
             Container.BindInstance(Player.Looking);
+            Container.BindInstance(GameInstaller);
         }
     }
 }

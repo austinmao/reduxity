@@ -3,7 +3,10 @@ using UnityEngine;
 using Zenject;
 
 namespace Reduxity.Example.Zenject {
-	public class ReduxZenjectInstaller : MonoInstaller<ReduxZenjectInstaller> {
+	public class GameInstaller : MonoInstaller<GameInstaller> {
+
+        [Inject]
+        Settings settings_ = null;
 
 		public override void InstallBindings() {
 			InstallState();

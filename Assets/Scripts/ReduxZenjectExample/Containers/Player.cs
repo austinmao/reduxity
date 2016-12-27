@@ -7,13 +7,13 @@ namespace Reduxity.Example.Zenject {
     [RequireComponent(typeof(CharacterController))]
 	public class Player : MonoBehaviour {
 
-		Settings settings_;
         CharacterController character_; // bound through ZenjectBinding script on GameObject
+		Settings settings_;
 
 		[Inject]
-		public void Construct(Settings settings) {
-			settings_ = settings; 
+		public void Construct(CharacterController character, Settings settings) {
 			character_ = character;
+			settings_ = settings; 
 		}
 
 		// public Vector3 Position {

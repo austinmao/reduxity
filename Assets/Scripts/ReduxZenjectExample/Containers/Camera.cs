@@ -11,9 +11,9 @@ namespace Reduxity.Example.Zenject {
 		Settings settings_;
 
 		[Inject]
-		public void Construct(Settings settings) {
-			settings_ = settings; 
+		public void Construct(Camera camera, Settings settings) {
             camera_ = camera;
+			settings_ = settings; 
 		}
 
 		// public Vector3 Position {
