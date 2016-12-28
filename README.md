@@ -2,6 +2,28 @@
 
 React-redux via UniRx + Redux.NET for Unity3D += Zenject
 
+- [reduxity](#reduxity)
+  * [Motivations](#motivations)
+    + [Why React](#why-react)
+    + [Why Redux](#why-redux)
+  * [Installation](#installation)
+  * [How to Use with Zenject](#how-to-use-with-zenject)
+    + [A Few Gotchas](#a-few-gotchas)
+  * [How to Use without Zenject](#how-to-use-without-zenject)
+  * [Examples](#examples)
+    + [CounterButton](#counterbutton)
+    + [PlayerMovement](#playermovement)
+    + [PlayerMovementLook](#playermovementlook)
+    + [ZenjectPlayerMovementLook](#zenjectplayermovementlook)
+  * [Plans](#plans)
+  * [FAQ](#faq)
+    + [Should I include the entire state object in the reducer?](#should-i-include-the-entire-state-object-in-the-reducer-)
+    + [Why are you mutating the state?](#why-are-you-mutating-the-state-)
+    + [Will there be DevTools that allow Time Travel?](#will-there-be-devtools-that-allow-time-travel-)
+    + [Why use Zenject?](#why-use-zenject-)
+  * [Resources](#resources)
+  * [Acknowledgements](#acknowledgements)
+
 ## Motivations
 
 React-redux is a modern design pattern employed on websites and mobile apps, including Facebook.com. This project seeks to port its principles and practices to Unity3D. To understand how Reactive Programming and Redux can be incorporated into your project, follow these steps:
