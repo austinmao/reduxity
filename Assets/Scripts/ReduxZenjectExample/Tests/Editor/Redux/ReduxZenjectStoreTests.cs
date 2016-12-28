@@ -1,7 +1,7 @@
 ﻿// using UnityEngine;
 // using NUnit.Framework;
 
-// namespace Reduxity.Example.PlayerMovement.Tests {
+// namespace Reduxity.Example.Zenject.Tests {
 
 // 	[TestFixture]
 // 	public class StoreTests {
