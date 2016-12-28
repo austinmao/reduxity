@@ -1,14 +1,24 @@
 # reduxity
 
-React-redux via UniRx + Redux.NET for Unity3D
+React-redux via UniRx + Redux.NET for Unity3D += Zenject
 
-Redux is a modern design pattern that can help with decoupling Unity projects. To understand how Reactive Programming and Redux can be incorporated into your project, follow these steps:
+## Motivations
 
-First, read [this well written blog post](https://ornithoptergames.com/reactiverx-in-unity3d-part-1/) on reactive programming in Unity3D. This already improves on the classical Unity3D approach of reading keyboard inputs -> converting to velocity -> applying movement to a character.
+React-redux is a modern design pattern employed on websites and mobile apps, including Facebook.com. This project seeks to port its principles and practices to Unity3D. To understand how Reactive Programming and Redux can be incorporated into your project, follow these steps:
 
-However, note that there is still coupling between inputs and movement. In fact, this reactive approach still passes around `IObservable`s which can make it difficult to reason, test, expand, and even use 3rd party assets that do not use observables.
+### Why React
 
-Using Redux, this example can be abstracted further. CharacterController.Move should only care that a Vector3 was provided to it. It should not care where that Vector3 came from or whether it is an Observable or not. This can be done by:
+First, read [this well written blog post](https://ornithoptergames.com/reactiverx-in-unity3d-part-1/) on reactive programming in Unity3D using UniRx. This takes a classic character movement example and decouples reading keyboard/mouse inputs -> converting to velocity -> applying movement to a character.
+
+Now, you should be convinced that reactive programming will lead to more efficient and maintanable code when compared with classical, imperative coding.
+
+### Why Redux
+
+Note that there is still coupling between inputs and movement. What if you wanted to move the character regardless of input (e.g., on a timer or because of an event trigger)? You would have to create a reactive situation for both observing the event and handling the movement for each variation.
+
+Enter [Redux](http://redux.js.org/). Instead of components observing events and then rendering changes, they observe said events and then mutate a global state object (via actions and pure functions called "reducers"). Other components who's sole purpose is to render changes will then observe changes to the state and then render.
+
+In the aforementioned example, CharacterController.Move would only care that a Vector3 state change occurreded using Redux. It would not care where that change came from.This can be done by:
 
 1. Observe input from any source
 2. Dispatch input to redux store
@@ -28,10 +38,14 @@ For a standard CounterButton example, take a look at the Example below. Example 
 
 ## Installation
 
-Download or clone this repo. While Reduxity has dependencies on [UniRx](https://github.com/neuecc/UniRx) and [redux.NET](https://github.com/GuillaumeSalles/redux.NET), these are included in this repo.
+Download or clone this repo. While Reduxity has dependencies on [UniRx](https://github.com/neuecc/UniRx) and [redux.NET](https://github.com/GuillaumeSalles/redux.NET), these are included in this repo. You can also use Reduxity with Zenject for Direct Injection.
+
+*Using Zenject is highly recommended and encouraged*. A full tutorial on how to use Zenject is forthcoming since it is a bit heady at first.
 
 
-## Process with Zenject
+## How to Use with Zenject
+
+We recommend you use Reduxity with Zenject to encourage more modular, easier-to-test code. Once you get the hang of it, it will lead to less code that is easier to reason and less dependent on MonoBehaviours.
 
 ***Example for this is in `Reduxity.ZenjectPlayerMovementExamply.unity`***
 
@@ -59,14 +73,14 @@ Finally, create Components that listen to changes in the State.
 
 ### A Few Gotchas
 
-* [Zenject](https://github.com/modesttree/Zenject) can take some time to decipher. Here are a few gotchas:
-** Need a reference to a GameObject? On the GameObject, go to Add Component > ZenjectBindingScript. Then, change the Component > Size to `1` and then drag the GameObject into `Element 0`. Then, inject and use the bound instance without needing to do `GetComponent` or `public GameObject`.
-** Make sure you are dragging the actual GameObject you want a reference to. If it is the `CharacterController`, do not drag in the `Transform`.
-** You can also bind a GameObject directly to a script by dragging the script into the `Element 0`.
-** If you have multiple injected GameObjects of the same type, you should give an `ID` in the `ZenjectBindingScript`. Then, you can reference this injected GameObject by ID via an [Identifier](https://github.com/modesttree/Zenject#identifiers).
+[Zenject](https://github.com/modesttree/Zenject) can take some time to decipher. Here are a few gotchas:
+* Need a reference to a GameObject? On the GameObject, go to Add Component > ZenjectBindingScript. Then, change the Component > Size to `1` and then drag the GameObject into `Element 0`. Then, inject and use the bound instance without needing to do `GetComponent` or `public GameObject`.
+* Make sure you are dragging the actual GameObject you want a reference to. If it is the `CharacterController`, do not drag in the `Transform`.
+* You can also bind a GameObject directly to a script by dragging the script into the `Element 0`.
+* If you have multiple injected GameObjects of the same type, you should give an `ID` in the `ZenjectBindingScript`. Then, you can reference this injected GameObject by ID via an [Identifier](https://github.com/modesttree/Zenject#identifiers).
 
 
-## Process without Zenject
+## How to Use without Zenject
 
 Note: Direct injection via Zenject is the preferred method for using this library.
 
@@ -190,17 +204,22 @@ A standard example that demonstrate simple actions without a payload
 ### PlayerMovement
 An example of player movement via PC input observables. This implements a React-redux version of player movement from [this awesome article](https://ornithoptergames.com/reactiverx-in-unity3d-part-1/)
 
-### PlayerLook
+### PlayerMovementLook
 An example of player movement with keyboard inputs and camera looking with mouse inputs. This implements a React-redux version of player movement and mouse looking from [the aforementioned article](https://ornithoptergames.com/reactiverx-in-unity3d-part-1/). Specifically, it demonstrates:
 * an observer dispatching two actions
 * GameObjects (i.e., Transform) in state
 * separation of responsibilities of reducers
+
+### ZenjectPlayerMovementLook
+All of the above but using Zenject instead of static functions and `new Class()` intializers.
 
 ## Plans
 - [x] provide multiple reducer example
 - [x] provide GameObject in State example
 - [ ] clone state so state does not get mutated
 - [x] add Zenject example
+- [ ] write a Zenject tutorial
+- [ ] write a Reduxity + Zenject tutorial
 - [ ] create DevTools to visualize current state
 - [ ] create TimeMachineStore to visualize past states
 
@@ -216,6 +235,8 @@ Working on it, but this will likely be integrated with Zenject. If you don't kno
 
 ### Why use Zenject?
 There is plenty of reading material you can find on the benefits of direct injection at the [Zenject Repo](https://github.com/modesttree/Zenject). With that aside, I found that Zenject's separation + initialization logic, runtime serialization of fields, and its easy-to-use Settings Installer make it easier to reason about a more complex Redux project.
+
+The downside is that Direct Injection can take some time to wrap your head around *and* Zenject does not have any good tutorials. Don't worry, this is on the roadmap.
 
 
 ## Resources
