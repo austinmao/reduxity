@@ -1,12 +1,13 @@
 ﻿// using UnityEngine;
 // using NUnit.Framework;
+// using Zenject;
 
 // namespace Reduxity.Example.Zenject.Tests {
 
 // 	[TestFixture]
-// 	public class StoreTests {
+// 	public class StoreTests : ZenjectUnitTestFixture {
 
-// 		private App app_;
+// 		[Inject] App app_;
 
 // 		[SetUpAttribute]
 // 		public void Init() {

@@ -276,3 +276,4 @@ Read more about [Reactive Programming](https://gist.github.com/staltz/868e7e9bc2
 * [Zenject](https://github.com/modesttree/Zenject)
 * [Unidux](https://github.com/mattak/Unidux) for the inspiration!
 * [Takuma](https://github.com/mattak) for the help
+* [Moq for Unity](https://github.com/tenpn/moq-unitypackage/releases) for Zenject's [Automocking](https://github.com/modesttree/Zenject/blob/master/Documentation/AutoMocking.md) compatibility
