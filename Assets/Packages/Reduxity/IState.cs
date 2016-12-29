@@ -1,5 +1,6 @@
+using Zenject;
+
 namespace Reduxity {
-    public interface IState<T> {
-        T Initialize();
+    public interface IState {
     }
 }

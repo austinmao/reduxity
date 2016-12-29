@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 namespace Reduxity.Example.PlayerMovementLook {
-    public class State : IState<State> {
+    public class State {
         public CharacterState Character { get; set; }
         public CameraState Camera { get; set; }
 
@@ -22,14 +22,14 @@ namespace Reduxity.Example.PlayerMovementLook {
         }
     }
 
-    public class CharacterState {
+    public class CharacterState : IState {
         public bool isMoving { get; set; }
         public bool isTurning { get; set; }
         public Vector3 moveDistance { get; set; } // how much to move character
         public Transform transform { get; set; }
     }
 
-    public class CameraState {
+    public class CameraState : IState {
         public bool isLooking { get; set; }
         public Quaternion localRotation { get; set; }
     }

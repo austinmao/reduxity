@@ -26,7 +26,7 @@ namespace Reduxity.Example.Zenject {
     /// <summary>
     /// Nested State node that governs Character movement.
     /// </summary>
-    public class CharacterState : IInitializable {
+    public class CharacterState : IState, IInitializable {
         readonly CharacterController character_;
         public bool isMoving { get; set; }
         public bool isTurning { get; set; }
@@ -55,7 +55,7 @@ namespace Reduxity.Example.Zenject {
     /// <summary>
     /// Nested State node that governs Camera transform.
     /// </summary>
-    public class CameraState : IInitializable {
+    public class CameraState : IState, IInitializable {
         readonly Camera camera_;
 
         public bool isLooking { get; set; }

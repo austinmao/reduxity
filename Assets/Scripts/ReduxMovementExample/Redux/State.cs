@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 namespace Reduxity.Example.PlayerMovement {
-    public class State : IState<State> {
+    public class State {
         public MoveState Movement { get; set; }
 
         /* default state at app start-up */
@@ -15,7 +15,7 @@ namespace Reduxity.Example.PlayerMovement {
         }
     }
 
-    public class MoveState {
+    public class MoveState : IState {
         public bool isMoving { get; set; }
         public Vector3 distance { get; set; }
     }
