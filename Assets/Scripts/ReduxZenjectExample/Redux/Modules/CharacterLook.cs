@@ -11,7 +11,7 @@ namespace Reduxity.Example.Zenject.Look {
             // translated to Vector3 in the reducer.
             public Vector2 inputRotation { get; set; }
             // // cameraTransform is initialized. in a proper redux application, this
-            // // can only be mutated form a reducer. therefore, it should never need
+            // // can only be mutated from a reducer. therefore, it should never need
             // // to be passed in as a payload of an action
             // public Transform cameraTransform { get; set; }
             public float fixedDeltaTime { get; set; }
