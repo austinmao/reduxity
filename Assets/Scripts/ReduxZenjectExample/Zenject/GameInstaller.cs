@@ -37,6 +37,8 @@ namespace Reduxity.Example.Zenject {
             Container.Bind<CharacterState>().AsSingle();
             Container.Bind<IInitializable>().To<CameraState>().AsSingle();
             Container.Bind<CameraState>().AsSingle();
+            Container.Bind<IInitializable>().To<ApiState>().AsSingle();
+            Container.Bind<ApiState>().AsSingle();
 			Container.Bind<State>().AsSingle(); // TODO: should this be transient?
 		}
 
@@ -47,8 +49,8 @@ namespace Reduxity.Example.Zenject {
         /// that are dispatched will.
         /// </summary>
         private void InstallReducers() {
-            Container.Bind<Movement.Reducer>().AsSingle().WhenInjectedInto<App>();
-            Container.Bind<Look.Reducer>().AsSingle().WhenInjectedInto<App>();
+            Container.Bind<CharacterMover.Reducer>().AsSingle().WhenInjectedInto<App>();
+            Container.Bind<CharacterLook.Reducer>().AsSingle().WhenInjectedInto<App>();
         }
 
         /// <summary>

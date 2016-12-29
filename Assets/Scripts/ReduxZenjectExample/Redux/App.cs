@@ -12,8 +12,8 @@ namespace Reduxity.Example.Zenject {
 		readonly State state_;
 
 		/* Reducers below */
-		readonly Movement.Reducer move_;
-		readonly Look.Reducer look_;
+		readonly CharacterMover.Reducer move_;
+		readonly CharacterLook.Reducer look_;
 
 		/// <summary>
         /// Inject state and reducers
@@ -23,8 +23,8 @@ namespace Reduxity.Example.Zenject {
         /// <param name="look">Camera look reducers</param>
 		public App(
 			State state,
-			Movement.Reducer move,
-			Look.Reducer look
+			CharacterMover.Reducer move,
+			CharacterLook.Reducer look
 		) {
 			state_ = state;
 			move_ = move;

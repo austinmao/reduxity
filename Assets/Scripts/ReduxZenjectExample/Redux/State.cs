@@ -5,6 +5,7 @@ namespace Reduxity.Example.Zenject {
     public class State {
         public CharacterState Character;
         public CameraState Camera;
+        public ApiState Api;
 
         /// <summary>
         /// Inject nested state nodes into the Redux State that are already initialized.
@@ -14,10 +15,12 @@ namespace Reduxity.Example.Zenject {
         /// <param name="cameraState"></param>
         public State(
             CharacterState characterState,
-            CameraState cameraState
+            CameraState cameraState,
+            ApiState apiState
         ) {
             Character = characterState;
             Camera = cameraState;
+            Api = apiState;
         }
     }
 }

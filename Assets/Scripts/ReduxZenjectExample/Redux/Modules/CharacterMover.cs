@@ -3,7 +3,7 @@ using Redux;
 using System;
 using Zenject;
 
-namespace Reduxity.Example.Zenject.Movement {
+namespace Reduxity.Example.Zenject.CharacterMover {
 
     /// <summary>
     /// Actions that will be dispatched to the Redux store. These may have payloads.

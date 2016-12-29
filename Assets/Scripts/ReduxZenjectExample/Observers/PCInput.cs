@@ -37,7 +37,7 @@ namespace Reduxity.Example.Zenject {
                 .Subscribe(inputVelocity => 
                     app_.Store.Dispatch(
                         // dispatch move action
-                        new Movement.Action.Move {
+                        new CharacterMover.Action.Move {
                             inputVelocity = inputVelocity,
                             fixedDeltaTime = Time.fixedDeltaTime
                         }
@@ -64,7 +64,7 @@ namespace Reduxity.Example.Zenject {
 				.Subscribe(inputRotation => {
                     // rotate camera along x-axis (up and down)
                     app_.Store.Dispatch(
-                        new Look.Action.Look {
+                        new CharacterLook.Action.Look {
                             inputRotation = inputRotation,
                             fixedDeltaTime = Time.fixedDeltaTime
                         }
@@ -73,7 +73,7 @@ namespace Reduxity.Example.Zenject {
                     // TODO: get this to work
                     // turn character along y-axis (left and right)
                     app_.Store.Dispatch(
-                        new Movement.Action.Turn {
+                        new CharacterMover.Action.Turn {
                             inputRotation = inputRotation,
                             fixedDeltaTime = Time.fixedDeltaTime
                         }

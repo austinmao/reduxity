@@ -19,7 +19,7 @@ namespace Reduxity.Example.Zenject.Tests {
 		[SetUp]
 		public void Setup() {
 			container_ = new DiContainer();
-			container_.Bind<Look.Reducer>().AsSingle();
+			container_.Bind<CharacterLook.Reducer>().AsSingle();
 		}
 
 		[Test]
@@ -40,7 +40,7 @@ namespace Reduxity.Example.Zenject.Tests {
             // state.localRotation = clampedRotation;
             // Debug.Log($"in Look, returning state: {ObjectDumper.Dump(state)}");
 
-			var mockLookAction = new Mock<Look.Action.Look>();
+			var mockLookAction = new Mock<CharacterLook.Action.Look>();
 			mockLookAction.Setup(mock => mock.inputRotation).Returns(Vector2.up);
 			mockLookAction.Setup(mock => mock.fixedDeltaTime).Returns(1.0f);
 			// mockLookAction.SetupProperty(mock => mock.inputRotation, Vector2.up);
@@ -52,7 +52,7 @@ namespace Reduxity.Example.Zenject.Tests {
 			// mockCameraState.SetupProperty(mock => mock.isLooking, false);
 			// mockCameraState.SetupProperty(mock => mock.localRotation, new Quaternion());
 
-			var sut = container_.Resolve<Look.Reducer>();
+			var sut = container_.Resolve<CharacterLook.Reducer>();
 			var result = sut.Reduce(mockCameraState.Object, mockLookAction.Object);
 
 			Debug.Log(result);
@@ -62,7 +62,7 @@ namespace Reduxity.Example.Zenject.Tests {
 
 		[Test]
 		public void Should_stop_on_stop_action() {
-			var mockLookAction = new Mock<Look.Action.StopLook>();
+			var mockLookAction = new Mock<CharacterLook.Action.StopLook>();
 			var mockCameraState = new Mock<CameraState>();
 		}
 	}
