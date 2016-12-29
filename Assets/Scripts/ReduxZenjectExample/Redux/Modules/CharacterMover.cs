@@ -31,7 +31,7 @@ namespace Reduxity.Example.Zenject.Movement {
     /// <summary>
     /// Perform actions to modify state
     /// </summary>
-    public class Reducer {
+    public class Reducer : IReducer {
 
         /// <summary>
         /// Inject Settings
