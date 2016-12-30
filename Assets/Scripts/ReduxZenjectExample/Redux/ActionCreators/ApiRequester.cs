@@ -65,18 +65,19 @@ namespace Reduxity.Example.Zenject.ApiRequester {
                 // dispatch first action to set state to loading
                 dispatch(new ApiLoader.Action.GetStart {});
 
+                // use observable to subscribe and dispatch new actions from results
                 ObservableWWW.Get(action.url)
                     .Subscribe(
-                        successResult => {
+                        successText => {
                             // dispatch second action on success
                             dispatch(new ApiLoader.Action.GetSuccess{
-                                text = successResult
+                                text = successText
                             });
                         },
-                        failureResult => {
+                        failureError => {
                             // dispatch second action on failure
                             dispatch(new ApiLoader.Action.GetFailure{
-                                error = failureResult
+                                error = failureError
                             });
                         }
                     );
@@ -93,18 +94,19 @@ namespace Reduxity.Example.Zenject.ApiRequester {
                 // dispatch first action to set state to loading
                 dispatch(new ApiLoader.Action.PostStart {});
 
+                // use observable to subscribe and dispatch new actions from results
                 ObservableWWW.Post(action.url, action.postData)
                     .Subscribe(
-                        successResult => {
+                        successText => {
                             // dispatch second action on success
                             dispatch(new ApiLoader.Action.PostSuccess{
-                                text = successResult
+                                text = successText
                             });
                         },
-                        failureResult => {
+                        failureError => {
                             // dispatch second action on failure
                             dispatch(new ApiLoader.Action.PostFailure{
-                                error = failureResult
+                                error = failureError
                             });
                         }
                     );
