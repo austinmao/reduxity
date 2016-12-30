@@ -35,6 +35,14 @@ namespace Reduxity.Example.PlayerMovementLook.Movement {
                 return StopMove(previousState, (Action.StopMove)action);
             }
 
+            if (action is Action.Turn) {
+                return Turn(previousState, (Action.Turn)action);
+            }
+
+            if (action is Action.StopTurn) {
+                return StopTurn(previousState, (Action.StopTurn)action);
+            }
+
             return previousState;
         }
 
