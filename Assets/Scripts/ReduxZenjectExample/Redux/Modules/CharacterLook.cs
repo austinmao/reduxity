@@ -21,7 +21,7 @@ namespace Reduxity.Example.Zenject.CharacterLook {
     }
 
     // reducers handle state changes
-    public class Reducer {
+    public class Reducer : IReducer {
 
         readonly Settings settings_;
 

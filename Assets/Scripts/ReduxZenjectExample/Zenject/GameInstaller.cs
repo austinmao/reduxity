@@ -17,15 +17,17 @@ namespace Reduxity.Example.Zenject {
         /// Note: order matters because of initializers!
         /// </summary>
 		public override void InstallBindings() {
-            // 1. init default nested state object
+            // 1. set up state singleton
 			InstallState();
-            // 2. reducers are injected into App
+            // 2. init nested state objects with default values
+            InstallStateInitializers();
+            // 3. reducers are injected into App
             InstallReducers();
-            // 3. create store from reducers
+            // 4. create store from reducers
             InstallApp();
-            // 4. init store state subscribers
+            // 5. init store state subscribers
             InstallComponents();
-            // 5. install renderers
+            // 6. install renderers
             InstallContainers();
 		}
 
@@ -33,14 +35,17 @@ namespace Reduxity.Example.Zenject {
         /// Initialize each state as a single instance. Bind Initialize() to each.
         /// </summary>
         private void InstallState() {
-            Container.Bind<IInitializable>().To<CharacterState>().AsSingle();
             Container.Bind<CharacterState>().AsSingle();
-            Container.Bind<IInitializable>().To<CameraState>().AsSingle();
             Container.Bind<CameraState>().AsSingle();
-            Container.Bind<IInitializable>().To<ApiState>().AsSingle();
             Container.Bind<ApiState>().AsSingle();
-			Container.Bind<State>().AsSingle(); // TODO: should this be transient?
+			Container.Bind<State>().AsSingle();
 		}
+
+        private void InstallStateInitializers() {
+            Container.Bind<IInitializable>().To<CharacterStateInitializer>().AsSingle();
+            Container.Bind<IInitializable>().To<CameraStateInitializer>().AsSingle();
+            Container.Bind<IInitializable>().To<ApiStateInitializer>().AsSingle();
+        }
 
         /// <summary>
         /// Install reducers and use `WhenInjectedIno` in order to ensure that they are

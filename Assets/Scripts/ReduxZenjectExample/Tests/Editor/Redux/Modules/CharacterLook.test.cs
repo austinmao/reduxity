@@ -40,20 +40,18 @@ namespace Reduxity.Example.Zenject.Tests {
             // state.localRotation = clampedRotation;
             // Debug.Log($"in Look, returning state: {ObjectDumper.Dump(state)}");
 
-			var mockLookAction = new Mock<CharacterLook.Action.Look>();
-			mockLookAction.Setup(mock => mock.inputRotation).Returns(Vector2.up);
-			mockLookAction.Setup(mock => mock.fixedDeltaTime).Returns(1.0f);
-			// mockLookAction.SetupProperty(mock => mock.inputRotation, Vector2.up);
-			// mockLookAction.SetupProperty(mock => mock.fixedDeltaTime, 1.0f);
+			var mockLookAction = new CharacterLook.Action.Look {
+				inputRotation = Vector2.up,
+				fixedDeltaTime = 1.0f
+			};
 
-			var mockCameraState = new Mock<CameraState>();
-			mockCameraState.Setup(mock => mock.isLooking).Returns(false);
-			mockCameraState.Setup(mock => mock.localRotation).Returns(new Quaternion());
-			// mockCameraState.SetupProperty(mock => mock.isLooking, false);
-			// mockCameraState.SetupProperty(mock => mock.localRotation, new Quaternion());
+			var mockCameraState = new CameraState {
+				isLooking = false,
+				localRotation = new Quaternion(1f,1f,1f,1f)
+			};
 
 			var sut = container_.Resolve<CharacterLook.Reducer>();
-			var result = sut.Reduce(mockCameraState.Object, mockLookAction.Object);
+			var result = sut.Reduce(mockCameraState, mockLookAction);
 
 			Debug.Log(result);
 			Assert.IsTrue(result.isLooking);

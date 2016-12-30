@@ -5,18 +5,19 @@ namespace Reduxity.Example.Zenject {
 
     /// <summary>
     /// </summary>
-    public class ApiState : IState, IInitializable {
+    public class ApiState : IState {
         public string data { get; set; }
+    }
 
-        // /// <summary>
-        // /// Data state constructor
-        // /// </summary>
-        // /// <param name="camera">Data GameObject injected via editor</param>
-        // public DataState() {
-        // }
+    public class ApiStateInitializer : IInitializable {
+        readonly ApiState apiState_;
+
+        public ApiStateInitializer(ApiState apiState) {
+            apiState_ = apiState;
+        }
 
         public void Initialize() {
-            data = "";
+            apiState_.data = "";
         }
     }
 }
