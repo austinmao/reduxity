@@ -241,6 +241,7 @@ All of the above but using Zenject instead of static functions and `new Class()`
 - [x] provide GameObject in State example
 - [ ] clone state so state does not get mutated
 - [x] add Zenject example
+- [x] add async example
 - [ ] write a Zenject tutorial
 - [ ] write a Reduxity + Zenject tutorial
 - [ ] create DevTools to visualize current state
@@ -271,6 +272,7 @@ Read more about [Reactive Programming](https://gist.github.com/staltz/868e7e9bc2
 
 * [redux.NET](https://github.com/GuillaumeSalles/redux.NET)
 * [UniRx](https://github.com/neuecc/UniRx)
+* [redux.NET thunk](https://github.com/taiste/redux.NET-thunk)
 * [Ducks: Redux Reducer Bundles](https://github.com/erikras/ducks-modular-redux)
 * [Redux](http://redux.js.org/)
 * [Zenject](https://github.com/modesttree/Zenject)

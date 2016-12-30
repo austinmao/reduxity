@@ -8,7 +8,7 @@ using Hash = System.Collections.Generic.Dictionary<string, string>;
 using HashEntry = System.Collections.Generic.KeyValuePair<string, string>;
 
 
-namespace Reduxity.Example.Zenject.ApiRequester {
+namespace Reduxity.Example.Zenject.ApiRequestCreator {
     public class Action {
         /// <summary>
         /// Properties for each type of http request
@@ -31,9 +31,9 @@ namespace Reduxity.Example.Zenject.ApiRequester {
 
     public class ActionCreator : IActionCreator {
         readonly Settings settings_;
-        readonly ApiLoader.Action apiLoaderAction_;
+        readonly ApiRequestor.Action apiLoaderAction_;
 
-        public ActionCreator(Settings settings, ApiLoader.Action apiLoaderAction) {
+        public ActionCreator(Settings settings, ApiRequestor.Action apiLoaderAction) {
             settings_ = settings;
             apiLoaderAction_ = apiLoaderAction;
         }
@@ -63,20 +63,20 @@ namespace Reduxity.Example.Zenject.ApiRequester {
             // return thunk to store, which will dispatch new actions upon success or failure
             return new ThunkAction<ApiState> ((dispatch, getState) => {
                 // dispatch first action to set state to loading
-                dispatch(new ApiLoader.Action.GetStart {});
+                dispatch(new ApiRequestor.Action.GetStart {});
 
                 // use observable to subscribe and dispatch new actions from results
                 ObservableWWW.Get(action.url)
                     .Subscribe(
                         successText => {
                             // dispatch second action on success
-                            dispatch(new ApiLoader.Action.GetSuccess{
+                            dispatch(new ApiRequestor.Action.GetSuccess{
                                 text = successText
                             });
                         },
                         failureError => {
                             // dispatch second action on failure
-                            dispatch(new ApiLoader.Action.GetFailure{
+                            dispatch(new ApiRequestor.Action.GetFailure{
                                 error = failureError
                             });
                         }
@@ -92,20 +92,20 @@ namespace Reduxity.Example.Zenject.ApiRequester {
             // return thunk to store, which will dispatch new actions upon success or failure
             return new ThunkAction<ApiState> ((dispatch, getState) => {
                 // dispatch first action to set state to loading
-                dispatch(new ApiLoader.Action.PostStart {});
+                dispatch(new ApiRequestor.Action.PostStart {});
 
                 // use observable to subscribe and dispatch new actions from results
                 ObservableWWW.Post(action.url, action.postData)
                     .Subscribe(
                         successText => {
                             // dispatch second action on success
-                            dispatch(new ApiLoader.Action.PostSuccess{
+                            dispatch(new ApiRequestor.Action.PostSuccess{
                                 text = successText
                             });
                         },
                         failureError => {
                             // dispatch second action on failure
-                            dispatch(new ApiLoader.Action.PostFailure{
+                            dispatch(new ApiRequestor.Action.PostFailure{
                                 error = failureError
                             });
                         }

@@ -4,7 +4,7 @@ using Zenject;
 using Moq;
 using System;
 
-namespace Reduxity.Example.Zenject.ApiLoader.Tests {
+namespace Reduxity.Example.Zenject.ApiRequestor.Tests {
 
 	[TestFixture]
 	public class Test : ZenjectUnitTestFixture {

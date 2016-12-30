@@ -10,7 +10,7 @@ using Hash = System.Collections.Generic.Dictionary<string, string>;
 using HashEntry = System.Collections.Generic.KeyValuePair<string, string>;
 
 
-namespace Reduxity.Example.Zenject.ApiLoader {
+namespace Reduxity.Example.Zenject.ApiRequestor {
     public class Action {
         /// <summary>
         /// Properties for each type of http request

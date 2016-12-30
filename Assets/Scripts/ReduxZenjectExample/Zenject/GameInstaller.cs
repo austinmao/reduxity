@@ -55,7 +55,7 @@ namespace Reduxity.Example.Zenject {
         /// usually in async usage).
         /// </summary>
         private void InstallActionsForActionCreators() {
-            Container.Bind<ApiLoader.Action>().AsSingle().WhenInjectedInto<ApiRequester.ActionCreator>();
+            Container.Bind<ApiRequestor.Action>().AsSingle().WhenInjectedInto<ApiRequestCreator.ActionCreator>();
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace Reduxity.Example.Zenject {
         private void InstallReducers() {
             Container.Bind<CharacterMover.Reducer>().AsSingle().WhenInjectedInto<App>();
             Container.Bind<CharacterLook.Reducer>().AsSingle().WhenInjectedInto<App>();
-            Container.Bind<ApiLoader.Reducer>().AsSingle().WhenInjectedInto<App>();
+            Container.Bind<ApiRequestor.Reducer>().AsSingle().WhenInjectedInto<App>();
         }
 
         /// <summary>
