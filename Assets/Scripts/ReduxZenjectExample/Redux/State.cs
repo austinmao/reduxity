@@ -11,8 +11,6 @@ namespace Reduxity.Example.Zenject {
         /// Inject nested state nodes into the Redux State that are already initialized.
         /// Thus, the initial State does not need an initializer itself.
         /// </summary>
-        /// <param name="characterState"></param>
-        /// <param name="cameraState"></param>
         public State(
             CharacterState characterState,
             CameraState cameraState,
