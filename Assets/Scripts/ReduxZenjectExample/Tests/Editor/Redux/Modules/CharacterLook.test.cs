@@ -14,10 +14,7 @@ namespace Reduxity.Example.Zenject.CharacterLook.Tests {
 		public void Setup() {
 			container_ = new DiContainer();
 			container_.Bind<CharacterLook.Reducer>().AsSingle();
-		}
 
-		[Test]
-		public void Should_return_accurate_move_distance_from_move_reducer() {
 			// set up mock settings
 			var mockSettings = new Settings {
 				maxViewAngle = 1,
@@ -25,7 +22,10 @@ namespace Reduxity.Example.Zenject.CharacterLook.Tests {
 				yLookSpeed = 1
 			};
 			container_.Bind<Settings>().FromInstance(mockSettings);
+		}
 
+		[Test]
+		public void Should_return_accurate_move_distance_from_move_reducer() {
 			var mockLookAction = new CharacterLook.Action.Look {
 				inputRotation = Vector2.up,
 				fixedDeltaTime = 1.0f
@@ -46,8 +46,15 @@ namespace Reduxity.Example.Zenject.CharacterLook.Tests {
 
 		[Test]
 		public void Should_stop_on_stop_action() {
-			var mockLookAction = new Mock<CharacterLook.Action.StopLook>();
-			var mockCameraState = new Mock<CameraState>();
+			var mockLookAction = new CharacterLook.Action.StopLook();
+			var mockCameraState = new CameraState {
+				isLooking = true
+			};
+			var sut = container_.Resolve<CharacterLook.Reducer>();
+			var result = sut.Reduce(mockCameraState, mockLookAction);
+
+			Assert.IsFalse(result.isLooking);
+
 		}
 	}
 }
