@@ -35,7 +35,7 @@ namespace Reduxity.Example.Zenject {
 
 		public void Initialize () {
 			// generate Store with initial state injected in the constructor
-			Store = new Store<State>(CombineReducers, state_); 
+			Store = new Store<State>(CombineReducers, state_, Redux.Thunk.Middleware.ThunkMiddleware); 
 		}
 
 		// return a new state after respective reducers. note that each reducer returns

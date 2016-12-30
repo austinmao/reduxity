@@ -1,12 +1,17 @@
 using UnityEngine;
 using Zenject;
+using System;
+using System.Collections.Generic;
 
 namespace Reduxity.Example.Zenject {
 
     /// <summary>
     /// </summary>
     public class ApiState : IState {
-        public string data { get; set; }
+        public bool isLoading { get; set; }
+        public bool isLoaded { get; set; }
+        public string text { get; set; }
+        public Exception error { get; set; }
     }
 
     public class ApiStateInitializer : IInitializable {
@@ -17,7 +22,10 @@ namespace Reduxity.Example.Zenject {
         }
 
         public void Initialize() {
-            apiState_.data = "";
+            apiState_.isLoading = false;
+            apiState_.isLoaded = false;
+            apiState_.text = "";
+            apiState_.error = null;
         }
     }
 }

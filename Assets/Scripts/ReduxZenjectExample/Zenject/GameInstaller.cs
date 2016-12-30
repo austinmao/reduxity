@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -21,13 +22,15 @@ namespace Reduxity.Example.Zenject {
 			InstallState();
             // 2. init nested state objects with default values
             InstallStateInitializers();
-            // 3. reducers are injected into App
+            // // 3. actions used in (async) thunks
+            // InstallActionsForActionCreators();
+            // 4. reducers are injected into App
             InstallReducers();
-            // 4. create store from reducers
+            // 5. create store from reducers
             InstallApp();
-            // 5. init store state subscribers
+            // 6. init store state subscribers
             InstallComponents();
-            // 6. install renderers
+            // 7. install renderers
             InstallContainers();
 		}
 
@@ -48,6 +51,14 @@ namespace Reduxity.Example.Zenject {
         }
 
         /// <summary>
+        /// Install Actions to be used in thunks (actions that will fire off other actions,
+        /// usually in async usage).
+        /// </summary>
+        private void InstallActionsForActionCreators() {
+            Container.Bind<ApiLoader.Action>().AsSingle().WhenInjectedInto<ApiRequester.ActionCreator>();
+        }
+
+        /// <summary>
         /// Install reducers and use `WhenInjectedIno` in order to ensure that they are
         /// only available when used by App to create the Store. This is because nothing
         /// but the Store intiailizer should interact directly with reducers; only actions
@@ -56,6 +67,7 @@ namespace Reduxity.Example.Zenject {
         private void InstallReducers() {
             Container.Bind<CharacterMover.Reducer>().AsSingle().WhenInjectedInto<App>();
             Container.Bind<CharacterLook.Reducer>().AsSingle().WhenInjectedInto<App>();
+            Container.Bind<ApiLoader.Reducer>().AsSingle().WhenInjectedInto<App>();
         }
 
         /// <summary>

@@ -43,7 +43,7 @@ namespace Reduxity.Example.Zenject.CharacterLook {
         }
 
         // Translate 2D mouse input into euler angle rotations.
-        public CameraState Look(CameraState state, Action.Look action) {
+        private CameraState Look(CameraState state, Action.Look action) {
             Quaternion localRotation = state.localRotation;
             Vector2 rotation = action.inputRotation;
             float time = action.fixedDeltaTime;
@@ -63,14 +63,14 @@ namespace Reduxity.Example.Zenject.CharacterLook {
         }
 
         // stop look
-        public CameraState StopLook(CameraState state, Action.StopLook action) {
+        private CameraState StopLook(CameraState state, Action.StopLook action) {
             state.isLooking = false;
             Debug.Log($"in StopLook, returning state: {ObjectDumper.Dump(state)}");
             return state;
         }
 
         // Ripped straight out of the Standard Assets MouseLook script
-		public Quaternion ClampRotationAroundXAxis_(Quaternion q, float minAngle, float maxAngle) {
+		private Quaternion ClampRotationAroundXAxis_(Quaternion q, float minAngle, float maxAngle) {
 			q.x /= q.w;
 			q.y /= q.w;
 			q.z /= q.w;

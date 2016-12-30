@@ -65,7 +65,7 @@ namespace Reduxity.Example.Zenject.CharacterMover {
 
         // TODO: clone state
         /* calculate distance from velocity and transform */
-        public CharacterState Move(CharacterState state, Action.Move action) {
+        private CharacterState Move(CharacterState state, Action.Move action) {
             var inputVelocity = action.inputVelocity;
             var transform = state.transform;
             var playerVelocity = (inputVelocity.x * transform.right) + (inputVelocity.y * transform.forward);
@@ -77,7 +77,7 @@ namespace Reduxity.Example.Zenject.CharacterMover {
             return state;
         }
 
-        public CharacterState StopMove(CharacterState state, Action.StopMove action) {
+        private CharacterState StopMove(CharacterState state, Action.StopMove action) {
             state.isMoving = false;
             state.moveDistance = Vector3.zero;
             // Debug.Log($"in StopMove, returning state: {ObjectDumper.Dump(state)}");
@@ -85,7 +85,7 @@ namespace Reduxity.Example.Zenject.CharacterMover {
         }
 
         // TODO: get this to work
-        public CharacterState Turn(CharacterState state, Action.Turn action) {
+        private CharacterState Turn(CharacterState state, Action.Turn action) {
             Vector2 rotation = action.inputRotation;
             float time = action.fixedDeltaTime;
 
@@ -98,7 +98,7 @@ namespace Reduxity.Example.Zenject.CharacterMover {
             return state;
         }
 
-        public CharacterState StopTurn(CharacterState state, Action.StopTurn action) {
+        private CharacterState StopTurn(CharacterState state, Action.StopTurn action) {
             state.isTurning = false;
             Debug.Log($"in StopTurn, returning state: {ObjectDumper.Dump(state)}");
             return state;
