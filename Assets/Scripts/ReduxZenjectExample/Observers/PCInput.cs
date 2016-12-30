@@ -63,6 +63,7 @@ namespace Reduxity.Example.Zenject {
 				.Where(v => v != Vector2.zero)
 				.Subscribe(inputRotation => {
                     // rotate camera along x-axis (up and down)
+                    Debug.Log($"going to dispatch Action.Look");
                     app_.Store.Dispatch(
                         new CharacterLook.Action.Look {
                             inputRotation = inputRotation,
@@ -72,6 +73,7 @@ namespace Reduxity.Example.Zenject {
 
                     // TODO: get this to work
                     // turn character along y-axis (left and right)
+                    Debug.Log($"going to dispatch Action.Turn");
                     app_.Store.Dispatch(
                         new CharacterMover.Action.Turn {
                             inputRotation = inputRotation,

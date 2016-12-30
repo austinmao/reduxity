@@ -2,6 +2,7 @@
 using Redux;
 using System;
 using Zenject;
+using System.Collections.Generic;
 
 namespace Reduxity.Example.Zenject.CharacterMover {
 
@@ -51,6 +52,14 @@ namespace Reduxity.Example.Zenject.CharacterMover {
                 return StopMove(previousState, (Action.StopMove)action);
             }
 
+            if (action is Action.Turn) {
+                return Turn(previousState, (Action.Turn)action);
+            }
+
+            if (action is Action.StopTurn) {
+                return StopTurn(previousState, (Action.StopTurn)action);
+            }
+
             return previousState;
         }
 
@@ -64,14 +73,14 @@ namespace Reduxity.Example.Zenject.CharacterMover {
 
             state.isMoving = true;
             state.moveDistance = distance;
-            Debug.Log($"in Move, returning state: {ObjectDumper.Dump(state)}");
+            // Debug.Log($"in Move, returning state: {ObjectDumper.Dump(state)}");
             return state;
         }
 
         public CharacterState StopMove(CharacterState state, Action.StopMove action) {
             state.isMoving = false;
             state.moveDistance = Vector3.zero;
-            Debug.Log($"in StopMove, returning state: {ObjectDumper.Dump(state)}");
+            // Debug.Log($"in StopMove, returning state: {ObjectDumper.Dump(state)}");
             return state;
         }
 
@@ -86,7 +95,6 @@ namespace Reduxity.Example.Zenject.CharacterMover {
             
             state.transform.localRotation *= Quaternion.Euler(horizontalLook);
             state.isTurning = true;
-            Debug.Log($"in Turn, returning state: {ObjectDumper.Dump(state)}");
             return state;
         }
 

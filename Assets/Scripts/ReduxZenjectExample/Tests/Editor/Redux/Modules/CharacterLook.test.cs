@@ -12,6 +12,7 @@ namespace Reduxity.Example.Zenject.CharacterLook.Tests {
 
 		[SetUp]
 		public void Setup() {
+			// create private container
 			container_ = new DiContainer();
 			container_.Bind<CharacterLook.Reducer>().AsSingle();
 
@@ -26,11 +27,13 @@ namespace Reduxity.Example.Zenject.CharacterLook.Tests {
 
 		[Test]
 		public void Should_return_accurate_move_distance_from_move_reducer() {
+			// stub action
 			var mockLookAction = new CharacterLook.Action.Look {
 				inputRotation = Vector2.up,
 				fixedDeltaTime = 1.0f
 			};
 
+			// stub state condition
 			var mockCameraState = new CameraState {
 				isLooking = false,
 				localRotation = new Quaternion(1f,1f,1f,1f)
@@ -39,7 +42,7 @@ namespace Reduxity.Example.Zenject.CharacterLook.Tests {
 			var sut = container_.Resolve<CharacterLook.Reducer>();
 			var result = sut.Reduce(mockCameraState, mockLookAction);
 
-			Debug.Log(result);
+			Debug.Log(ObjectDumper.Dump(result));
 			Assert.IsTrue(result.isLooking);
 			// Assert.Equals(result.localRotation, Quaternion.Euler(1f,1f,1f));
 		}

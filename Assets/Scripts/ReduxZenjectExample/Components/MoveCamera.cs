@@ -18,7 +18,7 @@ namespace Reduxity.Example.Zenject {
         }
 
         public void Initialize() {
-            Debug.Log($"In MoveCamera.Initialize, App.Store: {app_.Store}");
+            // Debug.Log($"In MoveCamera.Initialize, App.Store: {app_.Store}");
             RenderLook();
         }
 
@@ -28,7 +28,7 @@ namespace Reduxity.Example.Zenject {
         void RenderLook() {
             app_.Store
                 .Subscribe(state => {
-                    Debug.Log($"looking by rotation: {state.Camera.localRotation}");
+                    // Debug.Log($"looking by rotation: {state.Camera.localRotation}");
                     camera_.transform.localRotation = state.Camera.localRotation;
                 })
                 .AddTo(camera_);

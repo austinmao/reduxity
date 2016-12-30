@@ -19,7 +19,7 @@ namespace Reduxity.Example.Zenject {
         }
 
         public void Initialize() {
-            Debug.Log($"In MoveCharacter.Initialize, App.Store: {app_.Store}");
+            // Debug.Log($"In MoveCharacter.Initialize, App.Store: {app_.Store}");
             renderMove();
             renderTurn();
         }
@@ -28,7 +28,7 @@ namespace Reduxity.Example.Zenject {
             app_.Store
                 .Select(CharacterMoverSelector.GetMoveDistance)
                 .Subscribe(distance => {
-                    Debug.Log($"going to move character by: {distance}");
+                    // Debug.Log($"going to move character by: {distance}");
                     character_.Move(distance);
                 })
                 .AddTo(character_);
@@ -38,7 +38,7 @@ namespace Reduxity.Example.Zenject {
             app_.Store
                 .Select(CharacterMoverSelector.GetTurnRotation)
                 .Subscribe(rotation => {
-                    Debug.Log($"going to turn character by: {rotation}");
+                    // Debug.Log($"going to turn character by: {rotation}");
                     character_.transform.localRotation = rotation;
                 })
                 .AddTo(character_);
