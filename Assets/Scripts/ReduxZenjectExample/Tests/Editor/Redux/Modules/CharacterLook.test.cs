@@ -3,7 +3,7 @@ using NUnit.Framework;
 using Zenject;
 using Moq;
 
-namespace Reduxity.Example.Zenject.CharacterLook.Tests {
+namespace Reduxity.Example.Zenject.CharacterLook {
 
 	[TestFixture]
 	public class Test : ZenjectUnitTestFixture {
@@ -57,7 +57,6 @@ namespace Reduxity.Example.Zenject.CharacterLook.Tests {
 			var result = sut.Reduce(mockCameraState, mockLookAction);
 
 			Assert.IsFalse(result.isLooking);
-
 		}
 	}
 }
