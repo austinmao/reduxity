@@ -7,7 +7,7 @@ namespace Reduxity.Example.Zenject {
 		}
 
 		public static Quaternion GetTurnRotation(State state) {
-			return state.Character.transform.localRotation;
+			return state.Character.localRotation;
 		}
 	}
 }

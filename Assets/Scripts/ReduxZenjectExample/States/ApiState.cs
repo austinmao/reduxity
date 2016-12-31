@@ -14,7 +14,7 @@ namespace Reduxity.Example.Zenject {
         public Exception error { get; set; }
     }
 
-    public class ApiStateInitializer : IInitializable {
+    public class ApiStateInitializer : IStateInitializer, IInitializable {
         readonly ApiState apiState_;
 
         public ApiStateInitializer(ApiState apiState) {

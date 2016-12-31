@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
 using Zenject;
 
 namespace Reduxity.Example.Zenject {
@@ -44,10 +42,12 @@ namespace Reduxity.Example.Zenject {
 			Container.Bind<State>().AsSingle();
 		}
 
+        /// <summary>
+        /// Auto-bind IInitializable to all state initializers
+        /// @see https://github.com/modesttree/Zenject#examples
+        /// </summary>
         private void InstallStateInitializers() {
-            Container.Bind<IInitializable>().To<CharacterStateInitializer>().AsSingle();
-            Container.Bind<IInitializable>().To<CameraStateInitializer>().AsSingle();
-            Container.Bind<IInitializable>().To<ApiStateInitializer>().AsSingle();
+            Container.Bind<IInitializable>().To(x => x.AllTypes().DerivingFrom<IStateInitializer>()).AsSingle();
         }
 
         /// <summary>

@@ -67,8 +67,7 @@ namespace Reduxity.Example.Zenject.CharacterMover {
         /* calculate distance from velocity and transform */
         private CharacterState Move(CharacterState state, Action.Move action) {
             var inputVelocity = action.inputVelocity;
-            var transform = state.transform;
-            var playerVelocity = (inputVelocity.x * transform.right) + (inputVelocity.y * transform.forward);
+            var playerVelocity = (inputVelocity.x * state.transformRight) + (inputVelocity.y * state.transformForward);
             var distance = playerVelocity * action.fixedDeltaTime;
 
             state.isMoving = true;
@@ -93,7 +92,7 @@ namespace Reduxity.Example.Zenject.CharacterMover {
             // multiply by lookSpeed to increase the speed
             Vector3 horizontalLook = rotation.x * time * Vector3.up * settings_.xLookSpeed;
             
-            state.transform.localRotation *= Quaternion.Euler(horizontalLook);
+            state.localRotation *= Quaternion.Euler(horizontalLook);
             state.isTurning = true;
             return state;
         }

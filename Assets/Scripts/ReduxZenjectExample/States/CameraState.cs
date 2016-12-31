@@ -14,7 +14,7 @@ namespace Reduxity.Example.Zenject {
     /// <summary>
     /// Set up default state. This is done in a separate class to make state testable without dependencies.
     /// </summary>
-    public class CameraStateInitializer : IInitializable {
+    public class CameraStateInitializer : IStateInitializer, IInitializable {
         readonly CameraState cameraState_;
         readonly Camera camera_;
 
@@ -28,8 +28,14 @@ namespace Reduxity.Example.Zenject {
         }
 
         public void Initialize() {
+            var transform_ = (camera_ != null && camera_.transform != null) ? camera_.transform : null;
+            if (!transform_) {
+                Debug.LogWarning("Character transform cannot be found. Did you bind the object?");
+            }
+
             cameraState_.isLooking = false;
-            cameraState_.localRotation = camera_.transform.localRotation;
+            // set default localRotation if GameObject is not initialized (null)
+            cameraState_.localRotation = (transform_ != null) ? transform_.localRotation : Quaternion.identity;
         }
     }
 }
