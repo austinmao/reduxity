@@ -66,7 +66,8 @@ namespace Reduxity.Example.Zenject.ApiRequestCreator {
                 dispatch(new ApiRequestor.Action.GetStart {});
 
                 // use observable to subscribe and dispatch new actions from results
-                ObservableWWW.Get(action.url)
+                ObservableWWW
+                    .Get(action.url)
                     .Subscribe(
                         successText => {
                             // dispatch second action on success
@@ -95,7 +96,8 @@ namespace Reduxity.Example.Zenject.ApiRequestCreator {
                 dispatch(new ApiRequestor.Action.PostStart {});
 
                 // use observable to subscribe and dispatch new actions from results
-                ObservableWWW.Post(action.url, action.postData)
+                ObservableWWW
+                    .Post(action.url, action.postData)
                     .Subscribe(
                         successText => {
                             // dispatch second action on success

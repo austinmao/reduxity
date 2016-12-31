@@ -16,6 +16,7 @@ React-redux via UniRx + Redux.NET for Unity3D += Zenject
   + [PlayerMovement](#playermovement)
   + [PlayerMovementLook](#playermovementlook)
   + [ZenjectPlayerMovementLook](#zenjectplayermovementlook)
+  + [Async](#async)
 * [Plans](#plans)
 * [FAQ](#faq)
   + [Should I include the entire state object in the reducer?](#should-i-include-the-entire-state-object-in-the-reducer-)
@@ -235,6 +236,10 @@ An example of player movement with keyboard inputs and camera looking with mouse
 
 ### ZenjectPlayerMovementLook
 All of the above but using Zenject instead of static functions and `new Class()` intializers.
+
+### Async
+An async example of using UniRx's WWWObservable with [Redux Thunk](https://github.com/gaearon/redux-thunk) via [redux.NET-thunk](https://github.com/taiste/redux.NET-thunk) is provided.
+tl;dr instead of dispatching an Action, you dispatch an [ActionCreator](http://redux.js.org/docs/basics/Actions.html#action-creators) that returns an Action (after the async process is done), which is then dispatched to the store.
 
 ## Plans
 - [x] provide multiple reducer example
