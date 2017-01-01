@@ -58,14 +58,14 @@ namespace Reduxity.Example.Zenject.CharacterLook {
 
             state.isLooking = true;
             state.localRotation = clampedRotation;
-            Debug.Log($"in Look, returning state: {ObjectDumper.Dump(state)}");
+            // Debug.Log($"in Look, returning state: {ObjectDumper.Dump(state)}");
             return state;
         }
 
         // stop look
         private CameraState StopLook(CameraState state, Action.StopLook action) {
             state.isLooking = false;
-            Debug.Log($"in StopLook, returning state: {ObjectDumper.Dump(state)}");
+            // Debug.Log($"in StopLook, returning state: {ObjectDumper.Dump(state)}");
             return state;
         }
 
