@@ -26,7 +26,6 @@ namespace Reduxity.Example.PlayerMovementLook.Movement {
     // reducers handle state changes
     public class Reducer {
         public static CharacterState Reduce(CharacterState previousState, IAction action) {
-            // Debug.Log($"reducing with action: {action}");
             if (action is Action.Move) {
                 return Move(previousState, (Action.Move)action);
             }
@@ -55,6 +54,7 @@ namespace Reduxity.Example.PlayerMovementLook.Movement {
             var distance = playerVelocity * action.fixedDeltaTime;
 
             state.isMoving = true;
+            state.isTurning = false;
             state.moveDistance = distance;
             Debug.Log($"in Move, returning state: {ObjectDumper.Dump(state)}");
             return state;
@@ -78,6 +78,7 @@ namespace Reduxity.Example.PlayerMovementLook.Movement {
             
             state.transform.localRotation *= Quaternion.Euler(horizontalLook);
             state.isTurning = true;
+            state.isMoving = false;
             Debug.Log($"in Turn, returning state: {ObjectDumper.Dump(state)}");
             return state;
         }

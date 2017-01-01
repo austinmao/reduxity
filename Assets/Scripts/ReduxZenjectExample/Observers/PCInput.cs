@@ -34,15 +34,16 @@ namespace Reduxity.Example.Zenject {
                 // performance optimization: only dispatch if non-zero movement
                 .Where(v => v != Vector2.zero)
                 // dispatch inputVelocity and GameObject transform to move reducer
-                .Subscribe(inputVelocity => 
+                .Subscribe(inputVelocity => {
+                    // Debug.Log($"going to dispatch CharacterMover.Action.Move");
                     app_.Store.Dispatch(
                         // dispatch move action
                         new CharacterMover.Action.Move {
                             inputVelocity = inputVelocity,
                             fixedDeltaTime = Time.fixedDeltaTime
                         }
-                    )
-                )
+                    );
+                })
                 // dispose of the observable if GameObject is disposed
                 .AddTo(this);
         }
@@ -63,7 +64,7 @@ namespace Reduxity.Example.Zenject {
 				.Where(v => v != Vector2.zero)
 				.Subscribe(inputRotation => {
                     // rotate camera along x-axis (up and down)
-                    Debug.Log($"going to dispatch Action.Look");
+                    // Debug.Log($"going to dispatch Action.Look");
                     app_.Store.Dispatch(
                         new CharacterLook.Action.Look {
                             inputRotation = inputRotation,
@@ -71,16 +72,16 @@ namespace Reduxity.Example.Zenject {
                         }
                     );
 
-                    // TODO: get this to work
                     // turn character along y-axis (left and right)
-                    Debug.Log($"going to dispatch Action.Turn");
+                    // Debug.Log($"going to dispatch Action.Turn");
                     app_.Store.Dispatch(
                         new CharacterMover.Action.Turn {
                             inputRotation = inputRotation,
                             fixedDeltaTime = Time.fixedDeltaTime
                         }
                     );
-				}).AddTo(this);
+				})
+                .AddTo(this);
         }
     }
 }

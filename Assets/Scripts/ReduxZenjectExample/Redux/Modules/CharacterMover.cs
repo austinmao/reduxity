@@ -43,7 +43,7 @@ namespace Reduxity.Example.Zenject.CharacterMover {
         }
 
         public CharacterState Reduce(CharacterState previousState, IAction action) {
-            // Debug.Log($"reducing with action: {action}");
+            // Debug.Log($"reducing with action: {action} of type {typeof(Action)}");
             if (action is Action.Move) {
                 return Move(previousState, (Action.Move)action);
             }
@@ -71,6 +71,7 @@ namespace Reduxity.Example.Zenject.CharacterMover {
             var distance = playerVelocity * action.fixedDeltaTime;
 
             state.isMoving = true;
+            state.isTurning = false;
             state.moveDistance = distance;
             // Debug.Log($"in Move, returning state: {ObjectDumper.Dump(state)}");
             return state;
@@ -94,12 +95,14 @@ namespace Reduxity.Example.Zenject.CharacterMover {
             
             state.localRotation *= Quaternion.Euler(horizontalLook);
             state.isTurning = true;
+            state.isMoving = false;
+            // Debug.Log($"in Turn, returning state: {ObjectDumper.Dump(state)}");
             return state;
         }
 
         private CharacterState StopTurn(CharacterState state, Action.StopTurn action) {
             state.isTurning = false;
-            Debug.Log($"in StopTurn, returning state: {ObjectDumper.Dump(state)}");
+            // Debug.Log($"in StopTurn, returning state: {ObjectDumper.Dump(state)}");
             return state;
         }
     }
