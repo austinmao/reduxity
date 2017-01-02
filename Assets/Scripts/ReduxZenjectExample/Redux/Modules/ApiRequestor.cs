@@ -95,5 +95,6 @@ namespace Reduxity.Example.Zenject.ApiRequestor {
     /// Public settings for api loading
     /// </summary>
     public class Settings {
+        public int retries = 3;
     }
 }

@@ -30,11 +30,9 @@ namespace Reduxity.Example.Zenject.ApiRequestCreator {
     }
 
     public class ActionCreator : IActionCreator {
-        readonly Settings settings_;
         readonly ApiRequestor.Action apiLoaderAction_;
 
-        public ActionCreator(Settings settings, ApiRequestor.Action apiLoaderAction) {
-            settings_ = settings;
+        public ActionCreator(ApiRequestor.Action apiLoaderAction) {
             apiLoaderAction_ = apiLoaderAction;
         }
 
@@ -115,12 +113,5 @@ namespace Reduxity.Example.Zenject.ApiRequestCreator {
             });
         }
 
-    }
-
-    [Serializable]
-    /// <summary>
-    /// Public settings for api loading
-    /// </summary>
-    public class Settings {
     }
 }

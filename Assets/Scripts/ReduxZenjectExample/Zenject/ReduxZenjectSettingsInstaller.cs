@@ -8,7 +8,7 @@ namespace Reduxity.Example.Zenject {
 
         /* These variables provide access nested classes below */
         public PlayerSettings Player;
-        // public HttpSettings Http;
+        public HttpSettings Http;
         public GameInstaller.Settings GameInstaller;
 
         [Serializable]
@@ -20,8 +20,12 @@ namespace Reduxity.Example.Zenject {
             public CameraLook.Settings Looking;
         }
 
+        [Serializable]
+        /// <summary>
+        /// Settings related to Http requests
+        /// </summary>
         public class HttpSettings {
-            // public ApiRequestor.Settings Api;
+            public ApiRequestor.Settings Api;
         }
 
         /// <summary>
@@ -30,7 +34,7 @@ namespace Reduxity.Example.Zenject {
         public override void InstallBindings() {
             Container.BindInstance(Player.Movement);
             Container.BindInstance(Player.Looking);
-            // Container.BindInstance(Http.Api);
+            Container.BindInstance(Http.Api);
             Container.BindInstance(GameInstaller);
         }
     }
