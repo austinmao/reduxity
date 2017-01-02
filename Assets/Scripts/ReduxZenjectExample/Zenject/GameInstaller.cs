@@ -26,9 +26,11 @@ namespace Reduxity.Example.Zenject {
             InstallReducers();
             // 5. create store from reducers
             InstallApp();
-            // 6. init store state subscribers
+            // 6. install observers, which may be MonoBehaviours
+            InstallObservers();
+            // 7. init store state subscribers
             InstallComponents();
-            // 7. install renderers
+            // 8. install renderers
             InstallContainers();
 		}
 
@@ -78,6 +80,13 @@ namespace Reduxity.Example.Zenject {
             Container.Bind<App>().AsSingle();
         }
 
+        private void InstallObservers() {
+            Container.Bind<IInitializable>().To<PCInput>().AsSingle();
+            Container.Bind<PCInput>().AsSingle();
+            Container.Bind<IInitializable>().To<ApiButton>().AsSingle();
+            Container.Bind<ApiButton>().AsSingle();
+        }
+
         /// <summary>
         /// Install Components that subscribe to and render state changes.
         /// </summary>
@@ -86,6 +95,8 @@ namespace Reduxity.Example.Zenject {
             Container.Bind<MoveCharacter>().AsSingle();
             Container.Bind<IInitializable>().To<MoveCamera>().AsSingle();
             Container.Bind<MoveCamera>().AsSingle();
+            Container.Bind<IInitializable>().To<DisplayHttpText>().AsSingle();
+            Container.Bind<DisplayHttpText>().AsSingle();
         }
 
         /// <summary>

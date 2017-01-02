@@ -4,23 +4,28 @@ using UniRx.Triggers;
 using Zenject;
 
 namespace Reduxity.Example.Zenject {
-    public class PCInput : MonoBehaviour {
+    public class PCInput : IInitializable {
 
-        App app_;
+        readonly App app_;
+        readonly Transform player_;
 
-        [Inject]
-        public void Construct(App app) {
+        public PCInput(
+            App app,
+			[Inject(Id = "Player")]
+            Transform player
+        ) {
             app_ = app;
+            player_ = player;
         }
 
-        void Start() {
+        public void Initialize() {
             observeMovement();
             observeLook();
         }
 
         // reference: https://ornithoptergames.com/reactiverx-in-unity3d-part-1/
         IObservable<Vector2> observeKeyInput() {
-            return this.FixedUpdateAsObservable()
+            return player_.FixedUpdateAsObservable()
                 // get inputs by key press
                 .Select(_ => {
                     var x = Input.GetAxis("Horizontal");
@@ -45,11 +50,11 @@ namespace Reduxity.Example.Zenject {
                     );
                 })
                 // dispose of the observable if GameObject is disposed
-                .AddTo(this);
+                .AddTo(player_);
         }
 
         IObservable<Vector2> observeMouseInput() {
-            return this.UpdateAsObservable()
+            return player_.UpdateAsObservable()
 				.Select(_ => {
                     // get inputs by axis
 					var x = Input.GetAxis("Mouse X");
@@ -81,7 +86,7 @@ namespace Reduxity.Example.Zenject {
                         }
                     );
 				})
-                .AddTo(this);
+                .AddTo(player_);
         }
     }
 }
