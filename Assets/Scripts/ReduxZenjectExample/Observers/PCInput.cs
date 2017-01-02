@@ -66,7 +66,7 @@ namespace Reduxity.Example.Zenject {
                     // rotate camera along x-axis (up and down)
                     // Debug.Log($"going to dispatch Action.Look");
                     app_.Store.Dispatch(
-                        new CharacterLook.Action.Look {
+                        new CameraLook.Action.Look {
                             inputRotation = inputRotation,
                             fixedDeltaTime = Time.fixedDeltaTime
                         }

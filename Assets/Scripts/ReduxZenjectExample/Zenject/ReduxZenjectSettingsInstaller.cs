@@ -17,7 +17,7 @@ namespace Reduxity.Example.Zenject {
         /// </summary>
         public class PlayerSettings {
             public CharacterMover.Settings Movement;
-            public CharacterLook.Settings Looking;
+            public CameraLook.Settings Looking;
         }
 
         public class HttpSettings {

@@ -66,7 +66,7 @@ namespace Reduxity.Example.Zenject {
         /// </summary>
         private void InstallReducers() {
             Container.Bind<CharacterMover.Reducer>().AsSingle().WhenInjectedInto<App>();
-            Container.Bind<CharacterLook.Reducer>().AsSingle().WhenInjectedInto<App>();
+            Container.Bind<CameraLook.Reducer>().AsSingle().WhenInjectedInto<App>();
             Container.Bind<ApiRequestor.Reducer>().AsSingle().WhenInjectedInto<App>();
         }
 

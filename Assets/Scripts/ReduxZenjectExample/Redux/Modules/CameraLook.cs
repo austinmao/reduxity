@@ -3,7 +3,7 @@ using Redux;
 using System;
 using Zenject;
 
-namespace Reduxity.Example.Zenject.CharacterLook {
+namespace Reduxity.Example.Zenject.CameraLook {
     // actions must have a type and may include a payload
     public class Action {
         public class Look: IAction {
