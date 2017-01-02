@@ -14,8 +14,8 @@ namespace Reduxity.Example.Zenject {
         }
 
         void Start() {
-            dispatchMovement();
-            dispatchLook();
+            observeMovement();
+            observeLook();
         }
 
         // reference: https://ornithoptergames.com/reactiverx-in-unity3d-part-1/
@@ -29,7 +29,7 @@ namespace Reduxity.Example.Zenject {
                 });
         }
 
-        void dispatchMovement() {
+        void observeMovement() {
             observeKeyInput()
                 // performance optimization: only dispatch if non-zero movement
                 .Where(v => v != Vector2.zero)
@@ -58,7 +58,7 @@ namespace Reduxity.Example.Zenject {
 				});
         }
 
-        void dispatchLook() {
+        void observeLook() {
             observeMouseInput()
                 // ignore if mouse look is zero
 				.Where(v => v != Vector2.zero)
