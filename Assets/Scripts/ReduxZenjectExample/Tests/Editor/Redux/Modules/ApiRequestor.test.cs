@@ -20,9 +20,9 @@ namespace Reduxity.Example.Zenject.ApiRequestor.Tests {
 			container_.Bind<Reducer>().AsSingle();
 
 			// set up mock settings
-			// var mockSettings = new Settings {
-			// };
-			// container_.Bind<Settings>().FromInstance(mockSettings);
+			var mockSettings = new Settings {
+			};
+			container_.Bind<Settings>().FromInstance(mockSettings);
 
 			// set default state
 			mockApiState_ = new ApiState {};

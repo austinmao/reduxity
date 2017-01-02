@@ -29,8 +29,9 @@ namespace Reduxity.Example.Zenject {
             app_.Store
                 .Where(state => state.Api.isLoaded == true)
 				.Select(ApiDataSelector.GetApiData)
-                .Subscribe(result => {
-					text_.text = result;
+				.Where(text => text != null)
+                .Subscribe(text => {
+					text_.text = text;
                 })
                 .AddTo(text_);
 		}
@@ -38,8 +39,8 @@ namespace Reduxity.Example.Zenject {
 		void RenderApiError() {
             app_.Store
                 .Where(state => state.Api.isLoaded == true)
-				.Where(state => state.Api.error != null)
 				.Select(ApiDataSelector.GetApiError)
+				.Where(error => error != null)
                 .Subscribe(error => {
 					text_.text = $"ERROR: {error.ToString()}";
                 })
