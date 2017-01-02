@@ -20,6 +20,7 @@ namespace Reduxity.Example.PlayerMovementLook {
         void renderMove() {
             // Debug.Log($"App.Store: {App.Store}");
             App.Store
+                .Where(state => state.Character.isMoving)
                 .Select(CharacterMoverSelector.GetMoveDistance)
                 .Subscribe(distance => {
                     // Debug.Log($"going to move character by: {distance}");
@@ -30,6 +31,7 @@ namespace Reduxity.Example.PlayerMovementLook {
 
         void renderTurn() {
             App.Store
+                .Where(state => state.Character.isTurning)
                 .Select(CharacterMoverSelector.GetTurnRotation)
                 .Subscribe(rotation => {
                     Debug.Log($"going to turn character by: {rotation}");
