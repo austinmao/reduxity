@@ -6,7 +6,7 @@ using ModestTree;
 
 namespace Reduxity.Example.Zenject {
 
-    public class MoveCharacter : IInitializable {
+    public class MoveCharacter : IInitializable, IComponent {
 
         readonly App app_;
         readonly CharacterController character_;
@@ -20,11 +20,11 @@ namespace Reduxity.Example.Zenject {
         }
 
         public void Initialize() {
-            renderMove();
-            renderTurn();
+            RenderMove();
+            RenderTurn();
         }
 
-        void renderMove() {
+        void RenderMove() {
             app_.Store
                 .Where(state => state.Character.isMoving)
                 .Select(CharacterMoverSelector.GetMoveDistance)
@@ -35,7 +35,7 @@ namespace Reduxity.Example.Zenject {
                 .AddTo(character_);
         }
 
-        void renderTurn() {
+        void RenderTurn() {
             app_.Store
                 .Where(state => state.Character.isTurning)
                 .Select(CharacterMoverSelector.GetTurnRotation)

@@ -4,7 +4,7 @@ using Zenject;
 
 namespace Reduxity.Example.Zenject {
 
-    public class MoveCamera : IInitializable {
+    public class MoveCamera : IInitializable, IComponent {
 
         readonly App app_;
         readonly Camera camera_; // bound through ZenjectBinding script on GameObject

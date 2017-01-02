@@ -3,9 +3,10 @@ using UnityEngine.UI;
 using UniRx;
 using UniRx.Triggers;
 using Zenject;
+using Reduxity;
 
 namespace Reduxity.Example.Zenject {
-	public class DisplayHttpText : IInitializable {
+	public class DisplayHttpText : IInitializable, IComponent {
 
 		readonly App app_;
 		readonly Text text_;
@@ -20,10 +21,11 @@ namespace Reduxity.Example.Zenject {
 		}
 
 		public void Initialize() {
-			observeApiText();
+			RenderApiText();
+			RenderApiError();
 		}
 
-		void observeApiText() {
+		void RenderApiText() {
             app_.Store
                 .Where(state => state.Api.isLoaded == true)
 				.Select(ApiDataSelector.GetApiData)
@@ -33,7 +35,7 @@ namespace Reduxity.Example.Zenject {
                 .AddTo(text_);
 		}
 
-		void observeApiError() {
+		void RenderApiError() {
             app_.Store
                 .Where(state => state.Api.isLoaded == true)
 				.Where(state => state.Api.error != null)
