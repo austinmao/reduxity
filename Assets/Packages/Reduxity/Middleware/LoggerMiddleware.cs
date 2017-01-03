@@ -5,12 +5,16 @@ using UnityEngine;
 namespace Reduxity.Middleware {
 
     /// <summary>
-    /// Print Action to console
+    /// Print Action or State to console depending on LogLevel
     /// </summary>
     public class Logger {
 
         readonly LoggerSettings settings_;
 
+        /// <summary>
+        /// Adjust log level settings in Zenject ScriptableObject Installer
+        /// </summary>
+        /// <param name="settings">LogLevel settings (off, actionsOnly, verbose)</param>
         public Logger(LoggerSettings settings) {
             settings_ = settings;
         }
@@ -52,7 +56,8 @@ namespace Reduxity.Middleware {
             actionsOnly,
             verbose
         }
-        public LogLevel Level;
+        // log actionsOnly by default
+        public LogLevel Level = LogLevel.actionsOnly;
     }
 
     /// <summary>

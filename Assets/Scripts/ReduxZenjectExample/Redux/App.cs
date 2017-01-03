@@ -49,6 +49,7 @@ namespace Reduxity.Example.Zenject {
 		public void Initialize () {
 			// Init with middlewares. Order will determine order of execution.
 			Middleware<State>[] middlewares = {
+				// automatically log depending on LogLevel, which can be adjusted in the inspector
 				logger_.Middleware,
 				Thunk.Middleware
 			};
