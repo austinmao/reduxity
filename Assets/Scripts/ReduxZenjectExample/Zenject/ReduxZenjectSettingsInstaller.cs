@@ -1,6 +1,7 @@
 using UnityEngine;
 using Zenject;
 using System;
+using Middleware = Reduxity.Middleware;
 
 namespace Reduxity.Example.Zenject {
     [CreateAssetMenu(fileName = "ReduxZenjectSettingsInstaller", menuName = "Installers/ReduxZenjectSettingsInstaller")]
@@ -9,7 +10,17 @@ namespace Reduxity.Example.Zenject {
         /* These variables provide access nested classes below */
         public PlayerSettings Player;
         public HttpSettings Http;
-        public GameInstaller.Settings GameInstaller;
+        public AppSettings App;
+
+        [Serializable]
+        /// <summary>
+        /// App wide settings
+        /// </summary>
+        public class AppSettings {
+            public Middleware.LoggerSettings LogLevel;
+            public GameInstaller.Settings GameInstaller;
+            // public App.Settings App;
+        }
 
         [Serializable]
         /// <summary>
@@ -41,7 +52,9 @@ namespace Reduxity.Example.Zenject {
             Container.BindInstance(Http.ApiRequest);
             Container.BindInstance(Http.SubmitButton);
             Container.BindInstance(Http.Text);
-            Container.BindInstance(GameInstaller);
+            Container.BindInstance(App.LogLevel);
+            Container.BindInstance(App.GameInstaller);
+            // Container.BindInstance(App.App);
         }
     }
 }

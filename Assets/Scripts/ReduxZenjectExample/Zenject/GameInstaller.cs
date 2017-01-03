@@ -24,6 +24,8 @@ namespace Reduxity.Example.Zenject {
             InstallReducers();
             // 5. actions used in (async) thunks
             InstallActionCreators();
+            // 6. install redux middleware
+            InstallMiddleware();
             // 6. create store from reducers
             InstallApp();
             // 7. install observers, which may be MonoBehaviours
@@ -60,6 +62,10 @@ namespace Reduxity.Example.Zenject {
         /// </summary>
         private void InstallActionCreators() {
             Container.Bind<ApiRequestCreator.ActionCreator>().AsSingle();
+        }
+
+        private void InstallMiddleware() {
+            Container.Bind<Reduxity.Middleware.Logger>().AsSingle();
         }
 
         /// <summary>

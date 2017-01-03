@@ -63,7 +63,6 @@ namespace Reduxity.Example.Zenject {
 		public class Settings {
 			public string defaultText = "Submit";
 			public string loadingText = "Loading...";
-			public string errorPrefixText = "Error: ";
 		}
 	}
 }

@@ -2,11 +2,11 @@
 using UnityEngine;
 
 // from https://github.com/taiste/redux.NET-thunk
-namespace Redux.Thunk
+namespace Redux.Middleware
 {
-    public static class Middleware
+    public static class Thunk
     {
-        public static Func<Dispatcher, Dispatcher> ThunkMiddleware<TState>(IStore<TState> store)
+        public static Func<Dispatcher, Dispatcher> Middleware<TState>(IStore<TState> store)
         {
             return (Dispatcher next) => (IAction action) =>
             {

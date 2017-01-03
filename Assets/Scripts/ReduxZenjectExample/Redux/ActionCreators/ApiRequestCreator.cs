@@ -1,8 +1,6 @@
 using Redux;
-using Redux.Thunk;
-using System;
+using Redux.Middleware;
 using System.Collections.Generic;
-using Zenject;
 using UniRx;
 using Hash = System.Collections.Generic.Dictionary<string, string>;
 using HashEntry = System.Collections.Generic.KeyValuePair<string, string>;
@@ -37,26 +35,24 @@ namespace Reduxity.Example.Zenject.ApiRequestCreator {
         /// <returns>ThunkAction for Receive or ReceiveError</returns>
         public IAction Get(Action.Get action) {
             // return thunk to store, which will dispatch new actions upon success or failure
-            Debug.Log($"in Get with action: {ObjectDumper.Dump(action)}");
             return new ThunkAction<State> ((dispatch, getState) => {
                 // dispatch first action to set state to loading
                 dispatch(new ApiRequestor.Action.GetStart {});
 
                 // use observable to subscribe and dispatch new actions from results
-                Debug.Log($"in Thunk, loading {action.url}");
                 ObservableWWW
                     .Get(action.url)
                     .Subscribe(
                         successText => {
                             // dispatch second action on success
-                            Debug.Log($"ApiRequestCreator.Get success => dispatching successText: {successText}");
+                            // Debug.Log($"ApiRequestCreator.Get success => dispatching successText: {successText}");
                             dispatch(new ApiRequestor.Action.GetSuccess{
                                 text = successText
                             });
                         },
                         failureError => {
                             // dispatch second action on failure
-                            Debug.Log($"ApiRequestCreator.Get failure => dispatching failureError: {failureError}");
+                            // Debug.Log($"ApiRequestCreator.Get failure => dispatching failureError: {failureError}");
                             dispatch(new ApiRequestor.Action.GetFailure{
                                 error = failureError
                             });

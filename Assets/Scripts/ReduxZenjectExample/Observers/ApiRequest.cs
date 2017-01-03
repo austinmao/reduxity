@@ -42,7 +42,7 @@ namespace Reduxity.Example.Zenject {
 
                     // dispatch thunk, which returns an IAction to dispatch to store
                     // on success or failure
-                    Debug.Log($"Dispatching: {ObjectDumper.Dump(action)}");
+                    // Debug.Log($"Dispatching: {ObjectDumper.Dump(action)}");
                     app_.Store.Dispatch(actionCreator_.Get(action));
                 })
                 .AddTo(button_);

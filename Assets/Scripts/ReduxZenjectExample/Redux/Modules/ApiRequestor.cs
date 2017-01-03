@@ -1,11 +1,7 @@
 using UnityEngine;
 using Redux;
-using Redux.Thunk;
+using Redux.Middleware;
 using System;
-using System.Collections.Generic;
-using Zenject;
-using UniRx;
-using ModestTree;
 using Hash = System.Collections.Generic.Dictionary<string, string>;
 using HashEntry = System.Collections.Generic.KeyValuePair<string, string>;
 

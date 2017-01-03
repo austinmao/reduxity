@@ -1,5 +1,8 @@
 ﻿using Redux;
+using Thunk = Redux.Middleware.Thunk;
+using Logger = Reduxity.Middleware.Logger;
 using Zenject;
+using System;
 
 namespace Reduxity.Example.Zenject {
 
@@ -10,6 +13,8 @@ namespace Reduxity.Example.Zenject {
 	public class App : IInitializable {
 
 		readonly State state_;
+		readonly Logger logger_;
+		// readonly Settings settings_;
 
 		/* Reducers below */
 		readonly CharacterMover.Reducer move_;
@@ -25,11 +30,15 @@ namespace Reduxity.Example.Zenject {
         /// <param name="api">Api reducers</param>
 		public App(
 			State state,
+			// Settings settings,
+			Logger logger,
 			CharacterMover.Reducer move,
 			CameraLook.Reducer look,
 			ApiRequestor.Reducer api
 		) {
 			state_ = state;
+			logger_ = logger;
+			// settings_ = settings;
 			move_ = move;
 			look_ = look;
 			api_ = api;
@@ -38,8 +47,14 @@ namespace Reduxity.Example.Zenject {
 		public IStore<State> Store { get ; private set; }
 
 		public void Initialize () {
+			// Init with middlewares. Order will determine order of execution.
+			Middleware<State>[] middlewares = {
+				logger_.Middleware,
+				Thunk.Middleware
+			};
+
 			// generate Store with initial state injected in the constructor
-			Store = new Store<State>(CombineReducers, state_, Redux.Thunk.Middleware.ThunkMiddleware); 
+			Store = new Store<State>(CombineReducers, state_, middlewares); 
 		}
 
 		// return a new state after respective reducers. note that each reducer returns
@@ -52,5 +67,9 @@ namespace Reduxity.Example.Zenject {
 			state_.Api = api_.Reduce(previousState.Api, action);
 			return state_;
 		}
+
+		// [Serializable]
+		// public class Settings {
+		// }
 	}
 }
