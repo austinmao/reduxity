@@ -17,6 +17,9 @@ React-redux via UniRx + Redux.NET for Unity3D += Zenject
   + [PlayerMovementLook](#playermovementlook)
   + [ZenjectPlayerMovementLook](#zenjectplayermovementlook)
   + [Async](#async)
+* [Middleware](#middleware)
+  + [Thunk](#thunk)
+  + [Logger](#logger)
 * [Plans](#plans)
 * [FAQ](#faq)
   + [Should I include the entire state object in the reducer?](#should-i-include-the-entire-state-object-in-the-reducer-)
@@ -241,6 +244,14 @@ All of the above but using Zenject instead of static functions and `new Class()`
 An async example of using UniRx's WWWObservable with [Redux Thunk](https://github.com/gaearon/redux-thunk) via [redux.NET-thunk](https://github.com/taiste/redux.NET-thunk) is provided.
 tl;dr instead of dispatching an Action, you dispatch an [ActionCreator](http://redux.js.org/docs/basics/Actions.html#action-creators) that returns an Action (after the async process is done), which is then dispatched to the store.
 
+## Middleware
+
+### Thunk
+A port of [redux.NET-thunk](https://github.com/taiste/redux.NET-thunk) is included for dispatching async actions. This allows you to dispatch an [Action Creator](http://redux.js.org/docs/basics/Actions.html#action-creators) that returns an [Action](http://redux.js.org/docs/basics/Actions.html). Within the Action Creator, we recommend you dispatch an action to store in state that an async process is happening. Then, update state upon success or failure with another dispatched action. See the Async example for reference on how to use this with UniRx.
+
+### Logger
+A port of [redux-logger](https://github.com/evgenyrodionov/redux-logger) is included for automatically logging dispatched actions and the current state before applying the action. Currently, this is only tested with Zenject and adjustable within Zenject's [ScriptableObjectInstaller](https://github.com/modesttree/Zenject#scriptable-object-installer) that is adjustable in runtime Settings. Note that using a `verbose` LogLevel setting will result in dumping each action and state object, which could adversely affect performance in development mode.
+
 ## Plans
 - [x] provide multiple reducer example
 - [x] provide GameObject in State example
@@ -249,6 +260,7 @@ tl;dr instead of dispatching an Action, you dispatch an [ActionCreator](http://r
 - [x] add async example
 - [ ] write a Zenject tutorial
 - [ ] write a Reduxity + Zenject tutorial
+- [x] add logger middleware with different levels settings
 - [ ] create DevTools to visualize current state
 - [ ] create TimeMachineStore to visualize past states
 
