@@ -21,6 +21,7 @@ namespace Reduxity.Middleware {
 
         public Func<Dispatcher, Dispatcher> Middleware<TState>(IStore<TState> store) {
             return (Dispatcher next) => (IAction action) => {
+                #if UNITY_EDITOR
                 switch (settings_.Level) {
                     // do default action if off
                     case LoggerSettings.LogLevel.off: {
@@ -43,6 +44,7 @@ namespace Reduxity.Middleware {
                         return next(action);
                     }
                 };
+                #endif
 
                 return next(action);
             };
@@ -50,6 +52,9 @@ namespace Reduxity.Middleware {
     }
 
     [Serializable]
+    /// <summary>
+    /// Settings adjustable in Zenject's ScriptableObjectInstaller
+    /// </summary>
     public class LoggerSettings {
         public enum LogLevel {
             off,
