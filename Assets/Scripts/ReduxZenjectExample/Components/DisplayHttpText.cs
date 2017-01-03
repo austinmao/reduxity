@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using UniRx;
 using UniRx.Triggers;
 using Zenject;
-using Reduxity;
+using System;
 
 namespace Reduxity.Example.Zenject {
 	public class DisplayHttpText : IInitializable, IComponent {
@@ -11,16 +11,19 @@ namespace Reduxity.Example.Zenject {
 		readonly App app_;
 		readonly Text textUI_; // bound by Zenject Binding (script) on GameObject
 		readonly ApiDataSelector selector_;
+		readonly Settings settings_;
 
 		public DisplayHttpText(
 			App app,
 			[Inject(Id = "HttpLogger")]
 			Text text,
-			ApiDataSelector apiDataSelector
+			ApiDataSelector apiDataSelector,
+			Settings settings
 		) {
 			app_ = app;
 			textUI_ = text;
 			selector_ = apiDataSelector;
+			settings_ = settings;
 		}
 
 		public void Initialize() {
@@ -34,7 +37,7 @@ namespace Reduxity.Example.Zenject {
 				.Select(selector_.GetApiData)
 				.Where(text => text != null)
                 .Subscribe(text => {
-					Debug.Log($"DisplayHttpText => textUI_.text on success: {text}");
+					// Debug.Log($"DisplayHttpText => textUI_.text on success: {text}");
 					textUI_.text = text;
                 })
                 .AddTo(textUI_);
@@ -46,10 +49,18 @@ namespace Reduxity.Example.Zenject {
 				.Select(selector_.GetApiError)
 				.Where(error => error != null)
                 .Subscribe(error => {
-					Debug.Log($"DisplayHttpText => textUI_.text on error: {error}");
-					textUI_.text = $"ERROR: {error}";
+					// Debug.Log($"DisplayHttpText => textUI_.text on error: {error}");
+					textUI_.text = $"{settings_.errorPrefixText}: {error}";
                 })
                 .AddTo(textUI_);
+		}
+
+		[Serializable]
+		/// <summary>
+		/// Default text to display for submit button.
+		/// </summary>
+		public class Settings {
+			public string errorPrefixText = "Error: ";
 		}
 	}
 }

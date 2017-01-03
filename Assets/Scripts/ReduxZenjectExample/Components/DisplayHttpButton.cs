@@ -28,7 +28,6 @@ namespace Reduxity.Example.Zenject {
 		public void Initialize() {
 			RenderLoading();
 			RenderSuccess();
-			RenderError();
 		}
 
 		/// <summary>
@@ -38,7 +37,7 @@ namespace Reduxity.Example.Zenject {
 			app_.Store
 				.Where(state => state.Api.isLoading)
 				.Subscribe(_ => {
-					Debug.Log($"DisplayHttpButton.RenderingLoading");
+					// Debug.Log($"DisplayHttpButton.RenderingLoading");
 					button_.text = settings_.loadingText;
 				})
 				.AddTo(button_);
@@ -49,29 +48,13 @@ namespace Reduxity.Example.Zenject {
         /// </summary>
 		void RenderSuccess() {
             app_.Store
-				.Where(state => (state.Api.isLoaded && !state.Api.isError))
-				.Select(selector_.GetApiData)
+				.Where(state => state.Api.isLoaded)
                 .Subscribe(text => {
-					Debug.Log($"DisplayHttpButton.RenderSuccess => {text}");
-					button_.text = text != null ? text : settings_.defaultText;
+					// Debug.Log($"DisplayHttpButton.RenderSuccess => {text}");
+					button_.text = settings_.defaultText;
                 })
                 .AddTo(button_);
 		}
-
-		/// <summary>
-        /// set error text if api is loaded and there is an error
-        /// </summary>
-		void RenderError() {
-            app_.Store
-				.Where(state => state.Api.isError)
-				.Select(selector_.GetApiError)
-				.Subscribe(error => {
-					Debug.Log($"DisplayHttpButton.RenderError => {error}");
-					button_.text = $"{settings_.errorPrefixText} {error}";
-				})
-				.AddTo(button_);
-		}
-
 
 		[Serializable]
 		/// <summary>
