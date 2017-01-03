@@ -28,4 +28,8 @@ MonoBehaviour:
     SubmitButton:
       defaultText: Submit
       loadingText: Loading...
+    Text:
       errorPrefixText: 'Error: '
+  App:
+    LogLevel:
+      Level: 1
