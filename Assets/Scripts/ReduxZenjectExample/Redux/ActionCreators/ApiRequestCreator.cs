@@ -6,6 +6,7 @@ using Zenject;
 using UniRx;
 using Hash = System.Collections.Generic.Dictionary<string, string>;
 using HashEntry = System.Collections.Generic.KeyValuePair<string, string>;
+using UnityEngine;
 
 
 namespace Reduxity.Example.Zenject.ApiRequestCreator {
@@ -30,51 +31,32 @@ namespace Reduxity.Example.Zenject.ApiRequestCreator {
     }
 
     public class ActionCreator : IActionCreator {
-        readonly ApiRequestor.Action apiLoaderAction_;
-
-        public ActionCreator(ApiRequestor.Action apiLoaderAction) {
-            apiLoaderAction_ = apiLoaderAction;
-        }
-
-        public IAction Reduce(ApiState state, IAction action) {
-            /* dispatch thunks */
-            if (action is Action.Get) {
-                return Get(state, (Action.Get)action);
-            }
-            if (action is Action.Post) {
-                return Post(state, (Action.Post)action);
-            }
-            // if (action is Action.Put) {
-            //     return Put(state, action);
-            // }
-            // if (action is Action.Del) {
-            //     return Del(state, action);
-            // }
-            throw new Exception("Action must be .Get, .Post, .Put, or .Del");
-        }
-
         /// <summary>
         /// Thunk that performs http request and dispatches an on success or failure action
         /// </summary>
         /// <returns>ThunkAction for Receive or ReceiveError</returns>
-        private IAction Get(ApiState state, Action.Get action) {
+        public IAction Get(Action.Get action) {
             // return thunk to store, which will dispatch new actions upon success or failure
-            return new ThunkAction<ApiState> ((dispatch, getState) => {
+            Debug.Log($"in Get with action: {ObjectDumper.Dump(action)}");
+            return new ThunkAction<State> ((dispatch, getState) => {
                 // dispatch first action to set state to loading
                 dispatch(new ApiRequestor.Action.GetStart {});
 
                 // use observable to subscribe and dispatch new actions from results
+                Debug.Log($"in Thunk, loading {action.url}");
                 ObservableWWW
                     .Get(action.url)
                     .Subscribe(
                         successText => {
                             // dispatch second action on success
+                            Debug.Log($"ApiRequestCreator.Get success => dispatching successText: {successText}");
                             dispatch(new ApiRequestor.Action.GetSuccess{
                                 text = successText
                             });
                         },
                         failureError => {
                             // dispatch second action on failure
+                            Debug.Log($"ApiRequestCreator.Get failure => dispatching failureError: {failureError}");
                             dispatch(new ApiRequestor.Action.GetFailure{
                                 error = failureError
                             });
@@ -87,9 +69,9 @@ namespace Reduxity.Example.Zenject.ApiRequestCreator {
         /// Thunk that performs http request and dispatches an on success or failure action
         /// </summary>
         /// <returns>ThunkAction for Receive or ReceiveError</returns>
-        private IAction Post(ApiState state, Action.Post action) {
+        public IAction Post(Action.Post action) {
             // return thunk to store, which will dispatch new actions upon success or failure
-            return new ThunkAction<ApiState> ((dispatch, getState) => {
+            return new ThunkAction<State> ((dispatch, getState) => {
                 // dispatch first action to set state to loading
                 dispatch(new ApiRequestor.Action.PostStart {});
 

@@ -20,17 +20,19 @@ namespace Reduxity.Example.Zenject {
 			InstallState();
             // 2. init nested state objects with default values
             InstallStateInitializers();
-            // // 3. actions used in (async) thunks
-            // InstallActionsForActionCreators();
             // 4. reducers are injected into App
             InstallReducers();
-            // 5. create store from reducers
+            // 5. actions used in (async) thunks
+            InstallActionCreators();
+            // 6. create store from reducers
             InstallApp();
-            // 6. install observers, which may be MonoBehaviours
+            // 7. install observers, which may be MonoBehaviours
             InstallObservers();
-            // 7. init store state subscribers
+            // 8. install selectors, which are used by components
+            InstallSelectors();
+            // 9. init store state subscribers
             InstallComponents();
-            // 8. install renderers
+            // 10. renderers
             InstallContainers();
 		}
 
@@ -56,8 +58,8 @@ namespace Reduxity.Example.Zenject {
         /// Install Actions to be used in thunks (actions that will fire off other actions,
         /// usually in async usage).
         /// </summary>
-        private void InstallActionsForActionCreators() {
-            Container.Bind<ApiRequestor.Action>().AsSingle().WhenInjectedInto<ApiRequestCreator.ActionCreator>();
+        private void InstallActionCreators() {
+            Container.Bind<ApiRequestCreator.ActionCreator>().AsSingle();
         }
 
         /// <summary>
@@ -83,20 +85,28 @@ namespace Reduxity.Example.Zenject {
         private void InstallObservers() {
             Container.Bind<IInitializable>().To<PCInput>().AsSingle();
             Container.Bind<PCInput>().AsSingle();
-            Container.Bind<IInitializable>().To<ApiButton>().AsSingle();
-            Container.Bind<ApiButton>().AsSingle();
+            Container.Bind<IInitializable>().To<ApiRequest>().AsSingle();
+            Container.Bind<ApiRequest>().AsSingle();
+        }
+
+        private void InstallSelectors() {
+            Container.Bind<CharacterMoverSelector>().AsSingle();
+            Container.Bind<ApiDataSelector>().AsSingle();
         }
 
         /// <summary>
         /// Install Components that subscribe to and render state changes.
         /// </summary>
         private void InstallComponents() {
-            Container.Bind<IInitializable>().To<MoveCharacter>().AsSingle();
+            Container.Bind<IInitializable>().To(x => x.AllTypes().DerivingFrom<IComponent>()).AsSingle();
+            // Container.Bind<IInitializable>().To<MoveCharacter>().AsSingle();
             Container.Bind<MoveCharacter>().AsSingle();
-            Container.Bind<IInitializable>().To<MoveCamera>().AsSingle();
+            // Container.Bind<IInitializable>().To<MoveCamera>().AsSingle();
             Container.Bind<MoveCamera>().AsSingle();
-            Container.Bind<IInitializable>().To<DisplayHttpText>().AsSingle();
+            // Container.Bind<IInitializable>().To<DisplayHttpText>().AsSingle();
             Container.Bind<DisplayHttpText>().AsSingle();
+            // Container.Bind<IInitializable>().To<DisplayHttpButton>().AsSingle();
+            Container.Bind<DisplayHttpButton>().AsSingle();
         }
 
         /// <summary>

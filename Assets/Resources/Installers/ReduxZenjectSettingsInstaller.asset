@@ -20,3 +20,12 @@ MonoBehaviour:
       maxViewAngle: 60
       minViewAngle: -60
       yLookSpeed: 100
+  Http:
+    Api:
+      retries: 3
+    ApiRequest:
+      defaultUrl: https://api.github.com/repos/austinmao/reduxity
+    SubmitButton:
+      defaultText: Submit
+      loadingText: Loading...
+      errorPrefixText: 'Error: '

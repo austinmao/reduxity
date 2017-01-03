@@ -10,6 +10,7 @@ namespace Reduxity.Example.Zenject {
     public class ApiState : IState {
         public bool isLoading { get; set; }
         public bool isLoaded { get; set; }
+        public bool isError { get; set; }
         public string text { get; set; }
         public Exception error { get; set; }
     }
@@ -24,7 +25,8 @@ namespace Reduxity.Example.Zenject {
         public void Initialize() {
             apiState_.isLoading = false;
             apiState_.isLoaded = false;
-            apiState_.text = "";
+            apiState_.isError = false;
+            apiState_.text = null;
             apiState_.error = null;
         }
     }

@@ -26,6 +26,8 @@ namespace Reduxity.Example.Zenject {
         /// </summary>
         public class HttpSettings {
             public ApiRequestor.Settings Api;
+            public ApiRequest.Settings ApiRequest;
+            public DisplayHttpButton.Settings SubmitButton;
         }
 
         /// <summary>
@@ -35,6 +37,8 @@ namespace Reduxity.Example.Zenject {
             Container.BindInstance(Player.Movement);
             Container.BindInstance(Player.Looking);
             Container.BindInstance(Http.Api);
+            Container.BindInstance(Http.ApiRequest);
+            Container.BindInstance(Http.SubmitButton);
             Container.BindInstance(GameInstaller);
         }
     }

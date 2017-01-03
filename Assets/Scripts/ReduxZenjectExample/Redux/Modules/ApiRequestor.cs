@@ -70,12 +70,14 @@ namespace Reduxity.Example.Zenject.ApiRequestor {
         private ApiState StartRequest(ApiState state, Action.IQueryStart action) {
             state.isLoaded = false;
             state.isLoading = true;
+            state.isError = false;
             return state;
         }
 
         private ApiState RequestSuccess(ApiState state, Action.IQuerySuccess action) {
             state.isLoaded = true;
             state.isLoading = false;
+            state.isError = false;
             state.text = action.text;
             state.error = null;
             return state;
@@ -84,6 +86,7 @@ namespace Reduxity.Example.Zenject.ApiRequestor {
         private ApiState RequestFailure(ApiState state, Action.IQueryFailure action) {
             state.isLoaded = true;
             state.isLoading = false;
+            state.isError = true;
             state.text = null;
             state.error = action.error;
             return state;

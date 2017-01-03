@@ -10,13 +10,16 @@ namespace Reduxity.Example.Zenject {
 
         readonly App app_;
         readonly CharacterController character_;
+        readonly CharacterMoverSelector selector_;
 
         public MoveCharacter(
             App app,
-            CharacterController character // via ZenjectBinding in editor
+            CharacterController character, // via ZenjectBinding in editor
+            CharacterMoverSelector selector
         ) {
             app_ = app;
             character_ = character;
+            selector_ = selector;
         }
 
         public void Initialize() {
@@ -27,7 +30,7 @@ namespace Reduxity.Example.Zenject {
         void RenderMove() {
             app_.Store
                 .Where(state => state.Character.isMoving)
-                .Select(CharacterMoverSelector.GetMoveDistance)
+                .Select(selector_.GetMoveDistance)
                 .Subscribe(distance => {
                     // Debug.Log($"going to move character by: {distance}");
                     character_.Move(distance);
@@ -38,7 +41,7 @@ namespace Reduxity.Example.Zenject {
         void RenderTurn() {
             app_.Store
                 .Where(state => state.Character.isTurning)
-                .Select(CharacterMoverSelector.GetTurnRotation)
+                .Select(selector_.GetTurnRotation)
                 .Subscribe(rotation => {
                     // Debug.Log($"going to turn character by: {rotation}");
                     character_.transform.localRotation = rotation;

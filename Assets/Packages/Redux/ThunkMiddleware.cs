@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 // from https://github.com/taiste/redux.NET-thunk
 namespace Redux.Thunk

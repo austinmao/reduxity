@@ -7,7 +7,7 @@ namespace Reduxity.Example.Zenject {
     public class PCInput : IInitializable {
 
         readonly App app_;
-        readonly Transform player_;
+        readonly Transform player_; // bound by Zenject Binding (script) on GameObject
 
         public PCInput(
             App app,
@@ -19,8 +19,8 @@ namespace Reduxity.Example.Zenject {
         }
 
         public void Initialize() {
-            observeMovement();
-            observeLook();
+            dispatchMovement();
+            dispatchLook();
         }
 
         // reference: https://ornithoptergames.com/reactiverx-in-unity3d-part-1/
@@ -34,7 +34,7 @@ namespace Reduxity.Example.Zenject {
                 });
         }
 
-        void observeMovement() {
+        void dispatchMovement() {
             observeKeyInput()
                 // performance optimization: only dispatch if non-zero movement
                 .Where(v => v != Vector2.zero)
@@ -63,7 +63,7 @@ namespace Reduxity.Example.Zenject {
 				});
         }
 
-        void observeLook() {
+        void dispatchLook() {
             observeMouseInput()
                 // ignore if mouse look is zero
 				.Where(v => v != Vector2.zero)

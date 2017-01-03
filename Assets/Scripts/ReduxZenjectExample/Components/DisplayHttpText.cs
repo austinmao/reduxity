@@ -9,15 +9,18 @@ namespace Reduxity.Example.Zenject {
 	public class DisplayHttpText : IInitializable, IComponent {
 
 		readonly App app_;
-		readonly Text text_;
+		readonly Text textUI_; // bound by Zenject Binding (script) on GameObject
+		readonly ApiDataSelector selector_;
 
 		public DisplayHttpText(
 			App app,
 			[Inject(Id = "HttpLogger")]
-			Text text
+			Text text,
+			ApiDataSelector apiDataSelector
 		) {
 			app_ = app;
-			text_ = text;
+			textUI_ = text;
+			selector_ = apiDataSelector;
 		}
 
 		public void Initialize() {
@@ -27,24 +30,26 @@ namespace Reduxity.Example.Zenject {
 
 		void RenderApiText() {
             app_.Store
-                .Where(state => state.Api.isLoaded == true)
-				.Select(ApiDataSelector.GetApiData)
+                .Where(state => (state.Api.isLoaded && !state.Api.isError))
+				.Select(selector_.GetApiData)
 				.Where(text => text != null)
                 .Subscribe(text => {
-					text_.text = text;
+					Debug.Log($"DisplayHttpText => textUI_.text on success: {text}");
+					textUI_.text = text;
                 })
-                .AddTo(text_);
+                .AddTo(textUI_);
 		}
 
 		void RenderApiError() {
             app_.Store
-                .Where(state => state.Api.isLoaded == true)
-				.Select(ApiDataSelector.GetApiError)
+                .Where(state => state.Api.isError)
+				.Select(selector_.GetApiError)
 				.Where(error => error != null)
                 .Subscribe(error => {
-					text_.text = $"ERROR: {error.ToString()}";
+					Debug.Log($"DisplayHttpText => textUI_.text on error: {error}");
+					textUI_.text = $"ERROR: {error}";
                 })
-                .AddTo(text_);
+                .AddTo(textUI_);
 		}
 	}
 }
