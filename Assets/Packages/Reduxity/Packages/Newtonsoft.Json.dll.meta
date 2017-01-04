@@ -1,5 +1,10 @@
 fileFormatVersion: 2
-guid: 878a269ee50954f5843ce9e2d98a44a6
+guid: bc43fbcb424fc4b53b70b86c1f93a3ba
+labels:
+- ExitGames
+- PUN
+- Photon
+- Networking
 PluginImporter:
   serializedVersion: 1
   iconMap: {}
@@ -8,10 +13,10 @@ PluginImporter:
   isOverridable: 0
   platformData:
     Any:
-      enabled: 1
+      enabled: 0
       settings: {}
     Editor:
-      enabled: 0
+      enabled: 1
       settings:
         DefaultValueInitialized: true
     WindowsStoreApps:
