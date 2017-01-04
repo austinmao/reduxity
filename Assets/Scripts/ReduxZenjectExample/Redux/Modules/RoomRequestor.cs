@@ -31,12 +31,12 @@ namespace Reduxity.Example.Zenject.RoomRequestor {
                 return JoinSuccess(state, (Action.JoinSuccess)action);
             }
 
-            if (action is Action.Join) {
+            if (action is Action.JoinFailure) {
                 return JoinFailure(state, (Action.JoinFailure)action);
             }
 
             if (action is Action.Leave) {
-                return StartLeav(state, (Action.Leave)action);
+                return Leave(state, (Action.Leave)action);
             }
 
             if (action is Action.LeaveSuccess) {
@@ -51,7 +51,7 @@ namespace Reduxity.Example.Zenject.RoomRequestor {
             state.isJoined = false;
             state.isJoinFailed = false;
             state.isLeaving = false;
-            state.feedbackText = "Joining...";
+            state.feedbackText = "Joining room...";
             return state;
         }
 
@@ -60,7 +60,7 @@ namespace Reduxity.Example.Zenject.RoomRequestor {
             state.isJoined = true;
             state.isJoinFailed = false;
             state.isLeaving = false;
-            state.feedbackText = "Joining room...";
+            state.feedbackText = "Joined room.";
             return state;
         }
 
@@ -69,16 +69,16 @@ namespace Reduxity.Example.Zenject.RoomRequestor {
             state.isJoined = false;
             state.isJoinFailed = true;
             state.isLeaving = false;
-            state.feedbackText = "Joining failed.";
+            state.feedbackText = "Joining room failed.";
             return state;
         }
 
-        private RoomState StartLeav(RoomState state, Action.Leave action) {
+        private RoomState Leave(RoomState state, Action.Leave action) {
             state.isJoining = false;
             state.isJoined = false;
             state.isJoinFailed = false;
             state.isLeaving = true;
-            state.feedbackText = "Leaving...";
+            state.feedbackText = "Leaving room...";
             return state;
         }
 
@@ -87,7 +87,7 @@ namespace Reduxity.Example.Zenject.RoomRequestor {
             state.isJoined = false;
             state.isJoinFailed = false;
             state.isLeaving = false;
-            state.feedbackText = "Leaving successful.";
+            state.feedbackText = "Left room";
             return state;
         }
     }

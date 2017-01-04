@@ -47,7 +47,6 @@ namespace Reduxity.Example.Zenject.NetworkRequestor.Tests
 		public void Should_set_Network_state_when_request_succeeds() {
             // arrange
 			var mockNetworkAction = new Action.ConnectSuccess {
-				feedbackText = "foo"
 			};
 
             // act
@@ -66,7 +65,6 @@ namespace Reduxity.Example.Zenject.NetworkRequestor.Tests
 		public void Should_set_Network_state_when_request_fails() {
             // arrange
 			var mockNetworkAction = new Action.ConnectFailure {
-				feedbackText = "fail"
 			};
 
             // act
