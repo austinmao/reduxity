@@ -44,7 +44,7 @@ namespace Reduxity.Example.Zenject.RoomRequestor.Tests
         }
 
 		[Test]
-		public void Should_set_Room_state_when_request_succeeds() {
+		public void Should_set_Room_state_when_joining_succeeds() {
             // arrange
 			var mockRoomAction = new Action.JoinSuccess {
 			};

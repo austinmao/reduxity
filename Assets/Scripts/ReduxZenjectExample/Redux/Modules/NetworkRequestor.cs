@@ -79,7 +79,7 @@ namespace Reduxity.Example.Zenject.NetworkRequestor {
 
         private NetworkState StartDisconnect(NetworkState state, Action.Disconnect action) {
             state.isConnecting = false;
-            state.isConnected = false;
+            state.isConnected = true;
             state.isConnectionFailed = false;
             state.isDisconnecting = true;
             state.feedbackText = "Disconnecting...";
