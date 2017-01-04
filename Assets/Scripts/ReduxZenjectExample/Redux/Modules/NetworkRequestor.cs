@@ -102,20 +102,20 @@ namespace Reduxity.Example.Zenject.NetworkRequestor {
     /// </summary>
     public class Settings {
 
-        // // The maximum number of players per room
-        // byte maxPlayersPerRoom = 4;
+        // The maximum number of players per room
+        public byte maxPlayersPerRoom = 4;
 
-        // // #NotImportant
-        // // Force LogLevel
-        // PhotonLogLevel logLevel = PhotonLogLevel.Full;
+        // #NotImportant
+        // Force LogLevel
+        public PhotonLogLevel logLevel = PhotonLogLevel.Full;
 
-        // // #Critical
-        // // we don't join the lobby. There is no need to join a lobby to get the list of rooms.
-        // bool shouldAutoJoinLobby = false;
+        // #Critical
+        // we don't join the lobby. There is no need to join a lobby to get the list of rooms.
+        public bool shouldAutoJoinLobby = false;
 
-        // // #Critical
-        // // this makes sure we can use PhotonNetwork.LoadLevel() on the master client and all clients in the same room sync their level automatically
-        // bool shouldAutomaticallySyncScene = true;
+        // #Critical
+        // this makes sure we can use PhotonNetwork.LoadLevel() on the master client and all clients in the same room sync their level automatically
+        public bool shouldAutomaticallySyncScene = true;
     }
 }
 
