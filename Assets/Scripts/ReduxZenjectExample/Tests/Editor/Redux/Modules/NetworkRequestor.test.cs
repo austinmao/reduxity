@@ -30,7 +30,7 @@ namespace Reduxity.Example.Zenject.NetworkRequestor.Tests
 		[Test]
 		public void Should_set_isConnecting_and_isConnected_when_starting_request() {
 			// arrange
-			var mockNetworkAction = new Action.Connect {};
+			var mockNetworkAction = new Action.ConnectStart {};
 			var sut = reducer_;
 
 			// act
@@ -84,7 +84,7 @@ namespace Reduxity.Example.Zenject.NetworkRequestor.Tests
 		[Test]
 		public void Should_set_isDisconnecting_and_isConnected_when_starting_request() {
 			// arrange
-			var mockNetworkAction = new Action.Disconnect {};
+			var mockNetworkAction = new Action.DisconnectStart {};
 			var sut = reducer_;
 
 			// act

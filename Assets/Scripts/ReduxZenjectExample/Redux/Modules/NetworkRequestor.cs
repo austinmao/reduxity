@@ -12,10 +12,10 @@ namespace Reduxity.Example.Zenject.NetworkRequestor {
             public string feedbackText { get; set; }
         }
 
-        public class Connect : INetworkResponse, IAction {}
+        public class ConnectStart : INetworkResponse, IAction {}
         public class ConnectSuccess : INetworkResponse, IAction {}
         public class ConnectFailure : INetworkResponse, IAction {}
-        public class Disconnect : INetworkResponse, IAction {}
+        public class DisconnectStart : INetworkResponse, IAction {}
         public class DisconnectSuccess : INetworkResponse, IAction {}
     }
 
@@ -27,8 +27,8 @@ namespace Reduxity.Example.Zenject.NetworkRequestor {
         }
 
         public NetworkState Reduce(NetworkState state, IAction action) {
-            if (action is Action.Connect) {
-                return StartConnect(state, (Action.Connect)action);
+            if (action is Action.ConnectStart) {
+                return StartConnect(state, (Action.ConnectStart)action);
             }
 
             if (action is Action.ConnectSuccess) {
@@ -39,8 +39,8 @@ namespace Reduxity.Example.Zenject.NetworkRequestor {
                 return ConnectFailure(state, (Action.ConnectFailure)action);
             }
 
-            if (action is Action.Disconnect) {
-                return StartDisconnect(state, (Action.Disconnect)action);
+            if (action is Action.DisconnectStart) {
+                return StartDisconnect(state, (Action.DisconnectStart)action);
             }
 
             if (action is Action.DisconnectSuccess) {
@@ -50,7 +50,7 @@ namespace Reduxity.Example.Zenject.NetworkRequestor {
             return state;
         }
 
-        private NetworkState StartConnect(NetworkState state, Action.Connect action) {
+        private NetworkState StartConnect(NetworkState state, Action.ConnectStart action) {
             state.isConnecting = true;
             state.isConnected = false;
             state.isConnectionFailed = false;
@@ -77,7 +77,7 @@ namespace Reduxity.Example.Zenject.NetworkRequestor {
             return state;
         }
 
-        private NetworkState StartDisconnect(NetworkState state, Action.Disconnect action) {
+        private NetworkState StartDisconnect(NetworkState state, Action.DisconnectStart action) {
             state.isConnecting = false;
             state.isConnected = true;
             state.isConnectionFailed = false;

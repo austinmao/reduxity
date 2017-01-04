@@ -14,12 +14,14 @@ namespace Reduxity.Example.Zenject {
 
 		readonly State state_;
 		readonly Logger logger_;
-		// readonly Settings settings_;
+		readonly Settings settings_;
 
 		/* Reducers below */
 		readonly CharacterMover.Reducer move_;
 		readonly CameraLook.Reducer look_;
 		readonly ApiRequestor.Reducer api_;
+		readonly NetworkRequestor.Reducer network_;
+		readonly RoomRequestor.Reducer room_;
 
 		/// <summary>
         /// Inject state and reducers
@@ -28,20 +30,26 @@ namespace Reduxity.Example.Zenject {
         /// <param name="move">Character movement reducers</param>
         /// <param name="look">Camera look reducers</param>
         /// <param name="api">Api reducers</param>
+        /// <param name="network">Network reducers</param>
+        /// <param name="room">Room reducers</param>
 		public App(
 			State state,
-			// Settings settings,
+			Settings settings,
 			Logger logger,
 			CharacterMover.Reducer move,
 			CameraLook.Reducer look,
-			ApiRequestor.Reducer api
+			ApiRequestor.Reducer api,
+			NetworkRequestor.Reducer network,
+			RoomRequestor.Reducer room
 		) {
 			state_ = state;
 			logger_ = logger;
-			// settings_ = settings;
+			settings_ = settings;
 			move_ = move;
 			look_ = look;
 			api_ = api;
+			network_ = network;
+			room_ = room;
 		}
 
 		public IStore<State> Store { get ; private set; }
@@ -66,11 +74,13 @@ namespace Reduxity.Example.Zenject {
 			state_.Character = move_.Reduce(previousState.Character, action);
 			state_.Camera = look_.Reduce(previousState.Camera, action);
 			state_.Api = api_.Reduce(previousState.Api, action);
+			state_.Network = network_.Reduce(previousState.Network, action);
+			state_.Room = room_.Reduce(previousState.Room, action);
 			return state_;
 		}
 
-		// [Serializable]
-		// public class Settings {
-		// }
+		[Serializable]
+		public class Settings {
+		}
 	}
 }

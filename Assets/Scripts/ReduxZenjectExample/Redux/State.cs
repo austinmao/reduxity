@@ -2,10 +2,17 @@
 using Zenject;
 
 namespace Reduxity.Example.Zenject {
+
+    /// <summary>
+    /// Create Redux state object. Each nested state object needs to be public
+    /// to enable modules and App to reference them.
+    /// </summary>
     public class State {
         public CharacterState Character;
         public CameraState Camera;
         public ApiState Api;
+        public NetworkState Network;
+        public RoomState Room;
 
         /// <summary>
         /// Inject nested state nodes into the Redux State that are already initialized.
@@ -14,11 +21,15 @@ namespace Reduxity.Example.Zenject {
         public State(
             CharacterState characterState,
             CameraState cameraState,
-            ApiState apiState
+            ApiState apiState,
+            NetworkState networkState,
+            RoomState roomState
         ) {
             Character = characterState;
             Camera = cameraState;
             Api = apiState;
+            Network = networkState;
+            Room = roomState;
         }
     }
 }

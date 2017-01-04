@@ -20,7 +20,7 @@ namespace Reduxity.Example.Zenject {
         public class AppSettings {
             public Middleware.LoggerSettings LogLevel;
             public GameInstaller.Settings GameInstaller;
-            // public App.Settings App;
+            public App.Settings App;
         }
 
         [Serializable]
@@ -62,10 +62,11 @@ namespace Reduxity.Example.Zenject {
             Container.BindInstance(Http.ApiRequest);
             Container.BindInstance(Http.SubmitButton);
             Container.BindInstance(Http.Text);
-            Container.BindInstance(App.LogLevel);
-            Container.BindInstance(App.GameInstaller);
             Container.BindInstance(Network.Network);
             Container.BindInstance(Network.Room);
+            Container.BindInstance(App.LogLevel);
+            Container.BindInstance(App.GameInstaller);
+            Container.BindInstance(App.App);
         }
     }
 }
