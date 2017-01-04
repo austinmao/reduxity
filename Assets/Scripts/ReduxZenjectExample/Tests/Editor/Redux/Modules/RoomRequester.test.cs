@@ -30,7 +30,7 @@ namespace Reduxity.Example.Zenject.RoomRequestor.Tests
 		[Test]
 		public void Should_set_isJoining_and_isJoined_when_starting_request() {
 			// arrange
-			var mockRoomAction = new Action.Join {};
+			var mockRoomAction = new Action.JoinStart {};
 			var sut = reducer_;
 
 			// act
@@ -40,7 +40,10 @@ namespace Reduxity.Example.Zenject.RoomRequestor.Tests
 			Assert.IsFalse(result.isJoined);
 			Assert.IsTrue(result.isJoining);
 			Assert.IsFalse(result.isJoinFailed);
+			Assert.IsFalse(result.isCreating);
 			Assert.IsFalse(result.isLeaving);
+			Assert.IsInstanceOf<string>(result.feedbackText);
+			Assert.IsNotEmpty(result.feedbackText);
         }
 
 		[Test]
@@ -56,6 +59,7 @@ namespace Reduxity.Example.Zenject.RoomRequestor.Tests
 			Assert.IsTrue(result.isJoined);
 			Assert.IsFalse(result.isJoining);
 			Assert.IsFalse(result.isJoinFailed);
+			Assert.IsFalse(result.isCreating);
 			Assert.IsFalse(result.isLeaving);
 			Assert.IsInstanceOf<string>(result.feedbackText);
 			Assert.IsNotEmpty(result.feedbackText);
@@ -64,7 +68,7 @@ namespace Reduxity.Example.Zenject.RoomRequestor.Tests
 		[Test]
 		public void Should_set_isLeaving_and_isJoined_when_starting_request() {
 			// arrange
-			var mockRoomAction = new Action.Leave {};
+			var mockRoomAction = new Action.LeaveStart {};
 			var sut = reducer_;
 
 			// act
@@ -74,7 +78,27 @@ namespace Reduxity.Example.Zenject.RoomRequestor.Tests
 			Assert.IsFalse(result.isJoined);
 			Assert.IsFalse(result.isJoining);
 			Assert.IsTrue(result.isLeaving);
+			Assert.IsFalse(result.isCreating);
 			Assert.IsFalse(result.isJoinFailed);
+			Assert.IsInstanceOf<string>(result.feedbackText);
+			Assert.IsNotEmpty(result.feedbackText);
+        }
+
+		[Test]
+		public void Should_set_isJoining_and_isCreating_when_creating_starts() {
+			// arrange
+			var mockRoomAction = new Action.CreateRoomStart {};
+			var sut = reducer_;
+
+			// act
+			var result = sut.Reduce(mockRoomState_, mockRoomAction);
+
+			// assert
+			Assert.IsFalse(result.isJoined);
+			Assert.IsTrue(result.isJoining);
+			Assert.IsFalse(result.isJoinFailed);
+			Assert.IsTrue(result.isCreating);
+			Assert.IsFalse(result.isLeaving);
 			Assert.IsInstanceOf<string>(result.feedbackText);
 			Assert.IsNotEmpty(result.feedbackText);
         }
@@ -92,6 +116,7 @@ namespace Reduxity.Example.Zenject.RoomRequestor.Tests
 			Assert.IsFalse(result.isJoined);
 			Assert.IsFalse(result.isJoining);
 			Assert.IsFalse(result.isLeaving);
+			Assert.IsFalse(result.isCreating);
 			Assert.IsFalse(result.isJoinFailed);
 			Assert.IsFalse(result.isLeaving);
 			Assert.IsInstanceOf<string>(result.feedbackText);

@@ -25,6 +25,11 @@ namespace Reduxity.Example.Zenject {
         public bool isJoinFailed { get; set; }
 
 		/// <summary>
+        /// Creating room in progress
+        /// </summary>
+        public bool isCreating { get; set; }
+
+		/// <summary>
         /// Leaving in progress
         /// </summary>
         public bool isLeaving { get; set; }
@@ -46,6 +51,7 @@ namespace Reduxity.Example.Zenject {
             roomState_.isJoining = false;
             roomState_.isJoined = false;
             roomState_.isJoinFailed = false;
+            roomState_.isCreating = false;
             roomState_.isLeaving = false;
             roomState_.feedbackText = "";
         }

@@ -84,11 +84,14 @@ namespace Reduxity.Example.Zenject.NetworkRequestor.Tests
 		[Test]
 		public void Should_set_isDisconnecting_and_isConnected_when_starting_request() {
 			// arrange
+			var mockState = new NetworkState {
+				isConnected = true
+			};
 			var mockNetworkAction = new Action.DisconnectStart {};
 			var sut = reducer_;
 
 			// act
-			var result = sut.Reduce(mockNetworkState_, mockNetworkAction);
+			var result = sut.Reduce(mockState, mockNetworkAction);
 
 			// assert
 			Assert.IsTrue(result.isConnected);

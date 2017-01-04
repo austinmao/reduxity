@@ -1,22 +1,20 @@
 ﻿using Redux;
 using System;
-using Photon;
-using UnityEngine.UI;
+using ModestTree;
 
 namespace Reduxity.Example.Zenject.NetworkRequestor {
     public class Action {
         /// <summary>
         /// Properties for each type of http request
         /// </summary>
-        public abstract class INetworkResponse {
+        public abstract class INetworkAction {
             public string feedbackText { get; set; }
         }
-
-        public class ConnectStart : INetworkResponse, IAction {}
-        public class ConnectSuccess : INetworkResponse, IAction {}
-        public class ConnectFailure : INetworkResponse, IAction {}
-        public class DisconnectStart : INetworkResponse, IAction {}
-        public class DisconnectSuccess : INetworkResponse, IAction {}
+        public class ConnectStart : INetworkAction, IAction {}
+        public class ConnectSuccess : INetworkAction, IAction {}
+        public class ConnectFailure : INetworkAction, IAction {}
+        public class DisconnectStart : INetworkAction, IAction {}
+        public class DisconnectSuccess : INetworkAction, IAction {}
     }
 
     public class Reducer : IReducer {
@@ -51,6 +49,10 @@ namespace Reduxity.Example.Zenject.NetworkRequestor {
         }
 
         private NetworkState StartConnect(NetworkState state, Action.ConnectStart action) {
+            // guarding assertions
+            Assert.IsEqual(state.isConnecting, false);
+            Assert.IsEqual(state.isConnected, false);
+
             state.isConnecting = true;
             state.isConnected = false;
             state.isConnectionFailed = false;
@@ -78,6 +80,9 @@ namespace Reduxity.Example.Zenject.NetworkRequestor {
         }
 
         private NetworkState StartDisconnect(NetworkState state, Action.DisconnectStart action) {
+            // guarding assertions
+            Assert.IsEqual(state.isConnected, true);
+
             state.isConnecting = false;
             state.isConnected = true;
             state.isConnectionFailed = false;
