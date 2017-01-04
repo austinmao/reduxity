@@ -56,7 +56,7 @@ In the aforementioned example, CharacterController.Move would only care that a V
 
 Now, the CharacterController only knows that state.velocity has changed and responds accordingly. This has a few benefits:
 
-1. You can unit test the observer (step 1), reducers (step 3), and renderers (step 5) separately. Hooray for decoupling!
+1. You can unit test the observer (step 1), reducers (step 3), and renderers (step 5) separately. Hooray for decoupling! See [Unit Testing](#unit-testing) for more info.
 2. You can use any input to dispatch to the redux store. This includes third party assets that are not written reactively. All you need to do is dispatch to the store.
 3. You can debug how additions to the state affected your app one state change at a time.
 
@@ -251,6 +251,85 @@ A port of [redux.NET-thunk](https://github.com/taiste/redux.NET-thunk) is includ
 
 ### Logger
 A port of [redux-logger](https://github.com/evgenyrodionov/redux-logger) is included for automatically logging dispatched actions and the current state before applying the action. Currently, this is only tested with Zenject and adjustable within Zenject's [ScriptableObjectInstaller](https://github.com/modesttree/Zenject#scriptable-object-installer) that is adjustable in runtime Settings. Note that using a `verbose` LogLevel setting will result in dumping each action and state object, which could adversely affect performance in development mode.
+
+## Unit Testing
+One of the key benefits of redux is making unit testing much easier. Earlier, we stated: "You can unit test the observer (step 1), reducers (step 3), and renderers (step 5) separately. Hooray for decoupling!"
+
+Let's take a look at some code to test an asynchronous web request, which would normally be impossible without a web server.
+
+Given this reducer:
+
+```csharp
+public class Action {
+    /* Actions for succeeding with an http request */
+    public abstract class IQuerySuccess {
+        public string text { get; set; }
+    }
+    public class GetSuccess : IQuerySuccess, IAction {}
+}
+
+public class Reducer : IReducer {
+    private ApiState RequestSuccess(ApiState state, Action.IQuerySuccess action) {
+        state.isLoaded = true;
+        state.isLoading = false;
+        state.isError = false;
+        state.text = action.text;
+        state.error = null;
+        return state;
+    }
+}
+```
+
+You could write a test to make sure that the state returns:
+
+```csharp
+/* NOTE: testing using Zenject DIContainer below makes testing easier, but is not necessary */
+[TestFixture]
+public class Test : ZenjectUnitTestFixture {
+
+    DiContainer container_;
+    private ApiState mockApiState_;
+    private Reducer reducer_;
+
+    [SetUp]
+    public void Setup() {
+        // create private container
+        container_ = new DiContainer();
+        container_.Bind<Reducer>().AsSingle();
+
+        // set up mock settings
+        var mockSettings = new Settings {
+        };
+        container_.Bind<Settings>().FromInstance(mockSettings);
+
+        // set default state
+        mockApiState_ = new ApiState {};
+        reducer_ = container_.Resolve<Reducer>();
+    }
+
+    [Test]
+    public void Should_set_api_state_when_request_succeeds() {
+        // arrange
+        var mockApiAction = new Action.GetSuccess {
+            text = "foo"
+        };
+
+        // act
+        var result = reducer_.Reduce(mockApiState_, mockApiAction);
+
+        // assert
+        Assert.IsTrue(result.isLoaded);
+        Assert.IsFalse(result.isLoading);
+        Assert.IsNull(result.error);
+        Assert.AreEqual(result.text, "foo");
+    }
+}
+```
+
+There, now you have confirmed that dispatching the `GetSuccess()` will result in the desired state.
+
+You can then test the Component responsible for reacting to this state change.
+
 
 ## Plans
 - [x] provide multiple reducer example
