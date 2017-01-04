@@ -62,9 +62,27 @@ namespace Reduxity.Example.Zenject.RoomRequestor.Tests
         }
 
 		[Test]
-		public void Should_set_Room_state_when_request_fails() {
+		public void Should_set_isLeaving_and_isJoined_when_starting_request() {
+			// arrange
+			var mockRoomAction = new Action.Leave {};
+			var sut = reducer_;
+
+			// act
+			var result = sut.Reduce(mockRoomState_, mockRoomAction);
+
+			// assert
+			Assert.IsFalse(result.isJoined);
+			Assert.IsFalse(result.isJoining);
+			Assert.IsTrue(result.isLeaving);
+			Assert.IsFalse(result.isJoinFailed);
+			Assert.IsInstanceOf<string>(result.feedbackText);
+			Assert.IsNotEmpty(result.feedbackText);
+        }
+
+		[Test]
+		public void Should_set_Room_state_when_leaving_succeeds() {
             // arrange
-			var mockRoomAction = new Action.JoinFailure {
+			var mockRoomAction = new Action.LeaveSuccess {
 			};
 
             // act
@@ -73,7 +91,8 @@ namespace Reduxity.Example.Zenject.RoomRequestor.Tests
             // assert
 			Assert.IsFalse(result.isJoined);
 			Assert.IsFalse(result.isJoining);
-			Assert.IsTrue(result.isJoinFailed);
+			Assert.IsFalse(result.isLeaving);
+			Assert.IsFalse(result.isJoinFailed);
 			Assert.IsFalse(result.isLeaving);
 			Assert.IsInstanceOf<string>(result.feedbackText);
 			Assert.IsNotEmpty(result.feedbackText);
