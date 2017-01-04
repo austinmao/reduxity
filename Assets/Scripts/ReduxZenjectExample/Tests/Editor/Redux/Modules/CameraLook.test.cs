@@ -42,7 +42,6 @@ namespace Reduxity.Example.Zenject.CameraLook {
 			var sut = container_.Resolve<Reducer>();
 			var result = sut.Reduce(mockCameraState, mockLookAction);
 
-			Debug.Log(ObjectDumper.Dump(result));
 			Assert.IsTrue(result.isLooking);
 			// Assert.Equals(result.localRotation, Quaternion.Euler(1f,1f,1f));
 		}

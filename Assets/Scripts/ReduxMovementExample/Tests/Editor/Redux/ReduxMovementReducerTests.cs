@@ -42,7 +42,6 @@ namespace Reduxity.Example.PlayerMovement.Tests {
 			App.Store.Dispatch(mockMoveAction);
 
 			State currentState = GetCurrentState();
-			Debug.Log(currentState.Movement.distance);
 			Assert.IsTrue(currentState.Movement.isMoving);
 			Assert.AreEqual(currentState.Movement.distance, Vector3.forward);
 		}
