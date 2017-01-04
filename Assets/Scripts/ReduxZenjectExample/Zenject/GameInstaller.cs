@@ -45,6 +45,8 @@ namespace Reduxity.Example.Zenject {
             Container.Bind<CharacterState>().AsSingle();
             Container.Bind<CameraState>().AsSingle();
             Container.Bind<ApiState>().AsSingle();
+            Container.Bind<NetworkState>().AsSingle();
+            Container.Bind<RoomState>().AsSingle();
 			Container.Bind<State>().AsSingle();
 		}
 
@@ -78,6 +80,8 @@ namespace Reduxity.Example.Zenject {
             Container.Bind<CharacterMover.Reducer>().AsSingle().WhenInjectedInto<App>();
             Container.Bind<CameraLook.Reducer>().AsSingle().WhenInjectedInto<App>();
             Container.Bind<ApiRequestor.Reducer>().AsSingle().WhenInjectedInto<App>();
+            Container.Bind<NetworkRequestor.Reducer>().AsSingle().WhenInjectedInto<App>();
+            Container.Bind<RoomRequestor.Reducer>().AsSingle().WhenInjectedInto<App>();
         }
 
         /// <summary>
@@ -105,13 +109,9 @@ namespace Reduxity.Example.Zenject {
         /// </summary>
         private void InstallComponents() {
             Container.Bind<IInitializable>().To(x => x.AllTypes().DerivingFrom<IComponent>()).AsSingle();
-            // Container.Bind<IInitializable>().To<MoveCharacter>().AsSingle();
             Container.Bind<MoveCharacter>().AsSingle();
-            // Container.Bind<IInitializable>().To<MoveCamera>().AsSingle();
             Container.Bind<MoveCamera>().AsSingle();
-            // Container.Bind<IInitializable>().To<DisplayHttpText>().AsSingle();
             Container.Bind<DisplayHttpText>().AsSingle();
-            // Container.Bind<IInitializable>().To<DisplayHttpButton>().AsSingle();
             Container.Bind<DisplayHttpButton>().AsSingle();
         }
 
@@ -123,6 +123,10 @@ namespace Reduxity.Example.Zenject {
 
 		[Serializable]
 		public class Settings {
+            /// <summary>
+            /// This client's version number. Users are separated from each other by gameversion (which allows you to make breaking changes).
+            /// </summary>
+            string gameVersion = "1";
 		}
 	}
 }

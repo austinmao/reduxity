@@ -8,9 +8,10 @@ namespace Reduxity.Example.Zenject {
     public class ReduxZenjectSettingsInstaller : ScriptableObjectInstaller<ReduxZenjectSettingsInstaller> {
 
         /* These variables provide access nested classes below */
+        public AppSettings App;
         public PlayerSettings Player;
         public HttpSettings Http;
-        public AppSettings App;
+        public NetworkSettings Network;
 
         [Serializable]
         /// <summary>
@@ -42,6 +43,15 @@ namespace Reduxity.Example.Zenject {
             public DisplayHttpText.Settings Text;
         }
 
+        [Serializable]
+        /// <summary>
+        /// Settings related to multiplayer network requests
+        /// </summary>
+        public class NetworkSettings {
+            public NetworkRequestor.Settings Network;
+            public RoomRequestor.Settings Room;
+        }
+
         /// <summary>
         /// Binding settings as an instance
         /// </summary>
@@ -54,7 +64,8 @@ namespace Reduxity.Example.Zenject {
             Container.BindInstance(Http.Text);
             Container.BindInstance(App.LogLevel);
             Container.BindInstance(App.GameInstaller);
-            // Container.BindInstance(App.App);
+            Container.BindInstance(Network.Network);
+            Container.BindInstance(Network.Room);
         }
     }
 }

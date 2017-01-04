@@ -31,10 +31,14 @@ namespace Reduxity.Example.Zenject.ApiRequestor.Tests {
 
 		[Test]
 		public void Should_set_isLoading_and_isLoaded_when_starting_request() {
+			// arrange
 			var mockApiAction = new Action.GetStart {};
 			var sut = reducer_;
+
+			// act
 			var result = sut.Reduce(mockApiState_, mockApiAction);
 
+			// assert
 			Assert.IsFalse(result.isLoaded);
 			Assert.IsTrue(result.isLoading);
         }

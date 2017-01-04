@@ -6,6 +6,7 @@ using System.Collections.Generic;
 namespace Reduxity.Example.Zenject {
 
     /// <summary>
+    /// State of API requests
     /// </summary>
     public class ApiState : IState {
         public bool isLoading { get; set; }
