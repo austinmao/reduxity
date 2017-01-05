@@ -7,6 +7,7 @@ namespace Reduxity.Example.Zenject.ClientConnectCreator {
         /// Properties for each type of http request
         /// </summary>
         public class Connect : IAction {}
+        public class Switch : IAction {}
         public class Disconnect : IAction {}
     }
 
