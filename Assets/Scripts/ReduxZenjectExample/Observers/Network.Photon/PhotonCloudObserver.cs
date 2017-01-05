@@ -24,6 +24,7 @@ namespace Reduxity.Example.Zenject {
 		}
 
 		public void Initialize() {
+            // connect immediately on startup if settings say so
             if (settings_.shouldConnectOnStartup) {
                 StartConnect();
             }
@@ -36,6 +37,7 @@ namespace Reduxity.Example.Zenject {
             app_.Store
                 // .TakeUntilDestroy
                 .Where(state => {
+                    // only connect if not already connected or connecting
                     return (
                         state.Cloud.isDisconnected &&
                         !state.Cloud.isConnected &&
