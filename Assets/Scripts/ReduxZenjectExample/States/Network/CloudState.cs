@@ -44,20 +44,20 @@ namespace Reduxity.Example.Zenject {
 
     public class CloudStateInitializer : IStateInitializer, IInitializable {
 
-        readonly CloudState cloudState_;
+        readonly CloudState state_;
 
         public CloudStateInitializer(CloudState cloudState) {
-            cloudState_ = cloudState;
+            state_ = cloudState;
         }
 
         public void Initialize() {
-            cloudState_.isConnecting = false;
-            cloudState_.isConnected = false;
-            cloudState_.isConnectionFailed = false;
-            cloudState_.isDisconnected = true; // start disconnected
-            cloudState_.isDisconnectionFailed = false;
-            cloudState_.isDisconnecting = false;
-            cloudState_.feedbackText = "";
+            state_.isConnecting = false;
+            state_.isConnected = false;
+            state_.isConnectionFailed = false;
+            state_.isDisconnected = true; // start disconnected
+            state_.isDisconnectionFailed = false;
+            state_.isDisconnecting = false;
+            state_.feedbackText = "";
         }
     }
 }

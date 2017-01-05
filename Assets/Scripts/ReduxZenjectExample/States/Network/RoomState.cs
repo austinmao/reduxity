@@ -67,25 +67,25 @@ namespace Reduxity.Example.Zenject
     }
 
     public class RoomStateInitializer : IStateInitializer, IInitializable {
-        readonly RoomState roomState_;
+        readonly RoomState state_;
 
         public RoomStateInitializer(RoomState roomState) {
-            roomState_ = roomState;
+            state_ = roomState;
         }
 
         public void Initialize() {
-            roomState_.isJoining = false;
-            roomState_.isJoined = false;
-            roomState_.isJoinFailed = false;
-            roomState_.isCreating = false;
-            roomState_.isCreated = false;
-            roomState_.isCreateFailed = false;
-            roomState_.isLeaving = false;
-            roomState_.hasLeft = false;
-            roomState_.isLeavingFailed = false;
-            roomState_.roomName = "";
-            roomState_.roomProperties = null;
-            roomState_.feedbackText = "";
+            state_.isJoining = false;
+            state_.isJoined = false;
+            state_.isJoinFailed = false;
+            state_.isCreating = false;
+            state_.isCreated = false;
+            state_.isCreateFailed = false;
+            state_.isLeaving = false;
+            state_.hasLeft = false;
+            state_.isLeavingFailed = false;
+            state_.roomName = "";
+            state_.roomProperties = null;
+            state_.feedbackText = "";
         }
     }
 }

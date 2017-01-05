@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using Redux;
 
 namespace Reduxity.Example.Zenject {
-	public class PhotonPlayerObserver : IComponent {
+	public class PhotonNetworkPlayerObserver : IComponent {
 
 		readonly App app_;
 		readonly Settings settings_;
         readonly NetworkPlayerCreator.ActionCreator actionCreator_;
 		readonly Dispatcher dispatch_;
 
-        public PhotonPlayerObserver(
+        public PhotonNetworkPlayerObserver(
 			App app,
 			Settings settings,
             NetworkPlayerCreator.ActionCreator actionCreator

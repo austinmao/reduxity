@@ -71,21 +71,21 @@ namespace Reduxity.Example.Zenject {
     }
 
     public class LobbyStateInitializer : IStateInitializer, IInitializable {
-        readonly LobbyState lobbyState_;
+        readonly LobbyState state_;
 
         public LobbyStateInitializer(LobbyState lobbyState) {
-            lobbyState_ = lobbyState;
+            state_ = lobbyState;
         }
 
         public void Initialize() {
-            lobbyState_.isJoining = false;
-            lobbyState_.isJoined = false;
-            lobbyState_.isJoinFailed = false;
-            lobbyState_.isCreating = false;
-            lobbyState_.isLeaving = false;
-            lobbyState_.hasLeft = false;
-            lobbyState_.isLeavingFailed = false;
-            lobbyState_.feedbackText = "";
+            state_.isJoining = false;
+            state_.isJoined = false;
+            state_.isJoinFailed = false;
+            state_.isCreating = false;
+            state_.isLeaving = false;
+            state_.hasLeft = false;
+            state_.isLeavingFailed = false;
+            state_.feedbackText = "";
         }
     }
 }

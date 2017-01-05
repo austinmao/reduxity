@@ -94,13 +94,14 @@ namespace Reduxity.Example.Zenject {
     }
 
     public class NetworkPlayerStateInitializer : IStateInitializer, IInitializable {
-        readonly NetworkPlayerState networkPlayerState_;
+        readonly NetworkPlayerState state_;
 
         public NetworkPlayerStateInitializer(NetworkPlayerState networkPlayerState) {
-            networkPlayerState_ = networkPlayerState;
+            state_ = networkPlayerState;
         }
 
         public void Initialize() {
+			state_.ID = -1;
         }
     }
 }
