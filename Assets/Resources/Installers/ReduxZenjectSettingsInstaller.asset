@@ -11,6 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a1eb031eb91a46a29305fce22c34a0d, type: 3}
   m_Name: ReduxZenjectSettingsInstaller
   m_EditorClassIdentifier: 
+  App:
+    LogLevel:
+      Level: 1
   Player:
     Movement:
       xLookSpeed: 100
@@ -21,8 +24,6 @@ MonoBehaviour:
       minViewAngle: -60
       yLookSpeed: 100
   Http:
-    Api:
-      retries: 3
     ApiRequest:
       defaultUrl: https://api.github.com/repos/austinmao/reduxity
     SubmitButton:
@@ -30,6 +31,17 @@ MonoBehaviour:
       loadingText: Loading...
     Text:
       errorPrefixText: 'Error: '
-  App:
-    LogLevel:
-      Level: 1
+  Network:
+    Cloud:
+      logLevel: 2
+    Server:
+      shouldAutomaticallySyncScene: 1
+      logLevel: 2
+    Lobby:
+      shouldJoinRandomLobby: 1
+    Room:
+      maxPlayersPerRoom: 4
+      shouldJoinRandomRoom: 1
+  PhotonNetwork:
+    Cloud:
+      shouldConnectOnStartup: 1

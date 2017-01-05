@@ -1,17 +1,30 @@
 ﻿using UniRx;
 using Zenject;
 using System;
+using UnityEngine.UI;
 
 namespace Reduxity.Example.Zenject {
 
     public class PhotonCloud : IInitializable, IComponent {
 
         readonly App app_;
+        readonly Text logger_;
+        readonly Button button_;
+        readonly Text buttonText_;
 
         public PhotonCloud(
-            App app
+            App app,
+            [Inject(Id = "PhotonLogger")]
+            Text logger,
+            [Inject(Id = "ConnectToCloud")]
+            Button button,
+            [Inject(Id = "ConnectToCloud")]
+            Text buttonText
         ) {
             app_ = app;
+            logger_ = logger;
+            button_ = button;
+            buttonText_ = buttonText;
         }
 
         public void Initialize() {
@@ -26,8 +39,9 @@ namespace Reduxity.Example.Zenject {
                 // .TakeUntilDestroy
                 .Where(state => state.Cloud.isDisconnected)
                 .Subscribe(_ => {
-                    // TODO: appropriate to dispatch here?
-                    // do some rendering here
+                    logger_.text = "Click to connect to Photon Cloud.";
+                    button_.interactable = true;
+                    buttonText_.text = "Connect";
                 });
         }
 
@@ -35,8 +49,9 @@ namespace Reduxity.Example.Zenject {
             app_.Store
                 // .TakeUntilDestroy
                 .Where(state => state.Cloud.isConnecting)
-                .Subscribe(_ => {
-                    // do some rendering here
+                .Subscribe(state => {
+                    logger_.text = "Connecting...";
+                    button_.interactable = false;
                 });
         }
 
@@ -45,16 +60,19 @@ namespace Reduxity.Example.Zenject {
                 // .TakeUntilDestroy
                 .Where(state => state.Cloud.isConnected)
                 .Subscribe(_ => {
-                    // do some rendering here
+                    logger_.text = "Connected.";
+                    button_.interactable = true;
+                    buttonText_.text = "Disconnect";
                 });
         }
 
         void RenderConnectionFailure() {
             app_.Store
-                // .TakeUntilDestroy
                 .Where(state => state.Cloud.isConnectionFailed)
                 .Subscribe(_ => {
-                    // do some rendering here
+                    logger_.text = "Connection failure!";
+                    button_.interactable = true;
+                    buttonText_.text = "Connect";
                 });
         }
     }

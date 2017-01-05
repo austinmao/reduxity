@@ -149,7 +149,7 @@ namespace Reduxity.Example.Zenject {
 		/// <summary>
 		/// </summary>
 		public class Settings {
-            public bool shouldConnectOnStartup = false;
+            public bool shouldConnectOnStartup = true;
 		}
 	}
 }
