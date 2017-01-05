@@ -18,16 +18,10 @@ namespace Reduxity.Example.Zenject {
             RenderConnectStart();
         }
 
-        void RenderConnectStart() {
+        void RenderIsNotConnected() {
             app_.Store
                 // .TakeUntilDestroy
-                .Where(state => {
-                    return (
-                        state.Cloud.isDisconnected &&
-                        !state.Cloud.isConnected &&
-                        !state.Cloud.isConnecting
-                    );
-                })
+                .Where(state => state.Cloud.isDisconnected})
                 .Subscribe(_ => {
                     // TODO: appropriate to dispatch here?
                     // do some rendering here

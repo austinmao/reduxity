@@ -12,6 +12,7 @@ namespace Reduxity.Example.Zenject {
         public PlayerSettings Player;
         public HttpSettings Http;
         public NetworkSettings Network;
+        public PhotonNetwork PhotonNetwork;
 
         [Serializable]
         /// <summary>
@@ -56,6 +57,18 @@ namespace Reduxity.Example.Zenject {
             public NetworkPlayers.Settings NetworkPlayers;
         }
 
+        [Serializable]
+        /// <summary>
+        /// Settings related to multiplayer network requests
+        /// </summary>
+        public class PhotonNetworkSettings {
+            public PhotonCloudObserver.Settings Cloud;
+            public PhotonClientObserver.Settings Server;
+            public PhotonLobbyObserver.Settings Lobby;
+            public PhotonRoomObserver.Settings Room;
+            public PhotonNetworkPlayerObserver.Settings NetworkPlayer;
+        }
+
         /// <summary>
         /// Binding settings as an instance
         /// </summary>
@@ -77,6 +90,13 @@ namespace Reduxity.Example.Zenject {
             Container.BindInstance(Network.Room);
             Container.BindInstance(Network.NetworkPlayer);
             Container.BindInstance(Network.NetworkPlayers);
+
+            // PhotonNetwork
+            Container.BindInstance(PhotonNetwork.Cloud);
+            Container.BindInstance(PhotonNetwork.Server);
+            Container.BindInstance(PhotonNetwork.Lobby);
+            Container.BindInstance(PhotonNetwork.Room);
+            Container.BindInstance(PhotonNetwork.NetworkPlayer);
 
             // App
             Container.BindInstance(App.LogLevel);

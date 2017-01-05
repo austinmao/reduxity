@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Redux;
+using UniRx;
 
 namespace Reduxity.Example.Zenject {
 	public class PhotonCloudObserver : IComponent {
@@ -24,6 +25,26 @@ namespace Reduxity.Example.Zenject {
 
 		public void Initialize() {
 		}
+
+        /// <summary>
+        /// Start connecting to Photon Cloud
+        /// </summary>
+        void StartConnect() {
+            app_.Store
+                // .TakeUntilDestroy
+                .Where(state => {
+                    return (
+                        state.Cloud.isDisconnected &&
+                        !state.Cloud.isConnected &&
+                        !state.Cloud.isConnecting
+                    );
+                })
+                .Subscribe(_ => {
+                    var action = new CloudConnector.Action.ConnectStart {};
+                    dispatch_(action);
+                });
+        }
+
 
 		/// <summary>
         /// Called when the initial connection got established but before you can use the server. OnJoinedLobby() or OnConnectedToMaster() are called when PUN is ready.
@@ -123,6 +144,7 @@ namespace Reduxity.Example.Zenject {
 		/// <summary>
 		/// </summary>
 		public class Settings {
+            bool shouldConnectOnStartup = false;
 		}
 	}
 }
