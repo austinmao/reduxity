@@ -52,6 +52,7 @@ namespace Reduxity.Example.Zenject {
             Container.Bind<LobbyState>().AsSingle();
             Container.Bind<RoomState>().AsSingle();
             Container.Bind<NetworkPlayerState>().AsSingle();
+            Container.Bind<NetworkPlayersState>().AsSingle();
 
             // global state object
 			Container.Bind<State>().AsSingle();
@@ -97,6 +98,7 @@ namespace Reduxity.Example.Zenject {
             Container.Bind<LobbyConnector.Reducer>().AsSingle().WhenInjectedInto<App>();
             Container.Bind<RoomConnector.Reducer>().AsSingle().WhenInjectedInto<App>();
             Container.Bind<NetworkPlayer.Reducer>().AsSingle().WhenInjectedInto<App>();
+            Container.Bind<NetworkPlayers.Reducer>().AsSingle().WhenInjectedInto<App>();
         }
 
         /// <summary>

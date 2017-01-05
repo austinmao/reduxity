@@ -34,9 +34,8 @@ namespace Reduxity.Example.Zenject {
         /// Room.playerCount and find out if you can start.
         /// </remarks>
         public void OnPhotonPlayerConnected(PhotonPlayer newPlayer) {
-            // TODO: make player actions
-            // var action = new RoomConnector.Action.JoinSuccess {};
-            // dispatch_(action);
+            var action = new NetworkPlayers.Action.ConnectPlayer {};
+            dispatch_(action);
         }
 
         /// <summary>
@@ -48,6 +47,9 @@ namespace Reduxity.Example.Zenject {
         /// of several seconds.
         /// </remarks>
         public void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer) {
+            // TODO: decide if we want to use otherPlayer for any info
+            var action = new NetworkPlayers.Action.DisconnectPlayer {};
+            dispatch_(action);
         }
 
         /// <summary>

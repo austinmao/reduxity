@@ -19,7 +19,7 @@ namespace Reduxity.Example.Zenject.NetworkPlayerCreator {
             // return thunk to store, which will dispatch new actions upon success or failure
             return new ThunkAction<State> ((dispatch, getState) => {
                 // dispatch first action to set state to loading
-                dispatch(new NetworkPlayer.Action.ConnectStart {});
+                // dispatch(new NetworkPlayer.Action.ConnectStart {});
 
                 // connect to PhotonNetworkPlayer. Callbacks are handled by Photon.
 				// PhotonNetwork.ConnectUsingSettings(action.settings);
