@@ -64,6 +64,24 @@ namespace Reduxity.Example.Zenject {
         public void OnLobbyStatisticsUpdate() {
         }
 
+        /// <summary>
+        /// Called for any update of the room-listing while in a lobby (PhotonNetwork.insideLobby) on the Master Server.
+        /// </summary>
+        /// <remarks>
+        /// PUN provides the list of rooms by PhotonNetwork.GetRoomList().<br/>
+        /// Each item is a RoomInfo which might include custom properties (provided you defined those as lobby-listed when creating a room).
+        ///
+        /// Not all types of lobbies provide a listing of rooms to the client. Some are silent and specialized for server-side matchmaking.
+        /// </remarks>
+        public void OnReceivedRoomListUpdate() {
+            // get list of room info
+            RoomInfo[] roomList = PhotonNetwork.GetRoomList();
+			var action = new LobbyConnector.Action.UpdateRoomList {
+                photonRoomList = roomList
+            };
+			dispatch_(action);
+        }
+
 		[Serializable]
 		/// <summary>
 		/// </summary>

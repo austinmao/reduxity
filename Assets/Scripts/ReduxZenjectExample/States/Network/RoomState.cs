@@ -1,9 +1,8 @@
-﻿using UnityEngine;
-using Zenject;
-using System;
-using System.Collections.Generic;
+﻿using Zenject;
+using ExitGames.Client.Photon;
 
-namespace Reduxity.Example.Zenject {
+namespace Reduxity.Example.Zenject
+{
 
     /// <summary>
     /// </summary>
@@ -55,14 +54,16 @@ namespace Reduxity.Example.Zenject {
         public bool isLeavingFailed { get; set; }
 
 		/// <summary>
-        /// The Ui Text to inform the user about the Joining progress
-        /// </summary>
-        public string feedbackText { get; set; }
-
-		/// <summary>
         /// Photon room name
         /// </summary>
         public string roomName { get; set; }
+
+        public Hashtable roomProperties { get; set; }
+
+		/// <summary>
+        /// The Ui Text to inform the user about the Joining progress
+        /// </summary>
+        public string feedbackText { get; set; }
     }
 
     public class RoomStateInitializer : IStateInitializer, IInitializable {
@@ -77,9 +78,13 @@ namespace Reduxity.Example.Zenject {
             roomState_.isJoined = false;
             roomState_.isJoinFailed = false;
             roomState_.isCreating = false;
+            roomState_.isCreated = false;
+            roomState_.isCreateFailed = false;
             roomState_.isLeaving = false;
             roomState_.hasLeft = false;
             roomState_.isLeavingFailed = false;
+            roomState_.roomName = "";
+            roomState_.roomProperties = null;
             roomState_.feedbackText = "";
         }
     }

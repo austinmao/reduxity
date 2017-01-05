@@ -37,11 +37,8 @@ namespace Reduxity.Example.Zenject {
         /// The list of available rooms won't become available unless you join a lobby via PhotonNetwork.joinLobby.
         /// </remarks>
         public void OnConnectedToMaster() {
-			var action = new RoomConnector.Action.JoinStart {
-				// shouldJoinRandomRoom = settings_.shouldAutoJoinLobby,
-                // roomName = 
-			};
-			// dispatch_(actionCreator_.JoinRoomStart(action));
+			var action = new ClientConnector.Action.ConnectSuccess {};
+			dispatch_(action);
         }
 
         /// <summary>
@@ -52,6 +49,10 @@ namespace Reduxity.Example.Zenject {
         /// The former MasterClient is still in the player list when this method get called.
         /// </remarks>
         public void OnMasterClientSwitched(PhotonPlayer newMasterClient) {
+			var action = new ClientConnector.Action.ConnectSuccess {
+                photonClient = newMasterClient // set new client
+            };
+			dispatch_(action);
         }
 
         /// <summary>

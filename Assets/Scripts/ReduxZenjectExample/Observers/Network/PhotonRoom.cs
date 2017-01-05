@@ -95,7 +95,9 @@ namespace Reduxity.Example.Zenject {
         /// </remarks>
         /// <param name="codeAndMsg">codeAndMsg[0] is a short ErrorCode and codeAndMsg[1] is a string debug msg.</param>
         public void OnPhotonCreateRoomFailed(object[] codeAndMsg) {
-            var action = new RoomConnector.Action.CreateFailure {};
+            var action = new RoomConnector.Action.CreateFailure {
+                feedbackText = codeAndMsg.ToString()
+            };
             dispatch_(action);
         }
 
@@ -112,18 +114,6 @@ namespace Reduxity.Example.Zenject {
         }
 
         /// <summary>
-        /// Called for any update of the room-listing while in a lobby (PhotonNetwork.insideLobby) on the Master Server.
-        /// </summary>
-        /// <remarks>
-        /// PUN provides the list of rooms by PhotonNetwork.GetRoomList().<br/>
-        /// Each item is a RoomInfo which might include custom properties (provided you defined those as lobby-listed when creating a room).
-        ///
-        /// Not all types of lobbies provide a listing of rooms to the client. Some are silent and specialized for server-side matchmaking.
-        /// </remarks>
-        public void OnReceivedRoomListUpdate() {
-        }
-
-        /// <summary>
         /// Called when a room's custom properties changed. The propertiesThatChanged contains all that was set via Room.SetCustomProperties.
         /// </summary>
         /// <remarks>
@@ -132,6 +122,10 @@ namespace Reduxity.Example.Zenject {
         /// </remarks>
         /// <param name="propertiesThatChanged"></param>
         public void OnPhotonCustomRoomPropertiesChanged(Hashtable propertiesThatChanged) {
+			var action = new RoomConnector.Action.UpdateRoomProperties {
+                roomProperties = propertiesThatChanged
+            };
+			dispatch_(action);
         }
 
 		[Serializable]

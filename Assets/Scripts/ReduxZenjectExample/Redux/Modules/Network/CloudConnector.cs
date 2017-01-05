@@ -12,7 +12,9 @@ namespace Reduxity.Example.Zenject.CloudConnector {
         }
         public class ConnectStart : ICloudAction, IAction {}
         public class ConnectSuccess : ICloudAction, IAction {}
-        public class ConnectFailure : ICloudAction, IAction {}
+        public class ConnectFailure : ICloudAction, IAction {
+            public DisconnectCause photonDisconnectCause;
+        }
         public class DisconnectStart : ICloudAction, IAction {}
         public class DisconnectSuccess : ICloudAction, IAction {}
         public class DisconnectFailure : ICloudAction, IAction {}

@@ -63,6 +63,11 @@ namespace Reduxity.Example.Zenject {
         /// Photon lobby name
         /// </summary>
         public string lobbyName { get; set; }
+
+        /// <summary>
+        /// Each item is a RoomInfo which might include custom properties (provided you defined those as lobby-listed when creating a room).
+        /// </summary>
+        public RoomInfo[] photonRoomList { get; set; }
     }
 
     public class LobbyStateInitializer : IStateInitializer, IInitializable {

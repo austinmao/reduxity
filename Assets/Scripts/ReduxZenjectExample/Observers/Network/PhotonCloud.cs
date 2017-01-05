@@ -51,7 +51,9 @@ namespace Reduxity.Example.Zenject {
         /// It differs from OnConnectionFail, which is called when an existing connection fails.
         /// </remarks>
         public void OnFailedToConnectToPhoton(DisconnectCause cause) {
-            var action = new CloudConnector.Action.ConnectFailure {};
+            var action = new CloudConnector.Action.ConnectFailure {
+                photonDisconnectCause = cause
+            };
             dispatch_(action);
         }
 
@@ -63,6 +65,10 @@ namespace Reduxity.Example.Zenject {
         /// The reason for the error is provided as DisconnectCause.
         /// </remarks>
         public void OnConnectionFail(DisconnectCause cause) {
+            var action = new CloudConnector.Action.ConnectFailure {
+                photonDisconnectCause = cause
+            };
+            dispatch_(action);
         }
 
         /// <summary>
@@ -92,6 +98,10 @@ namespace Reduxity.Example.Zenject {
         /// </remarks>
         /// <param name="debugMessage">Contains a debug message why authentication failed. This has to be fixed during development time.</param>
         public void OnCustomAuthenticationFailed(string debugMessage) {
+            var action = new CloudConnector.Action.ConnectFailure {
+                feedbackText = debugMessage
+            };
+            dispatch_(action);
         }
 
 
@@ -107,8 +117,7 @@ namespace Reduxity.Example.Zenject {
         /// Example: void OnCustomAuthenticationResponse(Dictionary&lt;string, object&gt; data) { ... }
         /// </remarks>
         /// <see cref="https://doc.photonengine.com/en/realtime/current/reference/custom-authentication"/>
-        public void OnCustomAuthenticationResponse(Dictionary<string, object> data)
-        {
+        public void OnCustomAuthenticationResponse(Dictionary<string, object> data) {
         }
 
 		[Serializable]

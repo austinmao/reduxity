@@ -54,7 +54,7 @@ namespace Reduxity.Example.Zenject.RoomConnectCreator {
             // return thunk to store, which will dispatch new actions upon success or failure
             return new ThunkAction<State> ((dispatch, getState) => {
                 // dispatch first action to set state to starting
-                dispatch(new RoomConnector.Action.CreateRoomStart {});
+                dispatch(new RoomConnector.Action.CreateStart {});
 
                 // Creates a room but fails if this room is existing already. Can only be called on Master Server.
                 PhotonNetwork.CreateRoom(action.roomName, action.roomOptions, action.typedLobby);

@@ -22,6 +22,9 @@ namespace Reduxity.Example.Zenject.LobbyConnector {
         public class LeaveStart : ILobbyAction, IAction {}
         public class LeaveSuccess : ILobbyAction, IAction {}
         public class LeaveFailure : ILobbyAction, IAction {}
+        public class UpdateRoomList : IAction {
+            public RoomInfo[] photonRoomList { get; set; }
+        }
     }
 
     public class Reducer : IReducer {
@@ -120,6 +123,11 @@ namespace Reduxity.Example.Zenject.LobbyConnector {
             state.isLeaving = false;
             state.feedbackText = "Left lobby";
             state.lobbyName = null;
+            return state;
+        }
+
+        private LobbyState UpdateRoomList(LobbyState state, Action.UpdateRoomList action) {
+            state.photonRoomList = action.photonRoomList;
             return state;
         }
     }

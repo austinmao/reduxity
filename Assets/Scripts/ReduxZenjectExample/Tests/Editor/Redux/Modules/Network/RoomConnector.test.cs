@@ -87,7 +87,7 @@ namespace Reduxity.Example.Zenject.RoomConnector.Tests
 		[Test]
 		public void Should_set_isJoining_and_isCreating_when_creating_starts() {
 			// arrange
-			var mockRoomAction = new Action.CreateRoomStart {};
+			var mockRoomAction = new Action.CreateStart {};
 			var sut = reducer_;
 
 			// act

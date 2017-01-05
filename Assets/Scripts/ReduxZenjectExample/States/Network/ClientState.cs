@@ -22,6 +22,11 @@ namespace Reduxity.Example.Zenject {
         public bool isConnectionFailed { get; set; }
 
 		/// <summary>
+        /// Switching client Connection in progress
+        /// </summary>
+        public bool isSwitching { get; set; }
+
+		/// <summary>
         /// Server Disconnection in progress
         /// </summary>
         public bool isDisconnecting { get; set; }
@@ -35,6 +40,11 @@ namespace Reduxity.Example.Zenject {
         /// Server Disconnection failure
         /// </summary>
         public bool isDisconnectionFailed { get; set; }
+
+        /// <summary>
+        /// Photon player that acts as the Master Client
+        /// </summary>
+        public PhotonPlayer photonClient { get; set; }
 
 		/// <summary>
         /// The Ui Text to inform the user about the connection progress
@@ -53,6 +63,7 @@ namespace Reduxity.Example.Zenject {
             clientState_.isConnecting = false;
             clientState_.isConnected = false;
             clientState_.isConnectionFailed = false;
+            clientState_.isSwitching = false;
             clientState_.isDisconnecting = false;
             clientState_.isDisconnected = true; // start disconnected
             clientState_.isDisconnectionFailed = false;

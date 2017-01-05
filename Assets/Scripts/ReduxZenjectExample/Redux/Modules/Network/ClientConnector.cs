@@ -10,8 +10,13 @@ namespace Reduxity.Example.Zenject.ClientConnector {
         public abstract class IClientAction {
             public string feedbackText { get; set; }
         }
-        public class ConnectStart : IClientAction, IAction {}
-        public class ConnectSuccess : IClientAction, IAction {}
+        public class ConnectStart : IClientAction, IAction {
+            public bool isSwitching { get; set; }
+            public PhotonPlayer photonClient { get; set; }
+        }
+        public class ConnectSuccess : IClientAction, IAction {
+            public PhotonPlayer photonClient { get; set; }
+        }
         public class ConnectFailure : IClientAction, IAction {}
         public class DisconnectStart : IClientAction, IAction {}
         public class DisconnectSuccess : IClientAction, IAction {}
@@ -54,17 +59,22 @@ namespace Reduxity.Example.Zenject.ClientConnector {
         }
 
         private ClientState StartConnect(ClientState state, Action.ConnectStart action) {
-            // guarding assertions
+            // must not be connecting to client already
             Assert.IsEqual(state.isConnecting, false);
-            Assert.IsEqual(state.isConnected, false);
+            // must not be connected to client if not switching client
+            if (!state.isSwitching) {
+                Assert.IsEqual(state.isConnected, false);
+            }
 
             state.isConnecting = true; // action commencing
             state.isConnected = false;
             state.isConnectionFailed = false;
+            state.isSwitching = action.isSwitching;
             state.isDisconnecting = false;
             state.isDisconnected = false;
             state.isDisconnectionFailed = false;
-            state.feedbackText = "Connecting...";
+            state.photonClient = action.photonClient; // set client. this will be maintained in state.j
+            state.feedbackText = "Connecting to client...";
             return state;
         }
 
@@ -72,21 +82,22 @@ namespace Reduxity.Example.Zenject.ClientConnector {
             state.isConnecting = false;
             state.isConnected = true; // action succeeded
             state.isConnectionFailed = false;
+            state.isSwitching = false;
             state.isDisconnecting = false;
             state.isDisconnected = false;
             state.isDisconnectionFailed = false;
-            state.feedbackText = "Joining room...";
+            state.feedbackText = "Connected to client.";
             return state;
         }
-
         private ClientState ConnectFailure(ClientState state, Action.ConnectFailure action) {
             state.isConnecting = false;
             state.isConnected = false;
             state.isConnectionFailed = true; // action failed
+            state.isSwitching = false;
             state.isDisconnecting = false;
             state.isDisconnected = false;
             state.isDisconnectionFailed = false;
-            state.feedbackText = "Connection failed.";
+            state.feedbackText = "Failed to connect to client.";
             return state;
         }
 
@@ -97,6 +108,7 @@ namespace Reduxity.Example.Zenject.ClientConnector {
             state.isConnecting = false;
             state.isConnected = true; // still connected
             state.isConnectionFailed = false;
+            state.isSwitching = false;
             state.isDisconnecting = true; // action commencing
             state.isDisconnected = false;
             state.isDisconnectionFailed = false;
@@ -108,10 +120,11 @@ namespace Reduxity.Example.Zenject.ClientConnector {
             state.isConnecting = false;
             state.isConnected = false; // now disconnected
             state.isConnectionFailed = false;
+            state.isSwitching = false;
             state.isDisconnecting = false;
             state.isDisconnected = true; // action succeeded
             state.isDisconnectionFailed = false;
-            state.feedbackText = "Disconnection successful.";
+            state.feedbackText = "Disconnected.";
             return state;
         }
 
@@ -119,10 +132,11 @@ namespace Reduxity.Example.Zenject.ClientConnector {
             state.isConnecting = false;
             state.isConnected = true; // still disconnected
             state.isConnectionFailed = false;
+            state.isSwitching = false;
             state.isDisconnecting = false;
             state.isDisconnected = false;
             state.isDisconnectionFailed = true; // action failed
-            state.feedbackText = "Disconnection failed.";
+            state.feedbackText = "Failed to disconnect.";
             return state;
         }
     }
