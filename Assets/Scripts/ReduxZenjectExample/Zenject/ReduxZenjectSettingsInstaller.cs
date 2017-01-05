@@ -53,23 +53,32 @@ namespace Reduxity.Example.Zenject {
             public LobbyConnector.Settings Lobby;
             public RoomConnector.Settings Room;
             public NetworkPlayer.Settings NetworkPlayer;
+            public NetworkPlayers.Settings NetworkPlayers;
         }
 
         /// <summary>
         /// Binding settings as an instance
         /// </summary>
         public override void InstallBindings() {
+            // Player
             Container.BindInstance(Player.Movement);
             Container.BindInstance(Player.Looking);
+
+            // Http requests
             Container.BindInstance(Http.Api);
             Container.BindInstance(Http.ApiRequest);
             Container.BindInstance(Http.SubmitButton);
             Container.BindInstance(Http.Text);
+
+            // Network
             Container.BindInstance(Network.Cloud);
             Container.BindInstance(Network.Server);
             Container.BindInstance(Network.Lobby);
             Container.BindInstance(Network.Room);
             Container.BindInstance(Network.NetworkPlayer);
+            Container.BindInstance(Network.NetworkPlayers);
+
+            // App
             Container.BindInstance(App.LogLevel);
             Container.BindInstance(App.GameInstaller);
             Container.BindInstance(App.App);

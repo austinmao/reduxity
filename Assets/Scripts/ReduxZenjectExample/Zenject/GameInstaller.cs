@@ -130,7 +130,13 @@ namespace Reduxity.Example.Zenject {
             Container.Bind<MoveCamera>().AsSingle();
             Container.Bind<DisplayHttpText>().AsSingle();
             Container.Bind<DisplayHttpButton>().AsSingle();
-            // Container.Bind<PhotonManager>().AsSingle();
+
+            // network
+            Container.Bind<PhotonCloud>().AsSingle();
+            Container.Bind<PhotonClient>().AsSingle();
+            Container.Bind<PhotonLobby>().AsSingle();
+            Container.Bind<PhotonRoom>().AsSingle();
+            Container.Bind<PhotonNetworkPlayer>().AsSingle();
         }
 
         /// <summary>

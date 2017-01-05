@@ -15,7 +15,6 @@ namespace Reduxity.Example.Zenject {
 			App app,
 			Settings settings,
             CloudConnectCreator.ActionCreator actionCreator
-
 		) {
 			app_ = app;
 			settings_ = settings;

@@ -20,8 +20,12 @@ namespace Reduxity.Example.Zenject {
 		readonly CharacterMover.Reducer move_;
 		readonly CameraLook.Reducer look_;
 		readonly ApiRequestor.Reducer api_;
-		readonly CloudConnector.Reducer network_;
+		readonly CloudConnector.Reducer cloud_;
+		readonly ClientConnector.Reducer client_;
+		readonly LobbyConnector.Reducer lobby_;
 		readonly RoomConnector.Reducer room_;
+		readonly NetworkPlayer.Reducer networkPlayer_;
+		readonly NetworkPlayers.Reducer networkPlayers_;
 
 		/// <summary>
         /// Inject state and reducers
@@ -30,7 +34,7 @@ namespace Reduxity.Example.Zenject {
         /// <param name="move">Character movement reducers</param>
         /// <param name="look">Camera look reducers</param>
         /// <param name="api">Api reducers</param>
-        /// <param name="network">Network reducers</param>
+        /// <param name="cloud">Cloud reducers</param>
         /// <param name="room">Room reducers</param>
 		public App(
 			State state,
@@ -39,8 +43,13 @@ namespace Reduxity.Example.Zenject {
 			CharacterMover.Reducer move,
 			CameraLook.Reducer look,
 			ApiRequestor.Reducer api,
-			CloudConnector.Reducer network,
-			RoomConnector.Reducer room
+
+			CloudConnector.Reducer cloud,
+			ClientConnector.Reducer client,
+			LobbyConnector.Reducer lobby,
+			RoomConnector.Reducer room,
+			NetworkPlayer.Reducer networkPlayer,
+			NetworkPlayers.Reducer networkPlayers
 		) {
 			state_ = state;
 			logger_ = logger;
@@ -48,8 +57,12 @@ namespace Reduxity.Example.Zenject {
 			move_ = move;
 			look_ = look;
 			api_ = api;
-			network_ = network;
+			cloud_ = cloud;
+			client_ = client;
+			lobby_ = lobby;
 			room_ = room;
+			networkPlayer_ = networkPlayer;
+			networkPlayers_ = networkPlayers;
 		}
 
 		public IStore<State> Store { get ; private set; }
@@ -74,8 +87,14 @@ namespace Reduxity.Example.Zenject {
 			state_.Character = move_.Reduce(previousState.Character, action);
 			state_.Camera = look_.Reduce(previousState.Camera, action);
 			state_.Api = api_.Reduce(previousState.Api, action);
-			state_.Network = network_.Reduce(previousState.Network, action);
+
+			// network reducers
+			state_.Cloud = cloud_.Reduce(previousState.Cloud, action);
+			state_.Client = client_.Reduce(previousState.Client, action);
+			state_.Lobby = lobby_.Reduce(previousState.Lobby, action);
 			state_.Room = room_.Reduce(previousState.Room, action);
+			state_.NetworkPlayer = networkPlayer_.Reduce(previousState.NetworkPlayer, action);
+			state_.NetworkPlayers = networkPlayers_.Reduce(previousState.NetworkPlayers, action);
 			return state_;
 		}
 

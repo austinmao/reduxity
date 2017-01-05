@@ -86,6 +86,7 @@ namespace Reduxity.Example.Zenject {
 		/// <summary>
 		/// </summary>
 		public class Settings {
+            bool autoJoinLobby = false;
 		}
 	}
 }

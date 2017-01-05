@@ -11,8 +11,14 @@ namespace Reduxity.Example.Zenject {
         public CharacterState Character;
         public CameraState Camera;
         public ApiState Api;
-        public CloudState Network;
+        
+        // network states
+        public CloudState Cloud;
+        public ClientState Client;
+        public LobbyState Lobby;
         public RoomState Room;
+        public NetworkPlayerState NetworkPlayer;
+        public NetworkPlayersState NetworkPlayers;
 
         /// <summary>
         /// Inject nested state nodes into the Redux State that are already initialized.
@@ -22,14 +28,22 @@ namespace Reduxity.Example.Zenject {
             CharacterState characterState,
             CameraState cameraState,
             ApiState apiState,
-            CloudState networkState,
-            RoomState roomState
+            CloudState cloudState,
+            ClientState clientState,
+            LobbyState lobbyState,
+            RoomState roomState,
+            NetworkPlayerState networkPlayerState,
+            NetworkPlayersState networkPlayersState
         ) {
             Character = characterState;
             Camera = cameraState;
             Api = apiState;
-            Network = networkState;
+            Cloud = cloudState;
+            Client = clientState;
+            Lobby = lobbyState;
             Room = roomState;
+            NetworkPlayer = networkPlayerState;
+            NetworkPlayers = networkPlayersState;
         }
     }
 }
