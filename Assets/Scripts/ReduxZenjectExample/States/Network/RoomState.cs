@@ -30,14 +30,39 @@ namespace Reduxity.Example.Zenject {
         public bool isCreating { get; set; }
 
 		/// <summary>
+        /// Creating room successful
+        /// </summary>
+        public bool isCreated { get; set; }
+
+		/// <summary>
+        /// Creating room failure
+        /// </summary>
+        public bool isCreateFailed { get; set; }
+
+		/// <summary>
         /// Leaving in progress
         /// </summary>
         public bool isLeaving { get; set; }
 
 		/// <summary>
+        /// Leaving room successful
+        /// </summary>
+        public bool hasLeft { get; set; }
+
+		/// <summary>
+        /// Leaving room failure
+        /// </summary>
+        public bool isLeavingFailed { get; set; }
+
+		/// <summary>
         /// The Ui Text to inform the user about the Joining progress
         /// </summary>
         public string feedbackText { get; set; }
+
+		/// <summary>
+        /// Photon room name
+        /// </summary>
+        public string roomName { get; set; }
     }
 
     public class RoomStateInitializer : IStateInitializer, IInitializable {
@@ -53,6 +78,8 @@ namespace Reduxity.Example.Zenject {
             roomState_.isJoinFailed = false;
             roomState_.isCreating = false;
             roomState_.isLeaving = false;
+            roomState_.hasLeft = false;
+            roomState_.isLeavingFailed = false;
             roomState_.feedbackText = "";
         }
     }

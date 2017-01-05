@@ -1,14 +1,14 @@
 using NUnit.Framework;
 using Zenject;
 
-namespace Reduxity.Example.Zenject.NetworkRequestor.Tests
+namespace Reduxity.Example.Zenject.CloudConnector.Tests
 {
 
     [TestFixture]
 	public class Test : ZenjectUnitTestFixture {
 
 		DiContainer container_;
-		private NetworkState mockNetworkState_;
+		private CloudState mockNetworkState_;
 		private Reducer reducer_;
 
 		[SetUp]
@@ -23,7 +23,7 @@ namespace Reduxity.Example.Zenject.NetworkRequestor.Tests
 			container_.Bind<Settings>().FromInstance(mockSettings);
 
 			// set default state
-			mockNetworkState_ = new NetworkState {};
+			mockNetworkState_ = new CloudState {};
 			reducer_ = container_.Resolve<Reducer>();
 		}
 
@@ -84,7 +84,7 @@ namespace Reduxity.Example.Zenject.NetworkRequestor.Tests
 		[Test]
 		public void Should_set_isDisconnecting_and_isConnected_when_starting_request() {
 			// arrange
-			var mockState = new NetworkState {
+			var mockState = new CloudState {
 				isConnected = true
 			};
 			var mockNetworkAction = new Action.DisconnectStart {};

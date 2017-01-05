@@ -48,8 +48,11 @@ namespace Reduxity.Example.Zenject {
         /// Settings related to multiplayer network requests
         /// </summary>
         public class NetworkSettings {
-            public NetworkRequestor.Settings Network;
-            public RoomRequestor.Settings Room;
+            public CloudConnector.Settings Cloud;
+            public ClientConnector.Settings Server;
+            public LobbyConnector.Settings Lobby;
+            public RoomConnector.Settings Room;
+            public NetworkPlayer.Settings NetworkPlayer;
         }
 
         /// <summary>
@@ -62,8 +65,11 @@ namespace Reduxity.Example.Zenject {
             Container.BindInstance(Http.ApiRequest);
             Container.BindInstance(Http.SubmitButton);
             Container.BindInstance(Http.Text);
-            Container.BindInstance(Network.Network);
+            Container.BindInstance(Network.Cloud);
+            Container.BindInstance(Network.Server);
+            Container.BindInstance(Network.Lobby);
             Container.BindInstance(Network.Room);
+            Container.BindInstance(Network.NetworkPlayer);
             Container.BindInstance(App.LogLevel);
             Container.BindInstance(App.GameInstaller);
             Container.BindInstance(App.App);

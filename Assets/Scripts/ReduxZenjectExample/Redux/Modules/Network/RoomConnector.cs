@@ -3,7 +3,7 @@ using System;
 using Photon;
 using UnityEngine.UI;
 
-namespace Reduxity.Example.Zenject.RoomRequestor {
+namespace Reduxity.Example.Zenject.RoomConnector {
     public class Action {
         /// <summary>
         /// Properties for each type of http request
@@ -16,10 +16,12 @@ namespace Reduxity.Example.Zenject.RoomRequestor {
         public class JoinStart : IRoomAction, IAction {}
         public class JoinSuccess : IRoomAction, IAction {}
         public class JoinFailure : IRoomAction, IAction {}
-        public class CreateRoomStart : IRoomAction, IAction {
-        }
+        public class CreateRoomStart : IRoomAction, IAction {}
+        public class CreateSuccess : IRoomAction, IAction {}
+        public class CreateFailure : IRoomAction, IAction {}
         public class LeaveStart : IRoomAction, IAction {}
         public class LeaveSuccess : IRoomAction, IAction {}
+        public class LeaveFailure : IRoomAction, IAction {}
     }
 
     public class Reducer : IReducer {
@@ -64,6 +66,7 @@ namespace Reduxity.Example.Zenject.RoomRequestor {
             state.isCreating = false;
             state.isLeaving = false;
             state.feedbackText = "Joining room...";
+            state.roomName = action.roomName;
             return state;
         }
 
@@ -74,6 +77,7 @@ namespace Reduxity.Example.Zenject.RoomRequestor {
             state.isCreating = false;
             state.isLeaving = false;
             state.feedbackText = "Joined room.";
+            state.roomName = action.roomName;
             return state;
         }
 
@@ -84,6 +88,7 @@ namespace Reduxity.Example.Zenject.RoomRequestor {
             state.isCreating = false;
             state.isLeaving = false;
             state.feedbackText = "Joining room failed.";
+            state.roomName = null;
             return state;
         }
 
@@ -94,6 +99,7 @@ namespace Reduxity.Example.Zenject.RoomRequestor {
             state.isCreating = true;
             state.isLeaving = false;
             state.feedbackText = "Creating room...";
+            state.roomName = action.roomName;
             return state;
         }
 
@@ -103,6 +109,7 @@ namespace Reduxity.Example.Zenject.RoomRequestor {
             state.isJoinFailed = false;
             state.isLeaving = true;
             state.feedbackText = "Leaving room...";
+            state.roomName = action.roomName;
             return state;
         }
 
@@ -112,6 +119,7 @@ namespace Reduxity.Example.Zenject.RoomRequestor {
             state.isJoinFailed = false;
             state.isLeaving = false;
             state.feedbackText = "Left room";
+            state.roomName = null;
             return state;
         }
     }
@@ -121,6 +129,9 @@ namespace Reduxity.Example.Zenject.RoomRequestor {
     /// Public settings for api loading
     /// </summary>
     public class Settings {
+
+        // The maximum number of players per room
+        public byte maxPlayersPerRoom = 4;
 
 		// #Critical: The first we try to do is to join a potential existing room.
 		// If there is, good, else, we'll be called back with OnPhotonRandomJoinFailed()

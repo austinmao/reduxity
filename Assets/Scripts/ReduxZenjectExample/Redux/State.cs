@@ -11,7 +11,7 @@ namespace Reduxity.Example.Zenject {
         public CharacterState Character;
         public CameraState Camera;
         public ApiState Api;
-        public NetworkState Network;
+        public CloudState Network;
         public RoomState Room;
 
         /// <summary>
@@ -22,7 +22,7 @@ namespace Reduxity.Example.Zenject {
             CharacterState characterState,
             CameraState cameraState,
             ApiState apiState,
-            NetworkState networkState,
+            CloudState networkState,
             RoomState roomState
         ) {
             Character = characterState;

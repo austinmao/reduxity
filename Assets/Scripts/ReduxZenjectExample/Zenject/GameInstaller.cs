@@ -45,8 +45,15 @@ namespace Reduxity.Example.Zenject {
             Container.Bind<CharacterState>().AsSingle();
             Container.Bind<CameraState>().AsSingle();
             Container.Bind<ApiState>().AsSingle();
-            Container.Bind<NetworkState>().AsSingle();
+
+            // network states
+            Container.Bind<CloudState>().AsSingle();
+            Container.Bind<ClientState>().AsSingle();
+            Container.Bind<LobbyState>().AsSingle();
             Container.Bind<RoomState>().AsSingle();
+            Container.Bind<NetworkPlayerState>().AsSingle();
+
+            // global state object
 			Container.Bind<State>().AsSingle();
 		}
 
@@ -64,6 +71,7 @@ namespace Reduxity.Example.Zenject {
         /// </summary>
         private void InstallActionCreators() {
             Container.Bind<ApiRequestCreator.ActionCreator>().AsSingle();
+            // Container.Bind<PunCloudRequestCreator.ActionCreator>().AsSingle();
         }
 
         private void InstallMiddleware() {
@@ -79,9 +87,16 @@ namespace Reduxity.Example.Zenject {
         private void InstallReducers() {
             Container.Bind<CharacterMover.Reducer>().AsSingle().WhenInjectedInto<App>();
             Container.Bind<CameraLook.Reducer>().AsSingle().WhenInjectedInto<App>();
+
+            // http requests
             Container.Bind<ApiRequestor.Reducer>().AsSingle().WhenInjectedInto<App>();
-            Container.Bind<NetworkRequestor.Reducer>().AsSingle().WhenInjectedInto<App>();
-            Container.Bind<RoomRequestor.Reducer>().AsSingle().WhenInjectedInto<App>();
+
+            // multiplayer network
+            Container.Bind<CloudConnector.Reducer>().AsSingle().WhenInjectedInto<App>();
+            Container.Bind<ClientConnector.Reducer>().AsSingle().WhenInjectedInto<App>();
+            Container.Bind<LobbyConnector.Reducer>().AsSingle().WhenInjectedInto<App>();
+            Container.Bind<RoomConnector.Reducer>().AsSingle().WhenInjectedInto<App>();
+            Container.Bind<NetworkPlayer.Reducer>().AsSingle().WhenInjectedInto<App>();
         }
 
         /// <summary>
@@ -113,6 +128,7 @@ namespace Reduxity.Example.Zenject {
             Container.Bind<MoveCamera>().AsSingle();
             Container.Bind<DisplayHttpText>().AsSingle();
             Container.Bind<DisplayHttpButton>().AsSingle();
+            // Container.Bind<PhotonManager>().AsSingle();
         }
 
         /// <summary>

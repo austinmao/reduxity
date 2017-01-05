@@ -48,9 +48,5 @@ namespace Reduxity.Example.Zenject {
                 })
                 .AddTo(character_);
         }
-
-        [Serializable]
-        public class Settings {
-        }
     }
 }

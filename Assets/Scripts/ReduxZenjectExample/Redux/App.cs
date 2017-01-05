@@ -20,8 +20,8 @@ namespace Reduxity.Example.Zenject {
 		readonly CharacterMover.Reducer move_;
 		readonly CameraLook.Reducer look_;
 		readonly ApiRequestor.Reducer api_;
-		readonly NetworkRequestor.Reducer network_;
-		readonly RoomRequestor.Reducer room_;
+		readonly CloudConnector.Reducer network_;
+		readonly RoomConnector.Reducer room_;
 
 		/// <summary>
         /// Inject state and reducers
@@ -39,8 +39,8 @@ namespace Reduxity.Example.Zenject {
 			CharacterMover.Reducer move,
 			CameraLook.Reducer look,
 			ApiRequestor.Reducer api,
-			NetworkRequestor.Reducer network,
-			RoomRequestor.Reducer room
+			CloudConnector.Reducer network,
+			RoomConnector.Reducer room
 		) {
 			state_ = state;
 			logger_ = logger;
