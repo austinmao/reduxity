@@ -24,6 +24,9 @@ namespace Reduxity.Example.Zenject {
 		}
 
 		public void Initialize() {
+            if (settings_.shouldConnectOnStartup) {
+                StartConnect();
+            }
 		}
 
         /// <summary>
@@ -144,7 +147,7 @@ namespace Reduxity.Example.Zenject {
 		/// <summary>
 		/// </summary>
 		public class Settings {
-            bool shouldConnectOnStartup = false;
+            public bool shouldConnectOnStartup = false;
 		}
 	}
 }

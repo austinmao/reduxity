@@ -12,7 +12,7 @@ namespace Reduxity.Example.Zenject {
         public PlayerSettings Player;
         public HttpSettings Http;
         public NetworkSettings Network;
-        public PhotonNetwork PhotonNetwork;
+        public PhotonNetworkSettings PhotonNetwork;
 
         [Serializable]
         /// <summary>
