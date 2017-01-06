@@ -35,6 +35,7 @@ namespace Reduxity.Example.Zenject.RoomConnectCreator {
                 
                 // join random room if specified
                 } else if (action.shouldJoinRandomRoom) {
+                    // TODO: add joining random room with filters
                     PhotonNetwork.JoinRandomRoom();
                 
                 // dispatch join failure
@@ -56,8 +57,15 @@ namespace Reduxity.Example.Zenject.RoomConnectCreator {
                 // dispatch first action to set state to starting
                 dispatch(new RoomConnector.Action.CreateStart {});
 
-                // Creates a room but fails if this room is existing already. Can only be called on Master Server.
-                PhotonNetwork.CreateRoom(action.roomName, action.roomOptions, action.typedLobby);
+                // Creates a room with options if specified
+                if (action.roomOptions != null || action.typedLobby != null) {
+                    PhotonNetwork.CreateRoom(action.roomName, action.roomOptions, action.typedLobby);
+
+                // Else creates a room but fails if this room is existing already. Can only be called on Master Server.
+                } else {
+                    // will use random room name if roomName is null
+                    PhotonNetwork.CreateRoom(action.roomName);
+                }
             });
         }
 
@@ -70,6 +78,8 @@ namespace Reduxity.Example.Zenject.RoomConnectCreator {
             return new ThunkAction<State> ((dispatch, getState) => {
                 // dispatch first action to set state to loading
                 dispatch(new RoomConnector.Action.LeaveStart {});
+
+                PhotonNetwork.LeaveRoom();
             });
         }
     }
