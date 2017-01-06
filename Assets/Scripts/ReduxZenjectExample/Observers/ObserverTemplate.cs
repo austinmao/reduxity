@@ -1,8 +1,13 @@
 ﻿using UnityEngine;
 using Zenject;
-using System;
+// using System;
 
 namespace Reduxity.Example.Zenject {
+
+	/// <summary>
+    /// Reference template for observers that are attached to a GameObject
+	/// and bound via Zenject binding script
+    /// </summary>
 	public class ObserverTemplate : MonoBehaviour, IInitializable {
 		App app_;
 		// Settings settings_;
@@ -17,7 +22,7 @@ namespace Reduxity.Example.Zenject {
 		}
 
 		public void Initialize() {
-			Debug.Log($"ObserverTemplate initialized ith store: {app_.Store}");
+			Debug.Log($"ObserverTemplate initialized with store: {ObjectDumper.Dump(app_.Store)}");
 		}
 
 		// [Serializable]

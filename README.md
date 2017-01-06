@@ -8,6 +8,7 @@ React-redux via UniRx + Redux.NET for Unity3D += Zenject
   + [Why React](#why-react)
   + [Why Redux](#why-redux)
 * [Installation](#installation)
+* [Structure](#structure)
 * [How to Use with Zenject](#how-to-use-with-zenject)
   + [A Few Gotchas](#a-few-gotchas)
 * [How to Use without Zenject](#how-to-use-without-zenject)
@@ -69,6 +70,35 @@ Download or clone this repo. While Reduxity has dependencies on [UniRx](https://
 
 *Using Zenject is highly recommended and encouraged*. A full tutorial on how to use Zenject is forthcoming since it is a bit heady at first.
 
+## Structure
+
+This project follows Redux conventions a la common React-redux practices. The data flow is uni-directional from:
+
+Observer => (Action Creator => Action || Action) => Reducer => State => Container => Component
+
+In slightly greater detail:
+
+1. An Observer subscribes to an event, then dispatches an Action Creator or Action to the Redux Store
+2. An Action Creator (which is used for async actions) can dispatch an Action
+3. The Redux Store routes Action to the proper Reducer
+4. The Reducer performs calculations using the previous state and new data, then returns a new State
+5. A Container subscribes to a state change, then passes data down to components
+6. Each component renders its view based on data passed to it
+
+The objects that will interact with GameObjects or Inputs are:
+
+### Observers
+Observers dispatch actions to the store. This is a slight deviation from Redux conventions in that Redux projects often have components themselves observe events (like OnClick). However, I have found that separating observers into their own classes promotes further decoupling.
+
+### Components
+"Dumb" views that are passed data and then render based on the data. Components do not actually read from the Store or State object. In the web world, this may be a button that says "Increment" or "Processing..." based on current state.
+
+NOTE: you will not always need a script for this if you are using Zenject to bind GameObjects (like UI.Button). These will then be the components if no view logic needs to be applied other than to just render data.
+
+### Containers
+"Smart" view controllers that connect to the Redux store, query for data, and then pass this to one or many components, which then render. Thus, you can think of containers as a collection of components where the container is the manager divvying up tasks. In the web world, this may be a form, button, and corresponding response text. In a game, this could be an avatar that would include components for his/her hair, eyes, etc.
+
+Information on Action Creators, Actions, and Reducers can be found at [Redux Docs](http://redux.js.org/docs).
 
 ## How to Use with Zenject
 

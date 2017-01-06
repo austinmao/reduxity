@@ -9,7 +9,6 @@ namespace Reduxity.Example.Zenject {
 		readonly App app_;
 		readonly Settings settings_;
         readonly NetworkPlayerCreator.ActionCreator actionCreator_;
-		readonly Dispatcher dispatch_;
 
         public PhotonNetworkPlayerObserver(
 			App app,
@@ -20,7 +19,6 @@ namespace Reduxity.Example.Zenject {
 			app_ = app;
 			settings_ = settings;
             actionCreator_ = actionCreator;
-			dispatch_ = app_.Store.Dispatch;
 		}
 
 		public void Initialize() {
@@ -35,7 +33,7 @@ namespace Reduxity.Example.Zenject {
         /// </remarks>
         public void OnPhotonPlayerConnected(PhotonPlayer newPlayer) {
             var action = new NetworkPlayers.Action.ConnectPlayer {};
-            dispatch_(action);
+            app_.Store.Dispatch(action);
         }
 
         /// <summary>
@@ -49,7 +47,7 @@ namespace Reduxity.Example.Zenject {
         public void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer) {
             // TODO: decide if we want to use otherPlayer for any info
             var action = new NetworkPlayers.Action.DisconnectPlayer {};
-            dispatch_(action);
+            app_.Store.Dispatch(action);
         }
 
         /// <summary>

@@ -9,7 +9,6 @@ namespace Reduxity.Example.Zenject {
 		readonly App app_;
 		readonly Settings settings_;
         readonly LobbyConnectCreator.ActionCreator actionCreator_;
-		readonly Dispatcher dispatch_;
 
         public PhotonLobbyObserver(
 			App app,
@@ -20,7 +19,6 @@ namespace Reduxity.Example.Zenject {
 			app_ = app;
 			settings_ = settings;
             actionCreator_ = actionCreator;
-			dispatch_ = app_.Store.Dispatch;
 		}
 
 		public void Initialize() {
@@ -37,7 +35,7 @@ namespace Reduxity.Example.Zenject {
         /// </remarks>
         public void OnJoinedLobby() {
             var action = new LobbyConnector.Action.JoinSuccess {};
-            dispatch_(action);
+            app_.Store.Dispatch(action);
         }
 
         /// <summary>
@@ -49,7 +47,7 @@ namespace Reduxity.Example.Zenject {
         /// </remarks>
         public void OnLeftLobby() {
             var action = new LobbyConnector.Action.LeaveSuccess {};
-            dispatch_(action);
+            app_.Store.Dispatch(action);
         }
 
 
@@ -79,7 +77,7 @@ namespace Reduxity.Example.Zenject {
 			var action = new LobbyConnector.Action.UpdateRoomList {
                 photonRoomList = roomList
             };
-			dispatch_(action);
+			app_.Store.Dispatch(action);
         }
 
 		[Serializable]

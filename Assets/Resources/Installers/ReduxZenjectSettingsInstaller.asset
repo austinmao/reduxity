@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   App:
     LogLevel:
-      Level: 1
+      Level: 0
   Player:
     Movement:
       xLookSpeed: 100
@@ -33,7 +33,7 @@ MonoBehaviour:
       errorPrefixText: 'Error: '
   Network:
     Cloud:
-      logLevel: 2
+      logLevel: 0
     Server:
       shouldAutomaticallySyncScene: 1
       logLevel: 2

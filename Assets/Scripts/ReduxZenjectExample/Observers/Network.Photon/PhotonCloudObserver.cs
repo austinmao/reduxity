@@ -3,53 +3,26 @@ using System;
 using System.Collections.Generic;
 using Redux;
 using UniRx;
+using UnityEngine;
+using PhotonRx;
 
 namespace Reduxity.Example.Zenject {
-	public class PhotonCloudObserver : IComponent {
+	public class PhotonCloudObserver : IInitializable {
 
 		readonly App app_;
-		readonly Settings settings_;
         readonly CloudConnectCreator.ActionCreator actionCreator_;
-		readonly Dispatcher dispatch_;
+        readonly Component component_;
 
         public PhotonCloudObserver(
 			App app,
-			Settings settings,
             CloudConnectCreator.ActionCreator actionCreator
 		) {
 			app_ = app;
-			settings_ = settings;
             actionCreator_ = actionCreator;
-			dispatch_ = app_.Store.Dispatch;
 		}
 
 		public void Initialize() {
-            // connect immediately on startup if settings say so
-            if (settings_.shouldConnectOnStartup) {
-                StartConnect();
-            }
 		}
-
-        /// <summary>
-        /// Start connecting to Photon Cloud
-        /// </summary>
-        void StartConnect() {
-            app_.Store
-                // .TakeUntilDestroy
-                .Where(state => {
-                    // only connect if not already connected or connecting
-                    return (
-                        state.Cloud.isDisconnected &&
-                        !state.Cloud.isConnected &&
-                        !state.Cloud.isConnecting
-                    );
-                })
-                .Subscribe(_ => {
-                    var action = new CloudConnector.Action.ConnectStart {};
-                    dispatch_(action);
-                });
-        }
-
 
 		/// <summary>
         /// Called when the initial connection got established but before you can use the server. OnJoinedLobby() or OnConnectedToMaster() are called when PUN is ready.
@@ -64,8 +37,8 @@ namespace Reduxity.Example.Zenject {
         /// This is not called for transitions from the masterserver to game servers.
         /// </remarks>
         public void OnConnectedToPhoton() {
-			var action = new CloudConnector.Action.ConnectSuccess {};
-			dispatch_(action);
+            var action = new CloudConnector.Action.ConnectSuccess {};
+            app_.Store.Dispatch(action);
         }
 
         /// <summary>
@@ -79,7 +52,7 @@ namespace Reduxity.Example.Zenject {
             var action = new CloudConnector.Action.ConnectFailure {
                 photonDisconnectCause = cause
             };
-            dispatch_(action);
+            app_.Store.Dispatch(action);
         }
 
         /// <summary>
@@ -93,7 +66,7 @@ namespace Reduxity.Example.Zenject {
             var action = new CloudConnector.Action.ConnectFailure {
                 photonDisconnectCause = cause
             };
-            dispatch_(action);
+            app_.Store.Dispatch(action);
         }
 
         /// <summary>
@@ -105,7 +78,7 @@ namespace Reduxity.Example.Zenject {
         /// </remarks>
         public void OnDisconnectedFromPhoton() {
             var action = new CloudConnector.Action.DisconnectSuccess {};
-            dispatch_(action);
+            app_.Store.Dispatch(action);
         }
 
         /// <summary>
@@ -126,7 +99,7 @@ namespace Reduxity.Example.Zenject {
             var action = new CloudConnector.Action.ConnectFailure {
                 feedbackText = debugMessage
             };
-            dispatch_(action);
+            app_.Store.Dispatch(action);
         }
 
 
@@ -144,12 +117,5 @@ namespace Reduxity.Example.Zenject {
         /// <see cref="https://doc.photonengine.com/en/realtime/current/reference/custom-authentication"/>
         public void OnCustomAuthenticationResponse(Dictionary<string, object> data) {
         }
-
-		[Serializable]
-		/// <summary>
-		/// </summary>
-		public class Settings {
-            public bool shouldConnectOnStartup = true;
-		}
 	}
 }

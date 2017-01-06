@@ -4,11 +4,11 @@ using System;
 
 namespace Reduxity.Example.Zenject {
 
-    public class PhotonNetworkPlayer : IInitializable, IComponent {
+    public class PhotonClientContainer : IInitializable, IContainer {
 
         readonly App app_;
 
-        public PhotonNetworkPlayer(
+        public PhotonClientContainer(
             App app
         ) {
             app_ = app;

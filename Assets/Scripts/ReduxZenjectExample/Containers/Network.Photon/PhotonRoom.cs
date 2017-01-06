@@ -4,11 +4,11 @@ using System;
 
 namespace Reduxity.Example.Zenject {
 
-    public class PhotonLobby : IInitializable, IComponent {
+    public class PhotonRoomContainer : IInitializable, IContainer {
 
         readonly App app_;
 
-        public PhotonLobby(
+        public PhotonRoomContainer(
             App app
         ) {
             app_ = app;

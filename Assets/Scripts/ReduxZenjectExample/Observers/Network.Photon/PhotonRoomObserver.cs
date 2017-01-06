@@ -8,7 +8,6 @@ namespace Reduxity.Example.Zenject {
 		readonly App app_;
 		readonly Settings settings_;
         readonly RoomConnectCreator.ActionCreator actionCreator_;
-		readonly Dispatcher dispatch_;
 
         public PhotonRoomObserver(
 			App app,
@@ -18,7 +17,6 @@ namespace Reduxity.Example.Zenject {
 			app_ = app;
 			settings_ = settings;
             actionCreator_ = actionCreator;
-			dispatch_ = app_.Store.Dispatch;
 		}
 
 		public void Initialize() {
@@ -37,7 +35,7 @@ namespace Reduxity.Example.Zenject {
         /// </remarks>
         public void OnJoinedRoom() {
             var action = new RoomConnector.Action.JoinSuccess {};
-            dispatch_(action);
+            app_.Store.Dispatch(action);
         }
 
         /// <summary>
@@ -50,7 +48,7 @@ namespace Reduxity.Example.Zenject {
         /// <param name="codeAndMsg">codeAndMsg[0] is short ErrorCode. codeAndMsg[1] is string debug msg.</param>
         public void OnPhotonJoinRoomFailed(object[] codeAndMsg) {
             var action = new RoomConnector.Action.JoinFailure {};
-            dispatch_(action);
+            app_.Store.Dispatch(action);
         }
 
         /// <summary>
@@ -66,7 +64,7 @@ namespace Reduxity.Example.Zenject {
             var action = new RoomConnector.Action.JoinFailure {
                 feedbackText = codeAndMsg.ToString() // TODO: check this
             };
-            dispatch_(action);
+            app_.Store.Dispatch(action);
         }
 
         /// <summary>
@@ -83,7 +81,7 @@ namespace Reduxity.Example.Zenject {
         /// </remarks>
         public void OnCreatedRoom() {
             var action = new RoomConnector.Action.CreateSuccess {};
-            dispatch_(action);
+            app_.Store.Dispatch(action);
         }
 
         /// <summary>
@@ -98,7 +96,7 @@ namespace Reduxity.Example.Zenject {
             var action = new RoomConnector.Action.CreateFailure {
                 feedbackText = codeAndMsg.ToString()
             };
-            dispatch_(action);
+            app_.Store.Dispatch(action);
         }
 
         /// <summary>
@@ -110,7 +108,7 @@ namespace Reduxity.Example.Zenject {
         /// </remarks>
         public void OnLeftRoom() {
 			var action = new RoomConnector.Action.LeaveSuccess {};
-			dispatch_(action);
+			app_.Store.Dispatch(action);
         }
 
         /// <summary>
@@ -125,7 +123,7 @@ namespace Reduxity.Example.Zenject {
 			var action = new RoomConnector.Action.UpdateRoomProperties {
                 roomProperties = propertiesThatChanged
             };
-			dispatch_(action);
+			app_.Store.Dispatch(action);
         }
 
 		[Serializable]

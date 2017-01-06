@@ -62,7 +62,10 @@ namespace Reduxity.Example.Zenject {
         /// Settings related to multiplayer network requests
         /// </summary>
         public class PhotonNetworkSettings {
-            public PhotonCloudObserver.Settings Cloud;
+            // component settings
+            public PhotonCloudContainer.Settings Cloud;
+
+            // observer settings
             public PhotonClientObserver.Settings Server;
             public PhotonLobbyObserver.Settings Lobby;
             public PhotonRoomObserver.Settings Room;

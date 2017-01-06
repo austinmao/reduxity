@@ -135,18 +135,23 @@ namespace Reduxity.Example.Zenject {
             Container.Bind<DisplayHttpText>().AsSingle();
             Container.Bind<DisplayHttpButton>().AsSingle();
 
-            // network
-            Container.Bind<PhotonCloud>().AsSingle();
-            Container.Bind<PhotonClient>().AsSingle();
-            Container.Bind<PhotonLobby>().AsSingle();
-            Container.Bind<PhotonRoom>().AsSingle();
-            Container.Bind<PhotonNetworkPlayer>().AsSingle();
+            // network components
+            Container.Bind<PhotonLoggerComponent>().AsSingle();
+            Container.Bind<ConnectToCloudButtonComponent>().AsSingle();
         }
 
         /// <summary>
         /// Install Containers, which are MonoBehaviours that may include mah components.
         /// </summary>
         private void InstallContainers() {
+            Container.Bind<IInitializable>().To(x => x.AllTypes().DerivingFrom<IContainer>()).AsSingle();
+
+            // network
+            Container.Bind<PhotonCloudContainer>().AsSingle();
+            Container.Bind<PhotonClientContainer>().AsSingle();
+            Container.Bind<PhotonLobbyContainer>().AsSingle();
+            Container.Bind<PhotonRoomContainer>().AsSingle();
+            Container.Bind<PhotonNetworkPlayerContainer>().AsSingle();
         }
 
 		[Serializable]

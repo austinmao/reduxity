@@ -9,18 +9,15 @@ namespace Reduxity.Example.Zenject {
 		readonly App app_;
 		readonly Settings settings_;
         readonly ClientConnectCreator.ActionCreator actionCreator_;
-		readonly Dispatcher dispatch_;
 
         public PhotonClientObserver(
 			App app,
 			Settings settings,
             ClientConnectCreator.ActionCreator actionCreator
-
 		) {
 			app_ = app;
 			settings_ = settings;
             actionCreator_ = actionCreator;
-			dispatch_ = app_.Store.Dispatch;
 		}
 
 		public void Initialize() {
@@ -38,7 +35,7 @@ namespace Reduxity.Example.Zenject {
         /// </remarks>
         public void OnConnectedToMaster() {
 			var action = new ClientConnector.Action.ConnectSuccess {};
-			dispatch_(action);
+			app_.Store.Dispatch(action);
         }
 
         /// <summary>
@@ -52,7 +49,7 @@ namespace Reduxity.Example.Zenject {
 			var action = new ClientConnector.Action.ConnectSuccess {
                 photonClient = newMasterClient // set new client
             };
-			dispatch_(action);
+			app_.Store.Dispatch(action);
         }
 
         /// <summary>
