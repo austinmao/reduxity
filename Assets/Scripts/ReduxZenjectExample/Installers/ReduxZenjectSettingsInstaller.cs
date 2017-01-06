@@ -70,6 +70,7 @@ namespace Reduxity.Example.Zenject {
             public PhotonLobbyObserver.Settings Lobby;
             public PhotonRoomObserver.Settings Room;
             public PhotonNetworkPlayerObserver.Settings NetworkPlayer;
+            public PhotonSettings Photon;
         }
 
         /// <summary>
@@ -100,6 +101,7 @@ namespace Reduxity.Example.Zenject {
             Container.BindInstance(PhotonNetwork.Lobby);
             Container.BindInstance(PhotonNetwork.Room);
             Container.BindInstance(PhotonNetwork.NetworkPlayer);
+            Container.BindInstance(PhotonNetwork.Photon);
 
             // App
             Container.BindInstance(App.LogLevel);

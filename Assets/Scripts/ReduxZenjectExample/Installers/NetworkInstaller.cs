@@ -9,9 +9,6 @@ namespace Reduxity.Example.Zenject {
     /// </summary>
 	public class NetworkInstaller : MonoInstaller<NetworkInstaller> {
 
-        [SerializeField]
-        Settings settings_ = null;
-
         /// <summary>
         /// Install bindings into the direct injection container.
         /// Note: order matters because of initializers!
@@ -37,8 +34,6 @@ namespace Reduxity.Example.Zenject {
             InstallComponents();
             // 10. renderers
             InstallContainers();
-            // 11. install settings
-            InstallSettings();
 		}
 
         /// <summary>
@@ -120,14 +115,5 @@ namespace Reduxity.Example.Zenject {
             Container.Bind<PhotonRoomContainer>().AsSingle();
             Container.Bind<PhotonNetworkPlayerContainer>().AsSingle();
         }
-
-        void InstallSettings() {
-            Container.BindInstance(settings_.GameSettings);
-        }
-
-		[Serializable]
-		public class Settings {
-            public NetworkSettings.GameSettings GameSettings;
-		}
 	}
 }

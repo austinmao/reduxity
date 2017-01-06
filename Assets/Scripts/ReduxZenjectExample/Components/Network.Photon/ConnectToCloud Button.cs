@@ -15,14 +15,14 @@ namespace Reduxity.Example.Zenject {
 		}
 
 		readonly App app_;
-		// readonly Settings settings_ = null;
+		readonly PhotonSettings photonSettings_;
 		readonly CloudConnectCreator.ActionCreator actionCreator_;
 		readonly Button button_;
         readonly Text buttonText_;
 
         public ConnectToCloudButtonComponent(
 			App app,
-			// Settings settings,
+			PhotonSettings photonSettings,
 			CloudConnectCreator.ActionCreator actionCreator,
 			[Inject(Id = "ConnectToCloud")]
 			Button button,
@@ -30,6 +30,7 @@ namespace Reduxity.Example.Zenject {
             Text buttonText
         ) {
 			app_ = app;
+			photonSettings_ = photonSettings;
 			actionCreator_ = actionCreator;
 			button_ = button;
             buttonText_ = buttonText;
@@ -66,7 +67,7 @@ namespace Reduxity.Example.Zenject {
 			button_.OnClickAsObservable()
 				.Subscribe(_ => {
 					var action = new CloudConnectCreator.Action.Connect {
-						gameVersion = "0.1" // TODO: make this settable in settings
+						gameVersion = photonSettings_.GameVersion
 					};
 
 					// dispatch action creator that starts connect to cloud
