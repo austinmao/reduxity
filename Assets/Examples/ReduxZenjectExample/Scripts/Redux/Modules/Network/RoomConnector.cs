@@ -60,6 +60,10 @@ namespace Reduxity.Example.Zenject.RoomConnector {
                 return LeaveSuccess(state, (Action.LeaveSuccess)action);
             }
 
+            if (action is Action.LeaveFailure) {
+                return LeaveFailure(state, (Action.LeaveFailure)action);
+            }
+
             if (action is Action.UpdateRoomProperties) {
                 return UpdateRoomProperties(state, (Action.UpdateRoomProperties)action);
             }
@@ -71,8 +75,6 @@ namespace Reduxity.Example.Zenject.RoomConnector {
             state.isJoining = true;
             state.isJoined = false;
             state.isJoinFailed = false;
-            state.isCreating = false;
-            state.isLeaving = false;
             state.feedbackText = "Joining room...";
             state.roomName = action.roomName;
             return state;
@@ -82,8 +84,6 @@ namespace Reduxity.Example.Zenject.RoomConnector {
             state.isJoining = false;
             state.isJoined = true;
             state.isJoinFailed = false;
-            state.isCreating = false;
-            state.isLeaving = false;
             state.feedbackText = "Joined room.";
             state.roomName = action.roomName;
             return state;
@@ -91,23 +91,25 @@ namespace Reduxity.Example.Zenject.RoomConnector {
 
         private RoomState JoinFailure(RoomState state, Action.JoinFailure action) {
             state.isJoining = false;
-            state.isJoined = false;
+
+            // should inherit from previous state in case user as already in room
+            // state.isJoined = false;
+
             state.isJoinFailed = true;
-            state.isCreating = false;
-            state.isLeaving = false;
             state.feedbackText = "Joining room failed.";
-            state.roomName = null;
+
+            // should inherit from previous state in case user as already in room
+            state.roomName = state.roomName != null ? state.roomName : null;
             return state;
         }
 
         private RoomState StartCreate(RoomState state, Action.CreateStart action) {
+            // is leaving room if already in a room
+            state.isLeaving = state.isJoined ? true : false;
             state.isJoining = true;
-            state.isJoined = false;
-            state.isJoinFailed = false;
             state.isCreating = true;
             state.isCreated = false;
             state.isCreateFailed = false;
-            state.isLeaving = false;
             state.feedbackText = "Creating room...";
             state.roomName = action.roomName;
             return state;
@@ -120,7 +122,6 @@ namespace Reduxity.Example.Zenject.RoomConnector {
             state.isCreating = false;
             state.isCreated = true;
             state.isCreateFailed = false;
-            state.isLeaving = false;
             state.feedbackText = "Created room.";
             state.roomName = action.roomName;
             return state;
@@ -128,8 +129,9 @@ namespace Reduxity.Example.Zenject.RoomConnector {
 
         private RoomState CreateFailure(RoomState state, Action.CreateFailure action) {
             state.isJoining = false;
-            state.isJoined = false;
-            state.isJoinFailed = false;
+            // inherits previous state
+            // state.isJoined = false;
+            state.isJoinFailed = true;
             state.isCreating = false;
             state.isCreated = false;
             state.isCreateFailed = true;
@@ -140,20 +142,32 @@ namespace Reduxity.Example.Zenject.RoomConnector {
         }
 
         private RoomState Leave(RoomState state, Action.LeaveStart action) {
-            state.isJoining = false;
-            state.isJoined = false;
-            state.isJoinFailed = false;
             state.isLeaving = true;
+            state.hasLeft = false;
+            state.isLeavingFailed = false;
             state.feedbackText = "Leaving room...";
             state.roomName = action.roomName;
             return state;
         }
 
         private RoomState LeaveSuccess(RoomState state, Action.LeaveSuccess action) {
-            state.isJoining = false;
             state.isJoined = false;
-            state.isJoinFailed = false;
             state.isLeaving = false;
+            state.hasLeft = true;
+            state.isLeavingFailed = false;
+            state.feedbackText = "Left room";
+            state.roomName = null;
+            return state;
+        }
+
+        private RoomState LeaveFailure(RoomState state, Action.LeaveFailure action) {
+            // inherit previous state
+            // state.isJoining = false;
+            // state.isJoined = false;
+            // state.isJoinFailed = false;
+            state.isLeaving = false;
+            state.hasLeft = true;
+            state.isLeavingFailed = false;
             state.feedbackText = "Left room";
             state.roomName = null;
             return state;

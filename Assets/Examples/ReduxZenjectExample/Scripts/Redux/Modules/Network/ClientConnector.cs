@@ -65,7 +65,7 @@ namespace Reduxity.Example.Zenject.ClientConnector {
             state.isConnectionFailed = false;
             state.isSwitching = action.isSwitching;
             state.isDisconnecting = false;
-            state.isDisconnected = false;
+            state.isDisconnected = true;
             state.isDisconnectionFailed = false;
             state.photonClient = action.photonClient; // set client. this will be maintained in state.j
             state.feedbackText = "Connecting to client...";
@@ -89,7 +89,7 @@ namespace Reduxity.Example.Zenject.ClientConnector {
             state.isConnectionFailed = true; // action failed
             state.isSwitching = false;
             state.isDisconnecting = false;
-            state.isDisconnected = false;
+            state.isDisconnected = true;
             state.isDisconnectionFailed = false;
             state.feedbackText = "Failed to connect to client.";
             return state;

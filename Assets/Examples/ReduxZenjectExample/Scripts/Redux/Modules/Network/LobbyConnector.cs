@@ -54,6 +54,14 @@ namespace Reduxity.Example.Zenject.LobbyConnector {
                 return LeaveSuccess(state, (Action.LeaveSuccess)action);
             }
 
+            if (action is Action.LeaveFailure) {
+                return LeaveFailure(state, (Action.LeaveFailure)action);
+            }
+
+            if (action is Action.UpdateRoomList) {
+                return UpdateRoomList(state, (Action.UpdateRoomList)action);
+            }
+
             return state;
         }
 
@@ -63,6 +71,8 @@ namespace Reduxity.Example.Zenject.LobbyConnector {
             state.isJoinFailed = false;
             state.isCreating = false;
             state.isLeaving = false;
+            state.hasLeft = false;
+            state.isLeavingFailed = false;
             state.feedbackText = "Joining lobby...";
             state.lobbyName = action.lobbyName;
             return state;
@@ -74,6 +84,8 @@ namespace Reduxity.Example.Zenject.LobbyConnector {
             state.isJoinFailed = false;
             state.isCreating = false;
             state.isLeaving = false;
+            state.hasLeft = false;
+            state.isLeavingFailed = false;
             state.feedbackText = "Joined lobby.";
             state.lobbyName = action.lobbyName;
             return state;
@@ -85,6 +97,8 @@ namespace Reduxity.Example.Zenject.LobbyConnector {
             state.isJoinFailed = true;
             state.isCreating = false;
             state.isLeaving = false;
+            state.hasLeft = false;
+            state.isLeavingFailed = false;
             state.feedbackText = "Joining lobby failed.";
             state.lobbyName = null;
             return state;
@@ -96,6 +110,8 @@ namespace Reduxity.Example.Zenject.LobbyConnector {
             state.isJoinFailed = false;
             state.isCreating = true;
             state.isLeaving = false;
+            state.hasLeft = false;
+            state.isLeavingFailed = false;
             state.feedbackText = "Creating lobby...";
             state.lobbyName = action.lobbyName;
             return state;
@@ -103,9 +119,11 @@ namespace Reduxity.Example.Zenject.LobbyConnector {
 
         private LobbyState Leave(LobbyState state, Action.LeaveStart action) {
             state.isJoining = false;
-            state.isJoined = false;
+            state.isJoined = true; // still in lobby
             state.isJoinFailed = false;
-            state.isLeaving = true;
+            state.isLeaving = true; // commencing action
+            state.hasLeft = false;
+            state.isLeavingFailed = false;
             state.feedbackText = "Leaving lobby...";
             state.lobbyName = action.lobbyName;
             return state;
@@ -113,10 +131,24 @@ namespace Reduxity.Example.Zenject.LobbyConnector {
 
         private LobbyState LeaveSuccess(LobbyState state, Action.LeaveSuccess action) {
             state.isJoining = false;
-            state.isJoined = false;
+            state.isJoined = false; // left lobby
             state.isJoinFailed = false;
             state.isLeaving = false;
+            state.hasLeft = true;
+            state.isLeavingFailed = false;
             state.feedbackText = "Left lobby";
+            state.lobbyName = null;
+            return state;
+        }
+
+        private LobbyState LeaveFailure(LobbyState state, Action.LeaveFailure action) {
+            state.isJoining = false;
+            state.isJoined = true; // still in lobby
+            state.isJoinFailed = false;
+            state.isLeaving = false;
+            state.hasLeft = false;
+            state.isLeavingFailed = true;
+            state.feedbackText = "Leaving lobby failed";
             state.lobbyName = null;
             return state;
         }

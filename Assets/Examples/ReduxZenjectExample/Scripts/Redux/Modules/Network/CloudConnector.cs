@@ -58,7 +58,7 @@ namespace Reduxity.Example.Zenject.CloudConnector {
             state.isConnected = false;
             state.isConnectionFailed = false;
             state.isDisconnecting = false;
-            state.isDisconnected = false;
+            state.isDisconnected = true;
             state.isDisconnectionFailed = false;
             state.feedbackText = "Connecting...";
             return state;
@@ -80,7 +80,7 @@ namespace Reduxity.Example.Zenject.CloudConnector {
             state.isConnected = false;
             state.isConnectionFailed = true; // action failed
             state.isDisconnecting = false;
-            state.isDisconnected = false;
+            state.isDisconnected = true;
             state.isDisconnectionFailed = false;
             state.feedbackText = "Connection failed.";
             return state;

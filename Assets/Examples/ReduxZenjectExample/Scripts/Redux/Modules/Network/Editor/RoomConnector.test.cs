@@ -23,7 +23,7 @@ namespace Reduxity.Example.Zenject.RoomConnector
 		}
 
 		[Test]
-		public void Should_set_isJoining_and_isJoined_when_starting_request() {
+		public void Should_set_isJoining_and_isJoined_when_joining() {
 			// arrange
 			var mockRoomAction = new Action.JoinStart {};
 			var sut = reducer_;
@@ -32,17 +32,21 @@ namespace Reduxity.Example.Zenject.RoomConnector
 			var result = sut.Reduce(mockRoomState_, mockRoomAction);
 
 			// assert
-			Assert.IsFalse(result.isJoined);
-			Assert.IsTrue(result.isJoining);
-			Assert.IsFalse(result.isJoinFailed);
-			Assert.IsFalse(result.isCreating);
-			Assert.IsFalse(result.isLeaving);
+			Assert.IsFalse(result.isJoined, "isJoined");
+			Assert.IsTrue(result.isJoining, "isJoining");
+			Assert.IsFalse(result.isJoinFailed, "isJoinFailed");
+			Assert.IsFalse(result.isCreating, "isCreating");
+			Assert.IsFalse(result.isCreated, "isCreated");
+			Assert.IsFalse(result.isCreateFailed, "isCreateFailed");
+			Assert.IsFalse(result.isLeaving, "isLeaving");
+			Assert.IsFalse(result.hasLeft, "hasLeft");
+			Assert.IsFalse(result.isLeavingFailed, "isLeavingFailed");
 			Assert.IsInstanceOf<string>(result.feedbackText);
 			Assert.IsNotEmpty(result.feedbackText);
         }
 
 		[Test]
-		public void Should_set_Room_state_when_joining_succeeds() {
+		public void Should_set_isJoined_when_joining_succeeds() {
             // arrange
 			var mockRoomAction = new Action.JoinSuccess {
 			};
@@ -51,30 +55,110 @@ namespace Reduxity.Example.Zenject.RoomConnector
 			var result = reducer_.Reduce(mockRoomState_, mockRoomAction);
 
             // assert
-			Assert.IsTrue(result.isJoined);
-			Assert.IsFalse(result.isJoining);
-			Assert.IsFalse(result.isJoinFailed);
-			Assert.IsFalse(result.isCreating);
-			Assert.IsFalse(result.isLeaving);
+			Assert.IsTrue(result.isJoined, "isJoined");
+			Assert.IsFalse(result.isJoining, "isJoining");
+			Assert.IsFalse(result.isJoinFailed, "isJoinFailed");
+			Assert.IsFalse(result.isCreating, "isCreating");
+			Assert.IsFalse(result.isCreated, "isCreated");
+			Assert.IsFalse(result.isCreateFailed, "isCreateFailed");
+			Assert.IsFalse(result.isLeaving, "isLeaving");
+			Assert.IsFalse(result.hasLeft, "hasLeft");
+			Assert.IsFalse(result.isLeavingFailed, "isLeavingFailed");
 			Assert.IsInstanceOf<string>(result.feedbackText);
 			Assert.IsNotEmpty(result.feedbackText);
         }
 
 		[Test]
-		public void Should_set_isLeaving_and_isJoined_when_starting_request() {
+		public void Should_set_isJoined_when_joining_fails() {
+            // arrange
+			var mockRoomAction = new Action.JoinFailure {
+			};
+
+            // act
+			var result = reducer_.Reduce(mockRoomState_, mockRoomAction);
+
+            // assert
+			Assert.IsFalse(result.isJoined, "isJoined");
+			Assert.IsFalse(result.isJoining, "isJoining");
+			Assert.IsTrue(result.isJoinFailed, "isJoinFailed");
+			Assert.IsFalse(result.isCreating, "isCreating");
+			Assert.IsFalse(result.isCreated, "isCreated");
+			Assert.IsFalse(result.isCreateFailed, "isCreateFailed");
+			Assert.IsFalse(result.isLeaving, "isLeaving");
+			Assert.IsFalse(result.hasLeft, "hasLeft");
+			Assert.IsFalse(result.isLeavingFailed, "isLeavingFailed");
+			Assert.IsInstanceOf<string>(result.feedbackText);
+			Assert.IsNotEmpty(result.feedbackText);
+        }
+
+		[Test]
+		public void Should_set_isLeaving_and_isJoined_when_leaving() {
 			// arrange
+			var mockState = new RoomState {
+				isJoined = true
+			};
 			var mockRoomAction = new Action.LeaveStart {};
 			var sut = reducer_;
 
 			// act
-			var result = sut.Reduce(mockRoomState_, mockRoomAction);
+			var result = sut.Reduce(mockState, mockRoomAction);
 
 			// assert
-			Assert.IsFalse(result.isJoined);
-			Assert.IsFalse(result.isJoining);
-			Assert.IsTrue(result.isLeaving);
-			Assert.IsFalse(result.isCreating);
-			Assert.IsFalse(result.isJoinFailed);
+			Assert.IsTrue(result.isJoined, "isJoined");
+			Assert.IsFalse(result.isJoining, "isJoining");
+			Assert.IsFalse(result.isJoinFailed, "isJoinFailed");
+			Assert.IsFalse(result.isCreating, "isCreating");
+			Assert.IsFalse(result.isCreated, "isCreated");
+			Assert.IsFalse(result.isCreateFailed, "isCreateFailed");
+			Assert.IsTrue(result.isLeaving, "isLeaving");
+			Assert.IsFalse(result.hasLeft, "hasLeft");
+			Assert.IsFalse(result.isLeavingFailed, "isLeavingFailed");
+			Assert.IsInstanceOf<string>(result.feedbackText);
+			Assert.IsNotEmpty(result.feedbackText);
+        }
+
+		[Test]
+		public void Should_set_hasLeft_when_leaving_succeeds() {
+            // arrange
+			var mockRoomAction = new Action.LeaveSuccess {
+			};
+
+            // act
+			var result = reducer_.Reduce(mockRoomState_, mockRoomAction);
+
+            // assert
+			Assert.IsFalse(result.isJoined, "isJoined");
+			Assert.IsFalse(result.isJoining, "isJoining");
+			Assert.IsFalse(result.isJoinFailed, "isJoinFailed");
+			Assert.IsFalse(result.isCreating, "isCreating");
+			Assert.IsFalse(result.isCreated, "isCreated");
+			Assert.IsFalse(result.isCreateFailed, "isCreateFailed");
+			Assert.IsFalse(result.isLeaving, "isLeaving");
+			Assert.IsTrue(result.hasLeft, "hasLeft");
+			Assert.IsFalse(result.isLeavingFailed, "isLeavingFailed");
+			Assert.IsInstanceOf<string>(result.feedbackText);
+			Assert.IsNotEmpty(result.feedbackText);
+        }
+
+		[Test]
+		public void Should_stay_in_room_when_leaving_fails() {
+            // arrange
+			var mockRoomAction = new Action.LeaveFailure {
+			};
+
+            // act
+			var result = reducer_.Reduce(mockRoomState_, mockRoomAction);
+
+            // assert
+			Assert.IsTrue(result.isJoined, "isJoined");
+			Assert.IsFalse(result.isJoining, "isJoining");
+			Assert.IsFalse(result.isJoinFailed, "isJoinFailed");
+			Assert.IsFalse(result.isCreating, "isCreating");
+			Assert.IsFalse(result.isCreated, "isCreated");
+			Assert.IsFalse(result.isCreateFailed, "isCreateFailed");
+			Assert.IsFalse(result.isLeaving, "isLeaving");
+			Assert.IsFalse(result.hasLeft, "hasLeft");
+			Assert.IsTrue(result.isLeavingFailed, "isLeavingFailed");
 			Assert.IsInstanceOf<string>(result.feedbackText);
 			Assert.IsNotEmpty(result.feedbackText);
         }
@@ -89,31 +173,61 @@ namespace Reduxity.Example.Zenject.RoomConnector
 			var result = sut.Reduce(mockRoomState_, mockRoomAction);
 
 			// assert
-			Assert.IsFalse(result.isJoined);
-			Assert.IsTrue(result.isJoining);
-			Assert.IsFalse(result.isJoinFailed);
-			Assert.IsTrue(result.isCreating);
-			Assert.IsFalse(result.isLeaving);
+			Assert.IsFalse(result.isJoined, "isJoined");
+			Assert.IsTrue(result.isJoining, "isJoining");
+			Assert.IsFalse(result.isJoinFailed, "isJoinFailed");
+			Assert.IsTrue(result.isCreating, "isCreating");
+			Assert.IsFalse(result.isCreated, "isCreated");
+			Assert.IsFalse(result.isCreateFailed, "isCreateFailed");
+			Assert.IsFalse(result.isLeaving, "isLeaving");
+			Assert.IsFalse(result.hasLeft, "hasLeft");
+			Assert.IsFalse(result.isLeavingFailed, "isLeavingFailed");
 			Assert.IsInstanceOf<string>(result.feedbackText);
 			Assert.IsNotEmpty(result.feedbackText);
         }
 
 		[Test]
-		public void Should_set_Room_state_when_leaving_succeeds() {
-            // arrange
-			var mockRoomAction = new Action.LeaveSuccess {
-			};
+		public void Should_set_isCreated_when_creating_succeeds() {
+			// arrange
+			var mockRoomAction = new Action.CreateStart {};
+			var sut = reducer_;
 
-            // act
-			var result = reducer_.Reduce(mockRoomState_, mockRoomAction);
+			// act
+			var result = sut.Reduce(mockRoomState_, mockRoomAction);
 
-            // assert
-			Assert.IsFalse(result.isJoined);
-			Assert.IsFalse(result.isJoining);
-			Assert.IsFalse(result.isLeaving);
-			Assert.IsFalse(result.isCreating);
-			Assert.IsFalse(result.isJoinFailed);
-			Assert.IsFalse(result.isLeaving);
+			// assert
+			Assert.IsTrue(result.isJoined, "isJoined");
+			Assert.IsFalse(result.isJoining, "isJoining");
+			Assert.IsFalse(result.isJoinFailed, "isJoinFailed");
+			Assert.IsFalse(result.isCreating, "isCreating");
+			Assert.IsTrue(result.isCreated, "isCreated");
+			Assert.IsFalse(result.isCreateFailed, "isCreateFailed");
+			Assert.IsFalse(result.isLeaving, "isLeaving");
+			Assert.IsFalse(result.hasLeft, "hasLeft");
+			Assert.IsFalse(result.isLeavingFailed, "isLeavingFailed");
+			Assert.IsInstanceOf<string>(result.feedbackText);
+			Assert.IsNotEmpty(result.feedbackText);
+        }
+
+		[Test]
+		public void Should_set_isJoined_and_isCreated_when_creating_fails() {
+			// arrange
+			var mockRoomAction = new Action.CreateStart {};
+			var sut = reducer_;
+
+			// act
+			var result = sut.Reduce(mockRoomState_, mockRoomAction);
+
+			// assert
+			Assert.IsFalse(result.isJoined, "isJoined");
+			Assert.IsFalse(result.isJoining, "isJoining");
+			Assert.IsFalse(result.isJoinFailed, "isJoinFailed");
+			Assert.IsFalse(result.isCreating, "isCreating");
+			Assert.IsFalse(result.isCreated, "isCreated");
+			Assert.IsTrue(result.isCreateFailed, "isCreateFailed");
+			Assert.IsFalse(result.isLeaving, "isLeaving");
+			Assert.IsFalse(result.hasLeft, "hasLeft");
+			Assert.IsFalse(result.isLeavingFailed, "isLeavingFailed");
 			Assert.IsInstanceOf<string>(result.feedbackText);
 			Assert.IsNotEmpty(result.feedbackText);
         }
