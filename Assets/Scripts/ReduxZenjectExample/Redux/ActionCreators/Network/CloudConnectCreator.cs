@@ -10,13 +10,18 @@ namespace Reduxity.Example.Zenject.CloudConnectCreator
         /// <summary>
         /// Properties for each type of http request
         /// </summary>
-        public class Connect : IAction {
-            public string gameVersion;
-        }
+        public class Connect : IAction {}
         public class Disconnect : IAction {}
     }
 
     public class ActionCreator : IActionCreator {
+
+        readonly Settings settings_;
+
+        public ActionCreator(Settings settings) {
+            settings_ = settings;
+        }
+
         /// <summary>
         /// Thunk that connects to Photon Network
         /// </summary>
@@ -28,8 +33,8 @@ namespace Reduxity.Example.Zenject.CloudConnectCreator
                 dispatch(new CloudConnector.Action.ConnectStart {});
 
                 // connect to PhotonCloud. Callbacks are handled by Photon.
-                Debug.Log($"connect using version: {action.gameVersion}");
-				PhotonNetwork.ConnectUsingSettings(action.gameVersion);
+                Debug.Log($"connect using version: {settings_.GameVersion}");
+				PhotonNetwork.ConnectUsingSettings(settings_.GameVersion);
             });
         }
 
