@@ -3,6 +3,7 @@ using Zenject;
 
 namespace Reduxity.Example.Zenject {
 	public class NetworkSettings {
+
 		[Serializable]
 		public class GameSettings {
 

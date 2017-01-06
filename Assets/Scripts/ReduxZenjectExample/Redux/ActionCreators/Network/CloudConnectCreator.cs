@@ -2,6 +2,8 @@
 using Redux.Middleware;
 using UniRx;
 using PhotonRx;
+using UnityEngine;
+using Zenject;
 
 namespace Reduxity.Example.Zenject.CloudConnectCreator {
     public class Action {
@@ -22,10 +24,11 @@ namespace Reduxity.Example.Zenject.CloudConnectCreator {
         public IAction Connect(Action.Connect action) {
             // return thunk to store, which will dispatch new actions upon success or failure
             return new ThunkAction<State> ((dispatch, getState) => {
-                // dispatch first action to set state to loading
+                // dispatch first action to set state to connecting
                 dispatch(new CloudConnector.Action.ConnectStart {});
 
                 // connect to PhotonCloud. Callbacks are handled by Photon.
+                Debug.Log($"connect using version: {action.gameVersion}");
 				PhotonNetwork.ConnectUsingSettings(action.gameVersion);
             });
         }
@@ -37,19 +40,14 @@ namespace Reduxity.Example.Zenject.CloudConnectCreator {
         public IAction DisconnectStart(Action.Disconnect action) {
             // return thunk to store, which will dispatch new actions upon success or failure
             return new ThunkAction<State> ((dispatch, getState) => {
-                // dispatch first action to set state to loading
-                // dispatch(new RoomConnector.Action.JoinStart {});
+                // dispatch first action to set state to disconnecting
+                dispatch(new CloudConnector.Action.DisconnectStart {});
+
+                // disconnect from PhotonCloud. Callbacks are handled by Photon.
+                Debug.Log($"disconnecting");
+				PhotonNetwork.Disconnect();
             });
         }
-
-        // private IConnectableObservable<bool> ConnectToCloudObservable() {
-        //     return this.OnJoinedLobbyAsObservable().Cast(default(object))
-        //         .Merge(this.OnFailedToConnectToPhotonAsObservable().Cast(default(object)))
-        //         .FirstOrDefault() //OnCompletedを発火させるため
-        //         .PublishLast();   //PhotonNetwork.Connectを呼び出すより前にストリームを稼働させるため
-
-        // }
-
     }
 }
 

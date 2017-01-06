@@ -526,7 +526,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   settings_:
     GameSettings:
-      GameVersion: 
+      GameVersion: 0.1
 --- !u!1 &440135348
 GameObject:
   m_ObjectHideFlags: 0
