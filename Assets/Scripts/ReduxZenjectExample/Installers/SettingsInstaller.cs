@@ -4,8 +4,8 @@ using System;
 using Middleware = Reduxity.Middleware;
 
 namespace Reduxity.Example.Zenject {
-    [CreateAssetMenu(fileName = "ReduxZenjectSettingsInstaller", menuName = "Installers/ReduxZenjectSettingsInstaller")]
-    public class ReduxZenjectSettingsInstaller : ScriptableObjectInstaller<ReduxZenjectSettingsInstaller> {
+    [CreateAssetMenu(fileName = "SettingsInstaller", menuName = "Installers/SettingsInstaller")]
+    public class SettingsInstaller : ScriptableObjectInstaller<SettingsInstaller> {
 
         /* These variables provide access nested classes below */
         public AppSettings App;

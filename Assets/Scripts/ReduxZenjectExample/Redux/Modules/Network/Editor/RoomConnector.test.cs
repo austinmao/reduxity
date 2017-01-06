@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using Zenject;
 
-namespace Reduxity.Example.Zenject.RoomConnector.Tests
+namespace Reduxity.Example.Zenject.RoomConnector
 {
 
     [TestFixture]
