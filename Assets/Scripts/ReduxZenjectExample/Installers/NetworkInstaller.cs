@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using UnityEngine;
 using Zenject;
 
 namespace Reduxity.Example.Zenject {
@@ -6,9 +7,9 @@ namespace Reduxity.Example.Zenject {
     /// See here for more details:
     /// https://github.com/modesttree/zenject#installers
     /// </summary>
-	public class GameInstaller : MonoInstaller<GameInstaller> {
+	public class NetworkInstaller : MonoInstaller<NetworkInstaller> {
 
-        [Inject]
+        [SerializeField]
         Settings settings_ = null;
 
         /// <summary>
@@ -36,38 +37,42 @@ namespace Reduxity.Example.Zenject {
             InstallComponents();
             // 10. renderers
             InstallContainers();
+            // 11. install settings
+            InstallSettings();
 		}
 
         /// <summary>
         /// Initialize each state as a single instance. Bind Initialize() to each.
         /// </summary>
-        private void InstallState() {
-            Container.Bind<CharacterState>().AsSingle();
-            Container.Bind<CameraState>().AsSingle();
-            Container.Bind<ApiState>().AsSingle();
-
-            // global state object
-			Container.Bind<State>().AsSingle();
+        void InstallState() {
+            Container.Bind<CloudState>().AsSingle();
+            Container.Bind<ClientState>().AsSingle();
+            Container.Bind<LobbyState>().AsSingle();
+            Container.Bind<RoomState>().AsSingle();
+            Container.Bind<NetworkPlayerState>().AsSingle();
+            Container.Bind<NetworkPlayersState>().AsSingle();
 		}
 
         /// <summary>
         /// Auto-bind IInitializable to all state initializers
         /// @see https://github.com/modesttree/Zenject#examples
         /// </summary>
-        private void InstallStateInitializers() {
-            Container.Bind<IInitializable>().To(x => x.AllTypes().DerivingFrom<IStateInitializer>()).AsSingle();
+        void InstallStateInitializers() {
         }
 
         /// <summary>
         /// Install Actions to be used in thunks (actions that will fire off other actions,
         /// usually in async usage).
         /// </summary>
-        private void InstallActionCreators() {
-            Container.Bind<ApiRequestCreator.ActionCreator>().AsSingle();
+        void InstallActionCreators() {
+            Container.Bind<CloudConnectCreator.ActionCreator>().AsSingle();
+            Container.Bind<ClientConnectCreator.ActionCreator>().AsSingle();
+            Container.Bind<LobbyConnectCreator.ActionCreator>().AsSingle();
+            Container.Bind<RoomConnectCreator.ActionCreator>().AsSingle();
+            Container.Bind<NetworkPlayerCreator.ActionCreator>().AsSingle();
         }
 
-        private void InstallMiddleware() {
-            Container.Bind<Reduxity.Middleware.Logger>().AsSingle();
+        void InstallMiddleware() {
         }
 
         /// <summary>
@@ -76,54 +81,53 @@ namespace Reduxity.Example.Zenject {
         /// but the Store intiailizer should interact directly with reducers; only actions
         /// that are dispatched will.
         /// </summary>
-        private void InstallReducers() {
-            Container.Bind<CharacterMover.Reducer>().AsSingle().WhenInjectedInto<App>();
-            Container.Bind<CameraLook.Reducer>().AsSingle().WhenInjectedInto<App>();
-
-            // http requests
-            Container.Bind<ApiRequestor.Reducer>().AsSingle().WhenInjectedInto<App>();
+        void InstallReducers() {
+            Container.Bind<CloudConnector.Reducer>().AsSingle().WhenInjectedInto<App>();
+            Container.Bind<ClientConnector.Reducer>().AsSingle().WhenInjectedInto<App>();
+            Container.Bind<LobbyConnector.Reducer>().AsSingle().WhenInjectedInto<App>();
+            Container.Bind<RoomConnector.Reducer>().AsSingle().WhenInjectedInto<App>();
+            Container.Bind<NetworkPlayer.Reducer>().AsSingle().WhenInjectedInto<App>();
+            Container.Bind<NetworkPlayers.Reducer>().AsSingle().WhenInjectedInto<App>();
         }
 
         /// <summary>
         /// Install the App, which contains the Store that is initialized.
         /// </summary>
-        private void InstallApp() {
-            Container.Bind<IInitializable>().To<App>().AsSingle();
-            Container.Bind<App>().AsSingle();
+        void InstallApp() {
         }
 
-        private void InstallObservers() {
-            Container.Bind<IInitializable>().To<PCInput>().AsSingle();
-            Container.Bind<PCInput>().AsSingle();
-            Container.Bind<IInitializable>().To<ApiRequest>().AsSingle();
-            Container.Bind<ApiRequest>().AsSingle();
+        void InstallObservers() {
         }
 
-        private void InstallSelectors() {
-            Container.Bind<CharacterMoverSelector>().AsSingle();
-            Container.Bind<ApiDataSelector>().AsSingle();
+        void InstallSelectors() {
         }
 
         /// <summary>
         /// Install Components that subscribe to and render state changes.
         /// </summary>
-        private void InstallComponents() {
-            Container.Bind<IInitializable>().To(x => x.AllTypes().DerivingFrom<IComponent>()).AsSingle();
-            Container.Bind<MoveCharacter>().AsSingle();
-            Container.Bind<MoveCamera>().AsSingle();
-            Container.Bind<DisplayHttpText>().AsSingle();
-            Container.Bind<DisplayHttpButton>().AsSingle();
+        void InstallComponents() {
+            Container.Bind<PhotonLoggerComponent>().AsSingle();
+            Container.Bind<ConnectToCloudButtonComponent>().AsSingle();
         }
 
         /// <summary>
         /// Install Containers, which are MonoBehaviours that may include mah components.
         /// </summary>
-        private void InstallContainers() {
-            Container.Bind<IInitializable>().To(x => x.AllTypes().DerivingFrom<IContainer>()).AsSingle();
+        void InstallContainers() {
+            Container.Bind<PhotonCloudContainer>().AsSingle();
+            Container.Bind<PhotonClientContainer>().AsSingle();
+            Container.Bind<PhotonLobbyContainer>().AsSingle();
+            Container.Bind<PhotonRoomContainer>().AsSingle();
+            Container.Bind<PhotonNetworkPlayerContainer>().AsSingle();
+        }
+
+        void InstallSettings() {
+            Container.BindInstance(settings_.GameSettings);
         }
 
 		[Serializable]
 		public class Settings {
+            public NetworkSettings.GameSettings GameSettings;
 		}
 	}
 }
