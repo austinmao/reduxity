@@ -1,5 +1,6 @@
 ﻿using Redux;
 using Redux.Middleware;
+using System;
 
 namespace Reduxity.Example.Zenject.RoomConnectCreator {
     public class Action {
@@ -82,5 +83,19 @@ namespace Reduxity.Example.Zenject.RoomConnectCreator {
                 PhotonNetwork.LeaveRoom();
             });
         }
+    }
+
+    [Serializable]
+    /// <summary>
+    /// Public settings for api loading
+    /// </summary>
+    public class Settings {
+
+        // The maximum number of players per room
+        public byte maxPlayersPerRoom = 4;
+
+		// #Critical: The first we try to do is to join a potential existing room.
+		// If there is, good, else, we'll be called back with OnPhotonRandomJoinFailed()
+		public bool shouldJoinRandomRoom = true;
     }
 }

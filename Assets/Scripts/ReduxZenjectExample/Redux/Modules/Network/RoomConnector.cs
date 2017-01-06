@@ -27,12 +27,6 @@ namespace Reduxity.Example.Zenject.RoomConnector {
     }
 
     public class Reducer : IReducer {
-        readonly Settings settings_;
-
-        public Reducer(Settings settings) {
-            settings_ = settings;
-        }
-
         public RoomState Reduce(RoomState state, IAction action) {
             if (action is Action.JoinStart) {
                 return StartJoin(state, (Action.JoinStart)action);
@@ -169,19 +163,5 @@ namespace Reduxity.Example.Zenject.RoomConnector {
             state.roomProperties = action.roomProperties;
             return state;
         }
-    }
-
-    [Serializable]
-    /// <summary>
-    /// Public settings for api loading
-    /// </summary>
-    public class Settings {
-
-        // The maximum number of players per room
-        public byte maxPlayersPerRoom = 4;
-
-		// #Critical: The first we try to do is to join a potential existing room.
-		// If there is, good, else, we'll be called back with OnPhotonRandomJoinFailed()
-		public bool shouldJoinRandomRoom = true;
     }
 }

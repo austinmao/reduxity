@@ -17,11 +17,6 @@ namespace Reduxity.Example.Zenject.RoomConnector.Tests
 			container_ = new DiContainer();
 			container_.Bind<Reducer>().AsSingle();
 
-			// set up mock settings
-			var mockSettings = new Settings {
-			};
-			container_.Bind<Settings>().FromInstance(mockSettings);
-
 			// set default state
 			mockRoomState_ = new RoomState {};
 			reducer_ = container_.Resolve<Reducer>();

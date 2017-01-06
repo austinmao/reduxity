@@ -24,12 +24,6 @@ namespace Reduxity.Example.Zenject.ClientConnector {
     }
 
     public class Reducer : IReducer {
-        readonly Settings settings_;
-
-        public Reducer(Settings settings) {
-            settings_ = settings;
-        }
-
         public ClientState Reduce(ClientState state, IAction action) {
             if (action is Action.ConnectStart) {
                 return StartConnect(state, (Action.ConnectStart)action);
@@ -139,19 +133,5 @@ namespace Reduxity.Example.Zenject.ClientConnector {
             state.feedbackText = "Failed to disconnect.";
             return state;
         }
-    }
-
-    [Serializable]
-    /// <summary>
-    /// Public settings for api loading
-    /// </summary>
-    public class Settings {
-        // #Critical
-        // this makes sure we can use PhotonNetwork.LoadLevel() on the master client and all clients in the same room sync their level automatically
-        public bool shouldAutomaticallySyncScene = true;
-
-        // #NotImportant
-        // Force LogLevel
-        public PhotonLogLevel logLevel = PhotonLogLevel.Full;
     }
 }

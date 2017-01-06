@@ -21,12 +21,6 @@ namespace Reduxity.Example.Zenject.CloudConnector {
     }
 
     public class Reducer : IReducer {
-        readonly Settings settings_;
-
-        public Reducer(Settings settings) {
-            settings_ = settings;
-        }
-
         public CloudState Reduce(CloudState state, IAction action) {
             if (action is Action.ConnectStart) {
                 return StartConnect(state, (Action.ConnectStart)action);
@@ -127,15 +121,5 @@ namespace Reduxity.Example.Zenject.CloudConnector {
             state.feedbackText = "Disconnection failed.";
             return state;
         }
-    }
-
-    [Serializable]
-    /// <summary>
-    /// Public settings for api loading
-    /// </summary>
-    public class Settings {
-        // #NotImportant
-        // Force LogLevel
-        public PhotonLogLevel logLevel = PhotonLogLevel.Full;
     }
 }

@@ -28,11 +28,6 @@ namespace Reduxity.Example.Zenject.LobbyConnector {
     }
 
     public class Reducer : IReducer {
-        readonly Settings settings_;
-
-        public Reducer(Settings settings) {
-            settings_ = settings;
-        }
 
         public LobbyState Reduce(LobbyState state, IAction action) {
             if (action is Action.JoinStart) {
@@ -130,16 +125,5 @@ namespace Reduxity.Example.Zenject.LobbyConnector {
             state.photonRoomList = action.photonRoomList;
             return state;
         }
-    }
-
-    [Serializable]
-    /// <summary>
-    /// Public settings for api loading
-    /// </summary>
-    public class Settings {
-
-		// #Critical: The first we try to do is to join a potential existing lobby.
-		// If there is, good, else, we'll be called back with OnPhotonRandomJoinFailed()
-		public bool shouldJoinRandomLobby = true;
     }
 }

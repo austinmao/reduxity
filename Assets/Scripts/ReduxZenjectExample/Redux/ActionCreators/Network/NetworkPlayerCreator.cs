@@ -1,5 +1,6 @@
 ﻿using Redux;
 using Redux.Middleware;
+using System;
 
 namespace Reduxity.Example.Zenject.NetworkPlayerCreator {
     public class Action {
@@ -37,6 +38,12 @@ namespace Reduxity.Example.Zenject.NetworkPlayerCreator {
                 // dispatch(new RoomConnector.Action.JoinStart {});
             });
         }
+    }
+
+    [Serializable]
+    /// <summary>
+    /// </summary>
+    public class Settings {
     }
 }
 

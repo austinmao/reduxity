@@ -1,5 +1,6 @@
 ﻿using Redux;
 using Redux.Middleware;
+using System;
 
 namespace Reduxity.Example.Zenject.ClientConnectCreator {
     public class Action {
@@ -45,5 +46,19 @@ namespace Reduxity.Example.Zenject.ClientConnectCreator {
                 // PhotonNetwork.Disconnect();
             });
         }
+    }
+
+    [Serializable]
+    /// <summary>
+    /// Public settings for api loading
+    /// </summary>
+    public class Settings {
+        // #Critical
+        // this makes sure we can use PhotonNetwork.LoadLevel() on the master client and all clients in the same room sync their level automatically
+        public bool shouldAutomaticallySyncScene = true;
+
+        // #NotImportant
+        // Force LogLevel
+        public PhotonLogLevel logLevel = PhotonLogLevel.Full;
     }
 }

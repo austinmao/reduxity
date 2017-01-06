@@ -16,12 +16,6 @@ namespace Reduxity.Example.Zenject.NetworkPlayers
     }
 
     public class Reducer : IReducer {
-        readonly Settings settings_;
-
-        public Reducer(Settings settings) {
-            settings_ = settings;
-        }
-
         public NetworkPlayersState Reduce(NetworkPlayersState state, IAction action) {
             if (action is Action.ConnectPlayer) {
                 return ConnectPlayer(state, (Action.ConnectPlayer)action);
@@ -45,11 +39,5 @@ namespace Reduxity.Example.Zenject.NetworkPlayers
 			state.otherPlayers = PhotonNetwork.otherPlayers;
 			return state;
 		}
-    }
-
-    [Serializable]
-    /// <summary>
-    /// </summary>
-    public class Settings {
     }
 }

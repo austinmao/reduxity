@@ -1,11 +1,11 @@
 ﻿using Redux;
 using Redux.Middleware;
-using UniRx;
-using PhotonRx;
 using UnityEngine;
-using Zenject;
+using System;
 
-namespace Reduxity.Example.Zenject.CloudConnectCreator {
+namespace Reduxity.Example.Zenject.CloudConnectCreator
+{
+
     public class Action {
         /// <summary>
         /// Properties for each type of http request
@@ -49,5 +49,17 @@ namespace Reduxity.Example.Zenject.CloudConnectCreator {
             });
         }
     }
+
+	[Serializable]
+	public class Settings {
+
+		/// <summary>
+		/// This client's version number. Users are separated from each other by gameversion (which allows you to make breaking changes).
+		/// </summary>
+		public string GameVersion;
+        // #NotImportant
+        // Force LogLevel
+        public PhotonLogLevel logLevel = PhotonLogLevel.Full;
+	}
 }
 

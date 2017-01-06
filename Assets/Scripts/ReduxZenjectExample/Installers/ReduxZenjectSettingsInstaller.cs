@@ -49,12 +49,11 @@ namespace Reduxity.Example.Zenject {
         /// Settings related to multiplayer network requests
         /// </summary>
         public class NetworkSettings {
-            public CloudConnector.Settings Cloud;
-            public ClientConnector.Settings Server;
-            public LobbyConnector.Settings Lobby;
-            public RoomConnector.Settings Room;
-            public NetworkPlayer.Settings NetworkPlayer;
-            public NetworkPlayers.Settings NetworkPlayers;
+            public CloudConnectCreator.Settings Cloud;
+            public ClientConnectCreator.Settings Server;
+            public LobbyConnectCreator.Settings Lobby;
+            public RoomConnectCreator.Settings Room;
+            public NetworkPlayerCreator.Settings NetworkPlayer;
         }
 
         [Serializable]
@@ -70,7 +69,6 @@ namespace Reduxity.Example.Zenject {
             public PhotonLobbyObserver.Settings Lobby;
             public PhotonRoomObserver.Settings Room;
             public PhotonNetworkPlayerObserver.Settings NetworkPlayer;
-            public PhotonSettings Photon;
         }
 
         /// <summary>
@@ -93,7 +91,6 @@ namespace Reduxity.Example.Zenject {
             Container.BindInstance(Network.Lobby);
             Container.BindInstance(Network.Room);
             Container.BindInstance(Network.NetworkPlayer);
-            Container.BindInstance(Network.NetworkPlayers);
 
             // PhotonNetwork
             Container.BindInstance(PhotonNetwork.Cloud);
@@ -101,7 +98,6 @@ namespace Reduxity.Example.Zenject {
             Container.BindInstance(PhotonNetwork.Lobby);
             Container.BindInstance(PhotonNetwork.Room);
             Container.BindInstance(PhotonNetwork.NetworkPlayer);
-            Container.BindInstance(PhotonNetwork.Photon);
 
             // App
             Container.BindInstance(App.LogLevel);
