@@ -166,8 +166,8 @@ namespace Reduxity.Example.Zenject.RoomConnector {
             // state.isJoined = false;
             // state.isJoinFailed = false;
             state.isLeaving = false;
-            state.hasLeft = true;
-            state.isLeavingFailed = false;
+            state.hasLeft = false;
+            state.isLeavingFailed = true;
             state.feedbackText = "Left room";
             state.roomName = null;
             return state;

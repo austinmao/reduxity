@@ -1,14 +1,14 @@
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Zenject;
 
-namespace Reduxity.Example.Zenject.RoomConnector
+namespace Reduxity.Example.Zenject.LobbyConnector
 {
 
     [TestFixture]
 	public class Test : ZenjectUnitTestFixture {
 
 		DiContainer container_;
-		private RoomState mockRoomState_;
+		private LobbyState mockLobbyState_;
 		private Reducer reducer_;
 
 		[SetUp]
@@ -18,18 +18,18 @@ namespace Reduxity.Example.Zenject.RoomConnector
 			container_.Bind<Reducer>().AsSingle();
 
 			// set default state
-			mockRoomState_ = new RoomState {};
+			mockLobbyState_ = new LobbyState {};
 			reducer_ = container_.Resolve<Reducer>();
 		}
 
 		[Test]
 		public void Should_set_isJoining_and_isJoined_when_joining() {
 			// arrange
-			var mockRoomAction = new Action.JoinStart {};
+			var mockLobbyAction = new Action.JoinStart {};
 			var sut = reducer_;
 
 			// act
-			var result = sut.Reduce(mockRoomState_, mockRoomAction);
+			var result = sut.Reduce(mockLobbyState_, mockLobbyAction);
 
 			// assert
 			Assert.IsFalse(result.isJoined, "isJoined");
@@ -48,11 +48,11 @@ namespace Reduxity.Example.Zenject.RoomConnector
 		[Test]
 		public void Should_set_isJoined_when_joining_succeeds() {
             // arrange
-			var mockRoomAction = new Action.JoinSuccess {
+			var mockLobbyAction = new Action.JoinSuccess {
 			};
 
             // act
-			var result = reducer_.Reduce(mockRoomState_, mockRoomAction);
+			var result = reducer_.Reduce(mockLobbyState_, mockLobbyAction);
 
             // assert
 			Assert.IsTrue(result.isJoined, "isJoined");
@@ -71,11 +71,11 @@ namespace Reduxity.Example.Zenject.RoomConnector
 		[Test]
 		public void Should_set_isJoined_when_joining_fails() {
             // arrange
-			var mockRoomAction = new Action.JoinFailure {
+			var mockLobbyAction = new Action.JoinFailure {
 			};
 
             // act
-			var result = reducer_.Reduce(mockRoomState_, mockRoomAction);
+			var result = reducer_.Reduce(mockLobbyState_, mockLobbyAction);
 
             // assert
 			Assert.IsFalse(result.isJoined, "isJoined");
@@ -94,14 +94,14 @@ namespace Reduxity.Example.Zenject.RoomConnector
 		[Test]
 		public void Should_set_isLeaving_and_isJoined_when_leaving() {
 			// arrange
-			var mockState = new RoomState {
+			var mockState = new LobbyState {
 				isJoined = true
 			};
-			var mockRoomAction = new Action.LeaveStart {};
+			var mockLobbyAction = new Action.LeaveStart {};
 			var sut = reducer_;
 
 			// act
-			var result = sut.Reduce(mockState, mockRoomAction);
+			var result = sut.Reduce(mockState, mockLobbyAction);
 
 			// assert
 			Assert.IsTrue(result.isJoined, "isJoined");
@@ -120,11 +120,11 @@ namespace Reduxity.Example.Zenject.RoomConnector
 		[Test]
 		public void Should_set_hasLeft_when_leaving_succeeds() {
             // arrange
-			var mockRoomAction = new Action.LeaveSuccess {
+			var mockLobbyAction = new Action.LeaveSuccess {
 			};
 
             // act
-			var result = reducer_.Reduce(mockRoomState_, mockRoomAction);
+			var result = reducer_.Reduce(mockLobbyState_, mockLobbyAction);
 
             // assert
 			Assert.IsFalse(result.isJoined, "isJoined");
@@ -141,16 +141,16 @@ namespace Reduxity.Example.Zenject.RoomConnector
         }
 
 		[Test]
-		public void Should_stay_in_room_when_leaving_fails() {
+		public void Should_stay_in_lobby_when_leaving_fails() {
             // arrange
-			var mockState = new RoomState {
+			var mockState = new LobbyState {
 				isJoined = true
 			};
-			var mockRoomAction = new Action.LeaveFailure {
+			var mockLobbyAction = new Action.LeaveFailure {
 			};
 
             // act
-			var result = reducer_.Reduce(mockState, mockRoomAction);
+			var result = reducer_.Reduce(mockState, mockLobbyAction);
 
             // assert
 			Assert.IsTrue(result.isJoined, "isJoined");
@@ -169,11 +169,11 @@ namespace Reduxity.Example.Zenject.RoomConnector
 		[Test]
 		public void Should_set_isJoining_and_isCreating_when_creating_starts() {
 			// arrange
-			var mockRoomAction = new Action.CreateStart {};
+			var mockLobbyAction = new Action.CreateStart {};
 			var sut = reducer_;
 
 			// act
-			var result = sut.Reduce(mockRoomState_, mockRoomAction);
+			var result = sut.Reduce(mockLobbyState_, mockLobbyAction);
 
 			// assert
 			Assert.IsFalse(result.isJoined, "isJoined");
@@ -192,11 +192,11 @@ namespace Reduxity.Example.Zenject.RoomConnector
 		[Test]
 		public void Should_set_isCreated_when_creating_succeeds() {
 			// arrange
-			var mockRoomAction = new Action.CreateSuccess {};
+			var mockLobbyAction = new Action.CreateSuccess {};
 			var sut = reducer_;
 
 			// act
-			var result = sut.Reduce(mockRoomState_, mockRoomAction);
+			var result = sut.Reduce(mockLobbyState_, mockLobbyAction);
 
 			// assert
 			Assert.IsTrue(result.isJoined, "isJoined");
@@ -215,11 +215,11 @@ namespace Reduxity.Example.Zenject.RoomConnector
 		[Test]
 		public void Should_set_isJoined_and_isCreated_when_creating_fails() {
 			// arrange
-			var mockRoomAction = new Action.CreateFailure {};
+			var mockLobbyAction = new Action.CreateFailure {};
 			var sut = reducer_;
 
 			// act
-			var result = sut.Reduce(mockRoomState_, mockRoomAction);
+			var result = sut.Reduce(mockLobbyState_, mockLobbyAction);
 
 			// assert
 			Assert.IsFalse(result.isJoined, "isJoined");

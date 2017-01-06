@@ -1,7 +1,6 @@
 ﻿using Redux;
 using System;
-using Photon;
-using UnityEngine.UI;
+using ExitGames.Client.Photon;
 
 namespace Reduxity.Example.Zenject.LobbyConnector {
     public class Action {
@@ -16,7 +15,7 @@ namespace Reduxity.Example.Zenject.LobbyConnector {
         public class JoinStart : ILobbyAction, IAction {}
         public class JoinSuccess : ILobbyAction, IAction {}
         public class JoinFailure : ILobbyAction, IAction {}
-        public class CreateLobbyStart : ILobbyAction, IAction {}
+        public class CreateStart : ILobbyAction, IAction {}
         public class CreateSuccess : ILobbyAction, IAction {}
         public class CreateFailure : ILobbyAction, IAction {}
         public class LeaveStart : ILobbyAction, IAction {}
@@ -28,7 +27,6 @@ namespace Reduxity.Example.Zenject.LobbyConnector {
     }
 
     public class Reducer : IReducer {
-
         public LobbyState Reduce(LobbyState state, IAction action) {
             if (action is Action.JoinStart) {
                 return StartJoin(state, (Action.JoinStart)action);
@@ -42,8 +40,16 @@ namespace Reduxity.Example.Zenject.LobbyConnector {
                 return JoinFailure(state, (Action.JoinFailure)action);
             }
 
-            if (action is Action.CreateLobbyStart) {
-                return StartCreate(state, (Action.CreateLobbyStart)action);
+            if (action is Action.CreateStart) {
+                return StartCreate(state, (Action.CreateStart)action);
+            }
+
+            if (action is Action.CreateSuccess) {
+                return CreateSuccess(state, (Action.CreateSuccess)action);
+            }
+
+            if (action is Action.CreateFailure) {
+                return CreateFailure(state, (Action.CreateFailure)action);
             }
 
             if (action is Action.LeaveStart) {
@@ -59,7 +65,7 @@ namespace Reduxity.Example.Zenject.LobbyConnector {
             }
 
             if (action is Action.UpdateRoomList) {
-                return UpdateRoomList(state, (Action.UpdateRoomList)action);
+                return UpdateLobbyList(state, (Action.UpdateRoomList)action);
             }
 
             return state;
@@ -69,10 +75,6 @@ namespace Reduxity.Example.Zenject.LobbyConnector {
             state.isJoining = true;
             state.isJoined = false;
             state.isJoinFailed = false;
-            state.isCreating = false;
-            state.isLeaving = false;
-            state.hasLeft = false;
-            state.isLeavingFailed = false;
             state.feedbackText = "Joining lobby...";
             state.lobbyName = action.lobbyName;
             return state;
@@ -82,10 +84,6 @@ namespace Reduxity.Example.Zenject.LobbyConnector {
             state.isJoining = false;
             state.isJoined = true;
             state.isJoinFailed = false;
-            state.isCreating = false;
-            state.isLeaving = false;
-            state.hasLeft = false;
-            state.isLeavingFailed = false;
             state.feedbackText = "Joined lobby.";
             state.lobbyName = action.lobbyName;
             return state;
@@ -93,35 +91,58 @@ namespace Reduxity.Example.Zenject.LobbyConnector {
 
         private LobbyState JoinFailure(LobbyState state, Action.JoinFailure action) {
             state.isJoining = false;
-            state.isJoined = false;
+
+            // should inherit from previous state in case user as already in lobby
+            // state.isJoined = false;
+
             state.isJoinFailed = true;
-            state.isCreating = false;
-            state.isLeaving = false;
-            state.hasLeft = false;
-            state.isLeavingFailed = false;
             state.feedbackText = "Joining lobby failed.";
-            state.lobbyName = null;
+
+            // should inherit from previous state in case user as already in lobby
+            state.lobbyName = state.lobbyName != null ? state.lobbyName : null;
             return state;
         }
 
-        private LobbyState StartCreate(LobbyState state, Action.CreateLobbyStart action) {
+        private LobbyState StartCreate(LobbyState state, Action.CreateStart action) {
+            // is leaving lobby if already in a lobby
+            state.isLeaving = state.isJoined ? true : false;
             state.isJoining = true;
-            state.isJoined = false;
-            state.isJoinFailed = false;
             state.isCreating = true;
-            state.isLeaving = false;
-            state.hasLeft = false;
-            state.isLeavingFailed = false;
+            state.isCreated = false;
+            state.isCreateFailed = false;
             state.feedbackText = "Creating lobby...";
             state.lobbyName = action.lobbyName;
             return state;
         }
 
-        private LobbyState Leave(LobbyState state, Action.LeaveStart action) {
+        private LobbyState CreateSuccess(LobbyState state, Action.CreateSuccess action) {
             state.isJoining = false;
-            state.isJoined = true; // still in lobby
+            state.isJoined = true;
             state.isJoinFailed = false;
-            state.isLeaving = true; // commencing action
+            state.isCreating = false;
+            state.isCreated = true;
+            state.isCreateFailed = false;
+            state.feedbackText = "Created lobby.";
+            state.lobbyName = action.lobbyName;
+            return state;
+        }
+
+        private LobbyState CreateFailure(LobbyState state, Action.CreateFailure action) {
+            state.isJoining = false;
+            // inherits previous state
+            // state.isJoined = false;
+            state.isJoinFailed = true;
+            state.isCreating = false;
+            state.isCreated = false;
+            state.isCreateFailed = true;
+            state.isLeaving = false;
+            state.feedbackText = "Creating lobby failed.";
+            state.lobbyName = action.lobbyName;
+            return state;
+        }
+
+        private LobbyState Leave(LobbyState state, Action.LeaveStart action) {
+            state.isLeaving = true;
             state.hasLeft = false;
             state.isLeavingFailed = false;
             state.feedbackText = "Leaving lobby...";
@@ -130,9 +151,7 @@ namespace Reduxity.Example.Zenject.LobbyConnector {
         }
 
         private LobbyState LeaveSuccess(LobbyState state, Action.LeaveSuccess action) {
-            state.isJoining = false;
-            state.isJoined = false; // left lobby
-            state.isJoinFailed = false;
+            state.isJoined = false;
             state.isLeaving = false;
             state.hasLeft = true;
             state.isLeavingFailed = false;
@@ -142,18 +161,19 @@ namespace Reduxity.Example.Zenject.LobbyConnector {
         }
 
         private LobbyState LeaveFailure(LobbyState state, Action.LeaveFailure action) {
-            state.isJoining = false;
-            state.isJoined = true; // still in lobby
-            state.isJoinFailed = false;
+            // inherit previous state
+            // state.isJoining = false;
+            // state.isJoined = false;
+            // state.isJoinFailed = false;
             state.isLeaving = false;
             state.hasLeft = false;
             state.isLeavingFailed = true;
-            state.feedbackText = "Leaving lobby failed";
+            state.feedbackText = "Left lobby";
             state.lobbyName = null;
             return state;
         }
 
-        private LobbyState UpdateRoomList(LobbyState state, Action.UpdateRoomList action) {
+        private LobbyState UpdateLobbyList(LobbyState state, Action.UpdateRoomList action) {
             state.photonRoomList = action.photonRoomList;
             return state;
         }
