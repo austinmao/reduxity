@@ -72,7 +72,11 @@ namespace Reduxity.Example.Zenject {
         /// </summary>
         private void InstallActionCreators() {
             Container.Bind<ApiRequestCreator.ActionCreator>().AsSingle();
-            // Container.Bind<PunCloudRequestCreator.ActionCreator>().AsSingle();
+            Container.Bind<CloudConnectCreator.ActionCreator>().AsSingle();
+            Container.Bind<ClientConnectCreator.ActionCreator>().AsSingle();
+            Container.Bind<LobbyConnectCreator.ActionCreator>().AsSingle();
+            Container.Bind<RoomConnectCreator.ActionCreator>().AsSingle();
+            Container.Bind<NetworkPlayerCreator.ActionCreator>().AsSingle();
         }
 
         private void InstallMiddleware() {
