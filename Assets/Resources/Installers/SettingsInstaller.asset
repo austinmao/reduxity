@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5a1eb031eb91a46a29305fce22c34a0d, type: 3}
-  m_Name: ReduxZenjectSettingsInstaller
+  m_Name: SettingsInstaller
   m_EditorClassIdentifier: 
   App:
     LogLevel:
@@ -33,6 +33,7 @@ MonoBehaviour:
       errorPrefixText: 'Error: '
   Network:
     Cloud:
+      GameVersion: 0.69
       logLevel: 0
     Server:
       shouldAutomaticallySyncScene: 1
