@@ -190,21 +190,21 @@ public class App : MonoBehaviour {
 
     private void Awake () {
         // initialize store with default values
-        State initialState = new State {}.initialize();
+        State initialState = new State {}.Initialize();
 
         // generate Store
-        Store = new Store<State>(CombineReducers, initialState); 
+        Store = new Store<State>(
+            ReducerCombiner<State>.CombineReducers(
+                new Dictionary<string, Func<object, IAction, IState>> {
+                    {"Character", Movement.Reducer.Reduce},
+                    {"Camera", Look.Reducer.Reduce}
+
+                }
+            ),
+            initialState
+        ); 
     }
 
-    // return a new state after respective reducers. note that each reducer returns
-    // a nested state, so make sure to associate state objects with the result of the
-    // relevant reducer function.
-    private State CombineReducers(State previousState, IAction action) {
-        return new State {
-            Movement = CharacterMover.Reducer.Reduce(previousState, action).Movement,
-            Counter = Counter.Reducer.Reduce(previousState, action).Counter
-        };
-    }
 }
 ```
 
@@ -236,6 +236,7 @@ An example of player movement with keyboard inputs and camera looking with mouse
 * an observer dispatching two actions
 * GameObjects (i.e., Transform) in state
 * separation of responsibilities of reducers
+* Usage of `ReducerCombiner.CombineReducers` (see [Redux's `combineReducers` docs](http://redux.js.org/docs/api/combineReducers.html#)
 
 ### ZenjectPlayerMovementLook
 All of the above but using Zenject instead of static functions and `new Class()` intializers.
@@ -266,7 +267,7 @@ A port of [redux-logger](https://github.com/evgenyrodionov/redux-logger) is incl
 
 ## FAQ
 ### Should I include the entire state object in the reducer?
-While [Redux docs](http://redux.js.org/docs/faq/Reducers.html#how-do-i-share-state-between-two-reducers-do-i-have-to-use-combinereducers) suggest this is an anti-pattern, it also provides situations where this could be desired. Ultimately, it's up to you. Just make sure you must return the entire `State` object in `CombineReducers()` on `App.cs`.
+While [Redux docs](http://redux.js.org/docs/faq/Reducers.html#how-do-i-share-state-between-two-reducers-do-i-have-to-use-combinereducers) suggest this is an anti-pattern, it also provides situations where this could be desired. Ultimately, it's up to you. Using `ReducerCombiner.CombineReducers()` can help to keep your reducers cleaner.
 
 ### Why are you mutating the state?
 Because I need to figure out how to efficiently deep clone state objects before they hit the reducer. Until then, be careful that you do not mutate the whole state.
