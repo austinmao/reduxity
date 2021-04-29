@@ -1,6 +1,8 @@
 ﻿using Redux;
 using UnityEngine;
 using UniRx;
+using System;
+using System.Collections.Generic;
 
 namespace Reduxity.Example.PlayerMovementLook {
 	public class App {
@@ -13,17 +15,17 @@ namespace Reduxity.Example.PlayerMovementLook {
 			State initialState = new State {}.Initialize();
 
 			// generate Store
-			Store = new Store<State>(CombineReducers, initialState); 
+			Store = new Store<State>(
+				ReducerCombiner<State>.CombineReducers(
+					new Dictionary<string, Func<object, IAction, IState>> {
+						{"Character", Movement.Reducer.Reduce},
+						{"Camera", Look.Reducer.Reduce}
+
+					}
+				),
+				initialState
+			); 
 		}
 
-		// return a new state after respective reducers. note that each reducer returns
-		// a nested state, so make sure to associate state objects with the result of the
-		// relevant reducer function.
-		private State CombineReducers(State previousState, IAction action) {
-			return new State {
-				Character = Movement.Reducer.Reduce(previousState.Character, action),
-				Camera = Look.Reducer.Reduce(previousState.Camera, action)
-			};
-		}
 	}
 }

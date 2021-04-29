@@ -20,7 +20,10 @@ namespace Reduxity.Example.PlayerMovementLook.Look {
 
     // reducers handle state changes
     public class Reducer {
-        public static CameraState Reduce(CameraState previousState, IAction action) {
+        public static CameraState Reduce(object inState, IAction action) {
+
+            CameraState previousState = inState as CameraState;
+
             // Debug.Log($"reducing with action: {action}");
             if (action is Action.Look) {
                 return Look(previousState, (Action.Look)action);
